@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Background from "../../assets/background.mp4";
-import Logo from "../../assets/AVALANCHE logo.mp4";
-import TransitionVideo from "../../assets/open1.mp4"; 
-import HomePage from "../layout/home"; 
+import Logo from "../../assets/AVALANCHE.gif"; // ✅ GIF import
+import TransitionVideo from "../../assets/open1.mp4";
+import HomePage from "../layout/home";
 
 export default function LoadingVideoPage() {
   const [loadingPercent, setLoadingPercent] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [showButton, setShowButton] = useState(false);
   const [showTransition, setShowTransition] = useState(false);
-  const [showHomePage, setShowHomePage] = useState(false); 
+  const [showHomePage, setShowHomePage] = useState(false);
   const transitionRef = useRef(null);
 
   // Loader increment
@@ -61,8 +61,8 @@ export default function LoadingVideoPage() {
         </video>
       )}
 
-      {/* Dark Overlay */}
-      {!showTransition && !showHomePage && (
+      {/* Dark Overlay → only show during loader */}
+      {isLoading && !showTransition && !showHomePage && (
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40 z-10"></div>
       )}
 
@@ -97,29 +97,30 @@ export default function LoadingVideoPage() {
         )}
       </AnimatePresence>
 
-      {/* Main Content */}
+      {/* Main Content (Logo + Button) */}
       {!isLoading && !showTransition && !showHomePage && (
         <motion.div
           key="main-content"
-          className="relative z-20 min-h-screen flex flex-col items-center justify-center"
+          className="relative z-30 min-h-screen flex flex-col items-center justify-center"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0, transition: { duration: 1 } }}
         >
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-40 sm:w-56 md:w-72 lg:w-96 xl:w-[28rem] max-w-full drop-shadow-lg mix-blend-screen mb-8"
-          >
-            <source src={Logo} type="video/mp4" />
-          </video>
+          {/* ✅ Logo (no blending, above overlay) */}
+          <img
+            src={Logo}
+            alt="Avalanche Logo"
+            className="w-40 sm:w-56 md:w-72 lg:w-96 xl:w-[28rem] max-w-full drop-shadow-lg mb-8"
+          />
 
           {showButton && (
             <motion.button
               className="px-6 py-3 bg-transparent border-2 border-blue-500 text-white font-bold rounded-lg shadow-lg text-lg hover:bg-blue-600 hover:border-blue-600 transition-colors duration-300"
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.5 } }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.8, delay: 0.5 },
+              }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleStartMission}
@@ -138,7 +139,7 @@ export default function LoadingVideoPage() {
           autoPlay
           muted
           playsInline
-          onEnded={() => setShowHomePage(true)} // Show home page after transition
+          onEnded={() => setShowHomePage(true)}
           className="absolute top-0 left-0 w-full h-full object-cover z-30"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { duration: 0.8 } }}

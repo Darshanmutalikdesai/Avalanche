@@ -11,7 +11,7 @@ import { useHashLocation } from "./hooks/routing";
 
 // ✅ Lazy load pages
 const LandingPage = lazy(() => import("./components/pages/landing"));
-
+const Auth = lazy(() => import("./components/pages/auth"));
 
 function Routes() {
   return (
@@ -19,9 +19,7 @@ function Routes() {
       <Switch>
         {/* Landing Page */}
         <Route path="/" component={LandingPage} />
-        {/* <Route path="/events" component={EventsPage} /> */}
-        
-       
+        <Route path="/auth" component={Auth} />
         {/* Not Found */}
         <Route component={NotFound} />
       </Switch>
