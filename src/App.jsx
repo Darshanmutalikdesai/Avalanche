@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import { Route, Router, Switch } from "wouter";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 
 import Loading from "@/components/layout/Common/Loading";
@@ -7,22 +7,21 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import QueryProvider from "./components/layout/Common/QueryProvider";
 
 import NotFound from "./components/pages/Pagenotfound";
-import { useHashLocation } from "./hooks/routing";
 
-// ✅ Lazy load pages
+// Lazy load pages
 const LandingPage = lazy(() => import("./components/pages/landing"));
 const Auth = lazy(() => import("./components/pages/auth"));
+const Events = lazy(() => import("./components/pages/Events"));
 
-function Routes() {
+function AppRoutes() {
   return (
     <Suspense fallback={<Loading />}>
-      <Switch>
-        {/* Landing Page */}
-        <Route path="/" component={LandingPage} />
-        <Route path="/auth" component={Auth} />
-        {/* Not Found */}
-        <Route component={NotFound} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/events/*" element={<Events />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </Suspense>
   );
 }
@@ -32,11 +31,11 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Router hook={useHashLocation}>
-        <QueryProvider>
-          <Routes />
-        </QueryProvider>
-      </Router>
+      <QueryProvider>
+        <Router>
+          <AppRoutes />
+        </Router>
+      </QueryProvider>
     </QueryClientProvider>
   );
 }
