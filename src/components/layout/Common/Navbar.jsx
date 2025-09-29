@@ -26,7 +26,7 @@ const NavigationBar = () => {
   }, []);
 
   const navItems = [
-    { name: "Home", href: "/", icon: Zap }, // Changed from "/home" to "/"
+    { name: "Home", href: "/home", icon: Zap }, // Changed from "/home" to "/"
     { name: "Event Registration", href: "/events", icon: UserPlus },
     { name: "Developer", href: "/developer", icon: Code2 },
     { name: "Schedules", href: "/schedules", icon: CalendarDays },

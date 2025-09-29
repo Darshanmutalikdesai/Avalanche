@@ -8,8 +8,12 @@ import QueryProvider from "./components/layout/Common/QueryProvider";
 
 import NotFound from "./components/pages/Pagenotfound";
 
+// 🔊 Import the click sound provider
+import ClickSoundProvider from "./components/layout/Common/ClickSoundProvider";
+
 // Lazy load pages
 const LandingPage = lazy(() => import("./components/pages/landing"));
+const Home = lazy(() => import("./components/pages/home"));
 const Auth = lazy(() => import("./components/pages/auth"));
 const Events = lazy(() => import("./components/pages/Events"));
 
@@ -18,6 +22,7 @@ function AppRoutes() {
     <Suspense fallback={<Loading />}>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/events/*" element={<Events />} />
         <Route path="*" element={<NotFound />} />
@@ -33,7 +38,10 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <QueryProvider>
         <Router>
-          <AppRoutes />
+          {/* ✅ Wrap everything in ClickSoundProvider */}
+          <ClickSoundProvider>
+            <AppRoutes />
+          </ClickSoundProvider>
         </Router>
       </QueryProvider>
     </QueryClientProvider>
