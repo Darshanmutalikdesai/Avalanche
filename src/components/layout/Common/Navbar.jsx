@@ -2,25 +2,21 @@ import React, { useState, useRef, useEffect } from "react";
 import {
   Menu,
   X,
-  Github,
-  Heart,
-  MessageCircle,
-  Twitter,
   Zap,
   UserPlus,
   Code2,
   CalendarDays,
   LogIn,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom"; // ✅ React Router DOM navigation
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 const NavigationBar = () => {
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
   const canvasRef = useRef(null);
   const puffsCanvasRef = useRef(null);
-  const navigate = useNavigate(); // ✅ get navigate function
+  const location = useLocation();
 
-  // Load font and background animations as before
+  // Load font
   useEffect(() => {
     const fontLink = document.createElement("link");
     fontLink.href =
@@ -29,87 +25,103 @@ const NavigationBar = () => {
     document.head.appendChild(fontLink);
   }, []);
 
-  // ... keep your background canvas animations (dots/puffs) here
-
   const navItems = [
+    { name: "Home", href: "/", icon: Zap }, // Changed from "/home" to "/"
     { name: "Event Registration", href: "/events", icon: UserPlus },
     { name: "Developer", href: "/developer", icon: Code2 },
     { name: "Schedules", href: "/schedules", icon: CalendarDays },
     { name: "Login", href: "/auth", icon: LogIn },
   ];
 
+  // Mobile Slide-in Navigation
   const NavigationModal = () => (
     <div
-      className={`fixed inset-0 z-50 bg-black/90 backdrop-blur-md transition-opacity duration-300 flex items-center justify-center p-4 ${
-        isNavigationOpen ? "opacity-100 visible" : "opacity-0 invisible"
-      }`}
+      className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center"
+      onClick={() => setIsNavigationOpen(false)}
     >
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" style={{ opacity: 0.3 }} />
-      <canvas ref={puffsCanvasRef} className="absolute inset-0 pointer-events-none" style={{ opacity: 0.25 }} />
+      <div 
+        className="w-full max-w-md px-8"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          onClick={() => setIsNavigationOpen(false)}
+          className="absolute top-8 right-8 text-cyan-400 hover:text-cyan-300 transition-colors"
+          aria-label="Close menu"
+        >
+          <X size={32} />
+        </button>
 
-      <div className="w-full max-w-md sm:max-w-lg p-0 overflow-hidden rounded-lg shadow-lg">
-        <div className="bg-gradient-to-b from-cyan-900/20 to-cyan-900/5 p-6 sm:p-8 flex flex-col items-center justify-center text-center relative">
-          <button
-            onClick={() => setIsNavigationOpen(false)}
-            className="absolute top-4 right-4 text-cyan-400 hover:text-cyan-300 transition-colors p-1"
-          >
-            <X size={28} />
-          </button>
-
-          <nav className="flex flex-col items-center justify-center space-y-6 mb-8 mt-6 w-full">
-            {navItems.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => {
-                  navigate(item.href); // ✅ Navigate with React Router
-                  setIsNavigationOpen(false);
-                }}
-                className="flex items-center space-x-3 p-3 rounded transition-all duration-200 w-full justify-center text-cyan-400/90 hover:text-cyan-300 hover:bg-cyan-400/10 text-2xl font-light"
-              >
-                <item.icon size={24} />
-                <span>{item.name}</span>
-              </button>
-            ))}
-          </nav>
-        </div>
+        {/* Nav Items */}
+        <nav className="flex flex-col space-y-6 mt-20">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.name}
+              to={item.href}
+              onClick={() => setIsNavigationOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center space-x-4 px-6 py-4 rounded-lg transition-all text-xl font-medium ${
+                  isActive
+                    ? "bg-cyan-500/90 text-black shadow-lg shadow-cyan-400/50"
+                    : "text-cyan-300 hover:text-white hover:bg-cyan-400/20 bg-black/20"
+                }`
+              }
+            >
+              <item.icon size={24} />
+              <span>{item.name}</span>
+            </NavLink>
+          ))}
+        </nav>
       </div>
     </div>
   );
 
   return (
     <header className="relative z-10 w-full">
+      {/* Top Nav Bar */}
       <div className="flex items-center justify-between p-4 sm:p-6">
-        <div className="flex items-center space-x-2 sm:space-x-4">
+        {/* Logo */}
+        <Link to="/" className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-full flex items-center justify-center shadow-lg">
             <Zap size={16} className="text-black" />
           </div>
           <span className="text-cyan-400 text-lg sm:text-xl font-light tracking-wider">
             AVALANCHE
           </span>
-        </div>
+        </Link>
 
+        {/* Desktop Nav */}
         <nav className="hidden md:flex items-center space-x-6">
           {navItems.map((item) => (
-            <button
+            <NavLink
               key={item.name}
-              onClick={() => navigate(item.href)}
-              className="flex items-center space-x-2 px-3 py-2 rounded transition-all duration-200 text-base text-cyan-400/80 hover:text-cyan-300 hover:bg-cyan-400/10"
+              to={item.href}
+              className={({ isActive }) =>
+                `flex items-center space-x-2 px-3 py-2 rounded transition-all duration-200 text-base font-light ${
+                  isActive
+                    ? "bg-cyan-500 text-black shadow-md shadow-cyan-400/50"
+                    : "text-cyan-400/80 hover:text-cyan-300 hover:bg-cyan-400/10"
+                }`
+              }
             >
               <item.icon size={18} />
-              <span className="font-light">{item.name}</span>
-            </button>
+              <span>{item.name}</span>
+            </NavLink>
           ))}
         </nav>
 
+        {/* Mobile Menu Button */}
         <button
           onClick={() => setIsNavigationOpen(true)}
           className="text-cyan-400 hover:text-cyan-300 transition-colors p-2 md:hidden"
+          aria-label="Open menu"
         >
           <Menu size={24} />
         </button>
       </div>
 
-      <NavigationModal />
+      {/* Mobile Modal */}
+      {isNavigationOpen && <NavigationModal />}
     </header>
   );
 };

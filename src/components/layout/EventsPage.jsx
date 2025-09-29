@@ -1,45 +1,78 @@
 import React from "react";
 import EventCard from "../layout/Events/EventCard";
 import BackgroundVideo from "../../assets/backround1.mp4";
+import image1 from "../../assets/central_image.jpg";
+import image2 from "../../assets/dept_image.jpg";
+import image3 from "../../assets/puc_image.jpg";
 
-const EventsPage = ({ events }) => {
+const EventsPage = () => {
+  const eventsData = [
+    {
+      id: 1,
+      title: "Tadpole Galaxy",
+      description: "Department of Architecture",
+      image: image1,
+      path: "/events/central-events",
+    },
+    {
+      id: 2,
+      title: "Andromeda Galaxy",
+      description: "Department of Civil Engineering",
+      image: image2,
+      path: "/events/department-events",
+    },
+    {
+      id: 3,
+      title: "Blinking Galaxy",
+      description: "Department of Information Science",
+      image: image3,
+      path: "/events/puc-events",
+    },
+  ];
+
   return (
-    <div className="relative w-full min-h-screen font-orbitron text-[#00f7ff]">
-      {/* Background Video */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
+    <div className="fixed inset-0 w-screen h-screen overflow-y-auto font-['Orbitron',sans-serif] text-[#00f7ff]">
+      {/* Background video */}
+      <video 
+        autoPlay 
+        loop 
+        muted 
+        playsInline 
         className="fixed top-0 left-0 w-full h-full object-cover z-0"
       >
         <source src={BackgroundVideo} type="video/mp4" />
       </video>
 
       {/* Dark overlay */}
-      <div className="fixed top-0 left-0 w-full h-full bg-black/40 z-10"></div>
+      <div className="fixed top-0 left-0 w-full h-full bg-black/40 z-[1]"></div>
 
-      {/* Content */}
-      <div className="relative z-20">
+      {/* Content wrapper sits above video */}
+      <div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8">
         {/* Header */}
-        <div className="text-center py-16">
-          <h1 className="text-[2.5rem] font-semibold text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)]">
+        <div className="text-center mb-16 sm:mb-20 lg:mb-24 pt-8">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
             Events
           </h1>
-          <p className="text-[1.2rem] text-[#b0f7ff] opacity-80">
+          <p className="text-base sm:text-lg lg:text-xl text-[#b0f7ff] opacity-80">
             Explore the Galaxy of AVALANCHE
           </p>
         </div>
 
-        {/* Grid of cards */}
-        <div
-          className="grid gap-16 sm:gap-20 md:gap-24 
-                     grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 
-                     justify-items-center px-4 sm:px-6 lg:px-8 pb-20"
-        >
-          {events.map((event, index) => (
+        {/* Grid */}
+        <div className="
+          flex flex-wrap
+          justify-center
+          gap-x-8 gap-y-32
+          sm:gap-x-10 sm:gap-y-36
+          lg:gap-x-12 lg:gap-y-40
+          max-w-7xl
+          mx-auto
+          px-4
+          pb-16
+        ">
+          {eventsData.map((event) => (
             <EventCard
-              key={index}
+              key={event.id}
               title={event.title}
               description={event.description}
               image={event.image}

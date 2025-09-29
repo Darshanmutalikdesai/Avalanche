@@ -1,0 +1,128 @@
+/* Wrapper with video support */
+.events-wrapper {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  font-family: "Orbitron", sans-serif;
+  color: #00f7ff;
+}
+
+/* Background video */
+.events-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Dark overlay */
+.events-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+/* Content wrapper sits above video */
+.events-content {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+}
+
+/* Header */
+.events-header {
+  text-align: center;
+  margin-bottom: 90px;
+}
+
+.events-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #00eaff;
+  text-shadow: 0 0 15px rgba(0, 234, 255, 0.7);
+}
+
+.events-subtitle {
+  font-size: 1.2rem;
+  color: #b0f7ff;
+  opacity: 0.8;
+}
+
+/* Grid */
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 4rem;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .events-grid {
+    grid-template-columns: 1fr;
+    gap: 6rem;
+  }
+}
+
+/* Card */
+.event-card {
+  background: rgba(0, 15, 30, 0.85);
+  border: 1px solid #00f7ff71;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 0 15px rgba(0, 247, 255, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.event-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 0 25px #00f7ffaa, 0 0 40px #00f7ff9a;
+}
+
+/* Image / Planet */
+.event-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.event-title {
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+  color: #ffcc00;
+  text-shadow: 0 0 10px #ffcc00;
+}
+
+.event-desc {
+  font-size: 0.95rem;
+  color: #ddd;
+  margin-bottom: 1.2rem;
+}
+
+.event-link {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid #00f7ff;
+  border-radius: 8px;
+  color: #00f7ff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.event-link:hover {
+  background: #00f7ff;
+  color: #000;
+  box-shadow: 0 0 15px #00f7ff;
+}
