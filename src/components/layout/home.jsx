@@ -1,11 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import BackgroundVideo from "../../assets/mastvideo.webm";
+import BackgroundImage from "../../assets/back.jpg";
 import NavigationBar from "../layout/Common/Navbar";
 
 export default function HomePage() {
   const overlayRef = useRef(null);
-  const videoRef = useRef(null);
 
   // Dynamically load Titillium Web font
   useEffect(() => {
@@ -18,13 +17,10 @@ export default function HomePage() {
     }
   }, []);
 
-  // Animate overlay brightness (start dark, fade to normal brightness)
+  // Animate overlay brightness
   useEffect(() => {
     if (overlayRef.current) {
-      // start darker immediately
       overlayRef.current.style.backgroundColor = "rgba(0, 0, 0, 0.4)";
-
-      // fade to slightly dark (normal brightness, not over-bright)
       requestAnimationFrame(() => {
         overlayRef.current.style.transition = "background-color 2s ease-in-out";
         overlayRef.current.style.backgroundColor = "rgba(0, 0, 0, 0.2)";
@@ -32,36 +28,20 @@ export default function HomePage() {
     }
   }, []);
 
-  // Handle video loaded metadata to start from 7th second
-  const handleVideoLoaded = () => {
-    if (videoRef.current && !isNaN(videoRef.current.duration)) {
-      videoRef.current.currentTime = 7; // start from 7 seconds
-    }
-  };
-
   return (
     <div
       className="relative min-h-screen w-full overflow-hidden"
-      style={{ fontFamily: "'Titillium Web', sans-serif" }}
+      style={{
+        fontFamily: "'Titillium Web', sans-serif",
+        backgroundImage: `url(${BackgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
-      {/* Background Video */}
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        onLoadedMetadata={handleVideoLoaded}
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-      >
-        <source src={BackgroundVideo} type="video/WEBM" />
-      </video>
-
       {/* Dark Overlay */}
       <div
         ref={overlayRef}
         className="absolute top-0 left-0 w-full h-full z-[5]"
-        style={{ backgroundColor: "rgba(0,0,0,0.4)" }} // start darker
       ></div>
 
       {/* Navbar */}
@@ -71,17 +51,11 @@ export default function HomePage() {
 
       {/* Hero Content */}
       <div className="relative z-[10] flex flex-col items-center justify-center min-h-screen text-center px-4 sm:px-6 md:px-8 lg:px-16">
-        <h1
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white drop-shadow-lg mb-4 sm:mb-6 md:mb-8"
-          style={{ fontWeight: 700 }}
-        >
-          Welcome to Avalanche
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-9xl text-white drop-shadow-lg mb-4 sm:mb-6 md:mb-8 font-bold">
+          AVALANCHE'25
         </h1>
-        <p
-          className="text-base sm:text-lg md:text-xl lg:text-2xl text-white drop-shadow-md mb-6 sm:mb-8 md:mb-10 max-w-3xl"
-          style={{ fontWeight: 400 }}
-        >
-          Your mission starts here. Explore the experience.
+        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white drop-shadow-md mb-6 sm:mb-8 md:mb-10 max-w-3xl font-normal">
+          Discover the infinite
         </p>
         <Link
           to="/auth"

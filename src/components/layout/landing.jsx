@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Background from "../../assets/background.mp4";
-import Logo from "../../assets/AVALANCHE.gif"; // ✅ GIF import
-import TransitionVideo from "../../assets/open1.mp4";
+import Logo from "../../assets/weblogo.svg"; // ✅ GIF import
+import TransitionVideo from "../../assets/Rocket_V3.0 (online-video-cutter.com).mp4";
 import HomePage from "../layout/home";
 
 export default function LoadingVideoPage() {

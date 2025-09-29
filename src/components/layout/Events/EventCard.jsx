@@ -78,4 +78,4 @@ const EventCard = ({ title, description, image, path }) => {
   );
 };
 
-export default EventCard;
+export default EventCard; 

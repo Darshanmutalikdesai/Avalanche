@@ -9,6 +9,7 @@ import {
   LogIn,
 } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import logo from "../../../assets/weblogo.svg";
 
 const NavigationBar = () => {
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
@@ -26,7 +27,7 @@ const NavigationBar = () => {
   }, []);
 
   const navItems = [
-    { name: "Home", href: "/home", icon: Zap }, // Changed from "/home" to "/"
+    { name: "Home", href: "/home", icon: Zap },
     { name: "Event Registration", href: "/events", icon: UserPlus },
     { name: "Developer", href: "/developer", icon: Code2 },
     { name: "Schedules", href: "/schedules", icon: CalendarDays },
@@ -39,7 +40,7 @@ const NavigationBar = () => {
       className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center"
       onClick={() => setIsNavigationOpen(false)}
     >
-      <div 
+      <div
         className="w-full max-w-md px-8"
         onClick={(e) => e.stopPropagation()}
       >
@@ -82,12 +83,11 @@ const NavigationBar = () => {
       <div className="flex items-center justify-between p-4 sm:p-6">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-full flex items-center justify-center shadow-lg">
-            <Zap size={16} className="text-black" />
-          </div>
-          <span className="text-cyan-400 text-lg sm:text-xl font-light tracking-wider">
-            AVALANCHE 2025
-          </span>
+          <img
+            src={logo}
+            alt="Avalanche Logo"
+            className="h-20 w-auto sm:h-15"
+          />
         </Link>
 
         {/* Desktop Nav */}
