@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import BackgroundVideo from "../../assets/home.mp4";
+import BackgroundVideo from "../../assets/new one.mp4";
 import NavigationBar from "../layout/Common/Navbar";
 
 export default function HomePage() {
