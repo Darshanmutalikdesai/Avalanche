@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import BackgroundVideo from "../../assets/new one.mp4";
+import BackgroundVideo from "../../assets/mastvideo.webm";
 import NavigationBar from "../layout/Common/Navbar";
 
 export default function HomePage() {
@@ -18,11 +18,17 @@ export default function HomePage() {
     }
   }, []);
 
-  // Animate overlay brightness
+  // Animate overlay brightness (start dark, fade to normal brightness)
   useEffect(() => {
     if (overlayRef.current) {
-      overlayRef.current.style.transition = "background-color 2s ease-in-out";
+      // start darker immediately
       overlayRef.current.style.backgroundColor = "rgba(0, 0, 0, 0.4)";
+
+      // fade to slightly dark (normal brightness, not over-bright)
+      requestAnimationFrame(() => {
+        overlayRef.current.style.transition = "background-color 2s ease-in-out";
+        overlayRef.current.style.backgroundColor = "rgba(0, 0, 0, 0.2)";
+      });
     }
   }, []);
 
@@ -48,14 +54,14 @@ export default function HomePage() {
         onLoadedMetadata={handleVideoLoaded}
         className="absolute top-0 left-0 w-full h-full object-cover z-0"
       >
-        <source src={BackgroundVideo} type="video/mp4" />
+        <source src={BackgroundVideo} type="video/WEBM" />
       </video>
 
       {/* Dark Overlay */}
       <div
         ref={overlayRef}
         className="absolute top-0 left-0 w-full h-full z-[5]"
-        style={{ backgroundColor: "rgba(0,0,0,0)" }}
+        style={{ backgroundColor: "rgba(0,0,0,0.4)" }} // start darker
       ></div>
 
       {/* Navbar */}
