@@ -86,7 +86,7 @@ const NavigationBar = () => {
             <Zap size={16} className="text-black" />
           </div>
           <span className="text-cyan-400 text-lg sm:text-xl font-light tracking-wider">
-            AVALANCHE
+            AVALANCHE 2025
           </span>
         </Link>
 
