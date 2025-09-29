@@ -61,7 +61,7 @@ export default function LoadingVideoPage() {
         </video>
       )}
 
-      {/* Dark Overlay → only show during loader */}
+      {/* Dark Overlay → ONLY show during loading, completely removed after loading */}
       {isLoading && !showTransition && !showHomePage && (
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40 z-10"></div>
       )}
@@ -97,7 +97,7 @@ export default function LoadingVideoPage() {
         )}
       </AnimatePresence>
 
-      {/* Main Content (Logo + Button) */}
+      {/* Main Content (Logo + Button) - NO OVERLAY behind logo */}
       {!isLoading && !showTransition && !showHomePage && (
         <motion.div
           key="main-content"
@@ -105,11 +105,12 @@ export default function LoadingVideoPage() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0, transition: { duration: 1 } }}
         >
-          {/* ✅ Logo (no blending, above overlay) */}
+          {/* ✅ Logo with clean background, no interference */}
           <img
             src={Logo}
             alt="Avalanche Logo"
             className="w-40 sm:w-56 md:w-72 lg:w-96 xl:w-[28rem] max-w-full drop-shadow-lg mb-8"
+            style={{ position: "relative", zIndex: 35 }}
           />
 
           {showButton && (
@@ -124,6 +125,7 @@ export default function LoadingVideoPage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleStartMission}
+              style={{ position: "relative", zIndex: 35 }}
             >
               Start the Mission
             </motion.button>

@@ -22,24 +22,24 @@ const ArwesOAuthSignup = () => {
       color: 'from-blue-400 to-blue-600',
       glowColor: 'rgba(59, 130, 246, 0.6)',
     },
-    { 
-      name: 'GitHub', 
-      icon: '⚡',
-      color: 'from-gray-400 to-gray-600',
-      glowColor: 'rgba(107, 114, 128, 0.6)',
-    },
-    { 
-      name: 'Discord', 
-      icon: '🎮',
-      color: 'from-indigo-400 to-purple-600',
-      glowColor: 'rgba(99, 102, 241, 0.6)',
-    },
-    { 
-      name: 'Microsoft', 
-      icon: '🔷',
-      color: 'from-blue-500 to-cyan-400',
-      glowColor: 'rgba(6, 182, 212, 0.6)',
-    }
+    // { 
+    //   name: 'GitHub', 
+    //   icon: '⚡',
+    //   color: 'from-gray-400 to-gray-600',
+    //   glowColor: 'rgba(107, 114, 128, 0.6)',
+    // },
+    // { 
+    //   name: 'Discord', 
+    //   icon: '🎮',
+    //   color: 'from-indigo-400 to-purple-600',
+    //   glowColor: 'rgba(99, 102, 241, 0.6)',
+    // },
+    // { 
+    //   name: 'Microsoft', 
+    //   icon: '🔷',
+    //   color: 'from-blue-500 to-cyan-400',
+    //   glowColor: 'rgba(6, 182, 212, 0.6)',
+    // }
   ];
 
   const handleOAuthLogin = (provider) => {
