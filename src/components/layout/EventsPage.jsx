@@ -31,13 +31,19 @@ const EventsPage = () => {
   ];
 
   return (
-    <div className="fixed inset-0 w-screen h-screen overflow-y-auto font-['Orbitron',sans-serif] text-[#00f7ff]">
+    <div
+      className="
+        fixed inset-0 w-screen h-screen overflow-y-auto 
+        font-['Titillium_Web',sans-serif] /* ⬅ apply your custom font everywhere */
+        text-[#00f7ff]
+      "
+    >
       {/* Background video */}
-      <video 
-        autoPlay 
-        loop 
-        muted 
-        playsInline 
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
         className="fixed top-0 left-0 w-full h-full object-cover z-0"
       >
         <source src={BackgroundVideo} type="video/mp4" />
@@ -49,7 +55,8 @@ const EventsPage = () => {
       {/* Content wrapper sits above video */}
       <div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8">
         {/* Header */}
-        <div className="text-center mb-16 sm:mb-20 lg:mb-24 pt-8">
+        <div className="text-center mb-20 sm:mb-24 lg:mb-28 pt-16">
+          {/* ⬆️ pushed further down with pt-16 & more bottom margin */}
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
             Events
           </h1>
@@ -59,17 +66,19 @@ const EventsPage = () => {
         </div>
 
         {/* Grid */}
-        <div className="
-          flex flex-wrap
-          justify-center
-          gap-x-8 gap-y-32
-          sm:gap-x-10 sm:gap-y-36
-          lg:gap-x-12 lg:gap-y-40
-          max-w-7xl
-          mx-auto
-          px-4
-          pb-16
-        ">
+        <div
+          className="
+            flex flex-wrap
+            justify-center
+            gap-x-8 gap-y-32
+            sm:gap-x-10 sm:gap-y-36
+            lg:gap-x-12 lg:gap-y-40
+            max-w-7xl
+            mx-auto
+            px-4
+            pb-20
+          "
+        >
           {eventsData.map((event) => (
             <EventCard
               key={event.id}

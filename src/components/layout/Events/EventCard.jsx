@@ -13,13 +13,14 @@ const EventCard = ({ title, description, image, path }) => {
         transition-all duration-300 ease-in-out
         hover:-translate-y-2 hover:scale-[1.02]
         hover:shadow-[0_0_25px_#00f7ff,0_0_40px_#00f7ff]
-        px-4 pt-20 pb-6
+        px-4 pt-24 pb-8  /* ⬅ more padding top & bottom */
         overflow-visible
         w-full max-w-[280px]
         sm:max-w-[320px]
         md:max-w-[340px]
         lg:max-w-[360px]
         xl:max-w-[380px]
+        font-['Titillium_Web'] /* ⬅ enforce font on everything */
       "
     >
       {/* Planet Image */}
@@ -39,21 +40,25 @@ const EventCard = ({ title, description, image, path }) => {
       </div>
 
       {/* Card Content */}
-      <div className="mt-16 px-4">
-        <h2 className="
-          text-xl
-          sm:text-2xl
-          font-semibold text-[#ffcc00] mb-2 
-          drop-shadow-[0_0_10px_#ffcc00]
-        ">
+      <div className="mt-20 px-4"> {/* ⬅ pushed content further down */}
+        <h2
+          className="
+            text-xl
+            sm:text-2xl
+            font-semibold text-[#ffcc00] mb-2 
+            drop-shadow-[0_0_10px_#ffcc00]
+          "
+        >
           {title}
         </h2>
-        <p className="
-          text-sm
-          sm:text-base
-          text-[#cfcfcf] mb-4 
-          min-h-[60px]
-        ">
+        <p
+          className="
+            text-sm
+            sm:text-base
+            text-[#cfcfcf] mb-4 
+            min-h-[60px]
+          "
+        >
           {description}
         </p>
         <Link
@@ -78,4 +83,4 @@ const EventCard = ({ title, description, image, path }) => {
   );
 };
 
-export default EventCard; 
+export default EventCard;

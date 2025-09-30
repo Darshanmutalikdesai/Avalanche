@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Menu,
   X,
@@ -13,18 +13,7 @@ import logo from "../../../assets/weblogo.svg";
 
 const NavigationBar = () => {
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
-  const canvasRef = useRef(null);
-  const puffsCanvasRef = useRef(null);
   const location = useLocation();
-
-  // Load font
-  useEffect(() => {
-    const fontLink = document.createElement("link");
-    fontLink.href =
-      "https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;300;400;600;700&display=swap";
-    fontLink.rel = "stylesheet";
-    document.head.appendChild(fontLink);
-  }, []);
 
   const navItems = [
     { name: "Home", href: "/home", icon: Zap },
@@ -37,7 +26,7 @@ const NavigationBar = () => {
   // Mobile Slide-in Navigation
   const NavigationModal = () => (
     <div
-      className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center"
+      className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center font-['Sweet_Rosetia_Sans']"
       onClick={() => setIsNavigationOpen(false)}
     >
       <div
@@ -47,28 +36,28 @@ const NavigationBar = () => {
         {/* Close Button */}
         <button
           onClick={() => setIsNavigationOpen(false)}
-          className="absolute top-8 right-8 text-cyan-400 hover:text-cyan-300 transition-colors"
+          className="absolute top-8 right-8 text-white hover:text-cyan-300 transition-colors"
           aria-label="Close menu"
         >
-          <X size={32} />
+          <X size={36} /> {/* Bigger close button */}
         </button>
 
         {/* Nav Items */}
-        <nav className="flex flex-col space-y-6 mt-20">
+        <nav className="flex flex-col space-y-8 mt-24">
           {navItems.map((item) => (
             <NavLink
               key={item.name}
               to={item.href}
               onClick={() => setIsNavigationOpen(false)}
               className={({ isActive }) =>
-                `flex items-center space-x-4 px-6 py-4 rounded-lg transition-all text-xl font-medium ${
+                `flex items-center space-x-5 px-8 py-5 rounded-lg transition-all text-2xl font-semibold ${
                   isActive
                     ? "bg-cyan-500/90 text-black shadow-lg shadow-cyan-400/50"
-                    : "text-cyan-300 hover:text-white hover:bg-cyan-400/20 bg-black/20"
+                    : "text-white hover:text-cyan-300 hover:bg-cyan-400/20 bg-black/20"
                 }`
               }
             >
-              <item.icon size={24} />
+              <item.icon size={28} /> {/* Bigger icons */}
               <span>{item.name}</span>
             </NavLink>
           ))}
@@ -78,33 +67,33 @@ const NavigationBar = () => {
   );
 
   return (
-    <header className="relative z-10 w-full">
+    <header className="relative z-10 w-full font-['Sweet_Rosetia_Sans']">
       {/* Top Nav Bar */}
-      <div className="flex items-center justify-between p-4 sm:p-6">
+      <div className="flex items-center justify-between px-6 py-6 sm:px-10 sm:py-8">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-3">
           <img
             src={logo}
             alt="Avalanche Logo"
-            className="h-20 w-auto sm:h-15"
+            className="h-24 w-auto sm:h-28" // Bigger logo
           />
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-10">
           {navItems.map((item) => (
             <NavLink
               key={item.name}
               to={item.href}
               className={({ isActive }) =>
-                `flex items-center space-x-2 px-3 py-2 rounded transition-all duration-200 text-base font-light ${
+                `flex items-center space-x-3 px-4 py-3 rounded transition-all duration-200 text-lg font-medium ${
                   isActive
                     ? "bg-cyan-500 text-black shadow-md shadow-cyan-400/50"
-                    : "text-cyan-400/80 hover:text-cyan-300 hover:bg-cyan-400/10"
+                    : "text-white hover:text-cyan-300 hover:bg-cyan-400/10"
                 }`
               }
             >
-              <item.icon size={18} />
+              <item.icon size={22} /> {/* Bigger icons */}
               <span>{item.name}</span>
             </NavLink>
           ))}
@@ -113,10 +102,10 @@ const NavigationBar = () => {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsNavigationOpen(true)}
-          className="text-cyan-400 hover:text-cyan-300 transition-colors p-2 md:hidden"
+          className="text-white hover:text-cyan-300 transition-colors p-3 md:hidden"
           aria-label="Open menu"
         >
-          <Menu size={24} />
+          <Menu size={32} /> {/* Bigger hamburger */}
         </button>
       </div>
 

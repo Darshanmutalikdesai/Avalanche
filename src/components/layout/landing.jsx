@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Background from "../../assets/background.mp4";
-import Logo from "../../assets/weblogo.svg"; // ✅ GIF import
+import Logo from "../../assets/weblogo.svg"; 
 import TransitionVideo from "../../assets/Rocket_V3.0 (online-video-cutter.com).mp4";
 import HomePage from "../layout/home";
 
@@ -45,7 +45,7 @@ export default function LoadingVideoPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden font-['Sweet_Rosetia_Sans']">
       {/* Background Video */}
       {!showHomePage && (
         <video
@@ -61,7 +61,7 @@ export default function LoadingVideoPage() {
         </video>
       )}
 
-      {/* Dark Overlay → ONLY show during loading, completely removed after loading */}
+      {/* Dark Overlay */}
       {isLoading && !showTransition && !showHomePage && (
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40 z-10"></div>
       )}
@@ -97,22 +97,22 @@ export default function LoadingVideoPage() {
         )}
       </AnimatePresence>
 
-      {/* Main Content (Logo + Button) - NO OVERLAY behind logo */}
+      {/* Main Content (Logo + Button) */}
       {!isLoading && !showTransition && !showHomePage && (
         <motion.div
           key="main-content"
-          className="relative z-30 min-h-screen flex flex-col items-center justify-center"
+          className="absolute inset-0 z-30 flex flex-col items-center justify-center"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0, transition: { duration: 1 } }}
         >
-          {/* ✅ Logo with clean background, no interference */}
+          {/* Logo */}
           <img
             src={Logo}
             alt="Avalanche Logo"
             className="w-40 sm:w-56 md:w-72 lg:w-96 xl:w-[28rem] max-w-full drop-shadow-lg mb-8"
-            style={{ position: "relative", zIndex: 35 }}
           />
 
+          {/* Button */}
           {showButton && (
             <motion.button
               className="px-6 py-3 bg-transparent border-2 border-blue-500 text-white font-bold rounded-lg shadow-lg text-lg hover:bg-blue-600 hover:border-blue-600 transition-colors duration-300"
@@ -125,9 +125,8 @@ export default function LoadingVideoPage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleStartMission}
-              style={{ position: "relative", zIndex: 35 }}
             >
-              Start the Mission
+              <b>Start the Mission</b>
             </motion.button>
           )}
         </motion.div>
@@ -139,8 +138,8 @@ export default function LoadingVideoPage() {
           ref={transitionRef}
           key="transition-video"
           autoPlay
-          muted
           playsInline
+          // 🔊 sound enabled
           onEnded={() => setShowHomePage(true)}
           className="absolute top-0 left-0 w-full h-full object-cover z-30"
           initial={{ opacity: 0 }}
