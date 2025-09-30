@@ -143,7 +143,7 @@ export default function LoadingVideoPage() {
           exit={{ opacity: 0, transition: { duration: 0.8 } }}
         >
           <source
-            src="https://avalache2025.s3.ap-south-1.amazonaws.com/Rocket_V3.0"
+            src="https://d2j4u5h82d96vr.cloudfront.net/Rocket_V3.0"
             type="video/mp4"
           />
         </motion.video>
