@@ -4,6 +4,7 @@ import BackgroundVideo from "../../assets/backround1.mp4";
 import image1 from "../../assets/treasure_image.jpg";
 import image2 from "../../assets/hackathon_image.jpg";
 import image3 from "../../assets/debate_image.jpg";
+import image4 from "../../assets/logo5.jpeg"; // 🎵 Example new image
 
 const CentralEvents = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -33,10 +34,18 @@ const CentralEvents = () => {
       instructions:
         "1. Individual participation.\n2. 3 rounds.\n3. No mobiles allowed.\n4. Top 3 win certificates.",
     },
+    {
+      id: 4,
+      title: "Battle of Bands",
+      description: "Feel the rhythm, rock the stage!",
+      image: image4,
+      instructions:
+        "1. Teams of 5-8 members.\n2. 15 minutes stage time.\n3. Original or cover songs allowed.\n4. Bring your instruments.",
+    },
   ];
 
   return (
-    <div className="relative w-screen h-screen overflow-y-auto font-['Orbitron',sans-serif] text-[#00f7ff]">
+    <div className="fixed inset-0 w-screen h-screen overflow-y-auto font-['Orbitron',sans-serif] text-[#00f7ff]">
       {/* Background video */}
       <video
         autoPlay
@@ -52,13 +61,13 @@ const CentralEvents = () => {
       <div className="fixed top-0 left-0 w-full h-full bg-black/40 z-[1]"></div>
 
       {/* Content wrapper */}
-      <div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8 pt-56 sm:pt-48 lg:pt-52">
+      <div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8 pt-28 sm:pt-32">
         {/* Header */}
-        <div className="text-center mb-10 sm:mb-20 lg:mb-24">
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-semibold text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-2 sm:mb-3">
+        <div className="text-center mb-16 sm:mb-20 lg:mb-24">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
             Central Events
           </h1>
-          <p className="text-sm sm:text-lg lg:text-xl text-[#b0f7ff] opacity-80">
+          <p className="text-base sm:text-lg lg:text-xl text-[#b0f7ff] opacity-80">
             Discover the main highlights of AVALANCHE
           </p>
         </div>
@@ -67,10 +76,10 @@ const CentralEvents = () => {
         <div
           className="
           grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
-          gap-x-6 gap-y-10 sm:gap-x-10 sm:gap-y-20
+          gap-x-8 gap-y-16 sm:gap-x-10 sm:gap-y-20
           max-w-7xl
           mx-auto
-          px-2 sm:px-4
+          px-4
           pb-16
         "
         >
@@ -85,7 +94,7 @@ const CentralEvents = () => {
                 description={event.description}
                 image={event.image}
                 path="#"
-                className="flex flex-col w-full h-auto sm:h-[380px]"
+                className="flex flex-col h-[380px] w-full" // ✅ same height for all cards
               />
             </div>
           ))}
@@ -111,15 +120,15 @@ const CentralEvents = () => {
             "
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-xl sm:text-3xl font-bold text-[#ffcc00] mb-4 drop-shadow-[0_0_10px_#ffcc00]">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#ffcc00] mb-4 drop-shadow-[0_0_10px_#ffcc00]">
               {selectedEvent.title}
             </h2>
-            <p className="text-sm sm:text-lg text-gray-300 whitespace-pre-line leading-relaxed mb-6">
+            <p className="text-base sm:text-lg text-gray-300 whitespace-pre-line leading-relaxed mb-6">
               {selectedEvent.instructions}
             </p>
             <button
               className="
-                px-4 sm:px-6 py-2 sm:py-3
+                px-6 py-3
                 bg-transparent
                 border-2 border-[#00f7ff]
                 rounded-lg
@@ -127,7 +136,6 @@ const CentralEvents = () => {
                 transition-all duration-300 ease-in-out
                 hover:bg-[#00f7ff] hover:text-black
                 hover:shadow-[0_0_15px_#00f7ff]
-                text-sm sm:text-base
               "
               onClick={() => setSelectedEvent(null)}
             >

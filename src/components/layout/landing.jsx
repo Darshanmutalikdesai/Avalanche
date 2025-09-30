@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Background from "../../assets/background.mp4";
-import Logo from "../../assets/weblogo.svg"; 
-import TransitionVideo from "../../assets/Rocket_V3.0 (online-video-cutter.com).mp4";
+import Logo from "../../assets/weblogo.svg";
 import HomePage from "../layout/home";
-import RocketButton from "../layout/Common/RocketButton"; // ✅ import our button
+import RocketButton from "../layout/Common/RocketButton"; // ✅ Rocket button
 
 export default function LoadingVideoPage() {
   const [loadingPercent, setLoadingPercent] = useState(0);
@@ -143,7 +142,10 @@ export default function LoadingVideoPage() {
           animate={{ opacity: 1, transition: { duration: 0.8 } }}
           exit={{ opacity: 0, transition: { duration: 0.8 } }}
         >
-          <source src={TransitionVideo} type="video/mp4" />
+          <source
+            src="https://avalache2025.s3.ap-south-1.amazonaws.com/Rocket_V3.0+(online-video-cutter.com)+(1).mp4"
+            type="video/mp4"
+          />
         </motion.video>
       )}
 

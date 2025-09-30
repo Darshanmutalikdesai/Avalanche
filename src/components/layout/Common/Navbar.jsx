@@ -99,7 +99,7 @@ const NavigationBar = () => {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="flex items-center justify-between px-6 py-6 sm:px-10 sm:py-8"
+        className="flex items-center justify-between px-4 py-3 sm:px-10 sm:py-1"
       >
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-3">

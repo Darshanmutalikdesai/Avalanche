@@ -18,6 +18,7 @@ const Home = lazy(() => import("./components/pages/home"));
 const Auth = lazy(() => import("./components/pages/auth"));
 const Events = lazy(() => import("./components/pages/Events"));
 
+
 function AppRoutes() {
   return (
     <Suspense fallback={<Loading />}>
