@@ -96,9 +96,10 @@ export default function HomePage() {
       <div
         className="
           relative z-[10] flex flex-col items-center 
-          justify-center sm:justify-start 
+          justify-start sm:justify-start
           min-h-screen text-center 
           px-4 sm:px-6 md:px-8 lg:px-16
+          pt-[25%] sm:pt-6
         "
       >
         {/* Logo */}
