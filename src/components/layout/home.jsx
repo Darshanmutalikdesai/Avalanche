@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react"; // ✅ Import Star icon
-import BackgroundImage from "../../assets/back.jpg";
 import NavigationBar from "../layout/Common/Navbar";
 import Logo from "../../assets/weblogo.svg";
 
@@ -53,6 +52,28 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [launch, setLaunch] = useState(false);
 
+  // ⭐ Generate stars dynamically
+  useEffect(() => {
+    const numStars = 120; // Adjust density
+    const container = document.getElementById("star-container");
+    if (!container) return;
+
+    // clear old stars if any
+    container.innerHTML = "";
+
+    for (let i = 0; i < numStars; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+      star.style.top = Math.random() * 100 + "%";
+      star.style.left = Math.random() * 100 + "%";
+      star.style.animationDelay = Math.random() * 5 + "s";
+      const size = Math.random() * 2 + 1;
+      star.style.width = size + "px";
+      star.style.height = size + "px";
+      container.appendChild(star);
+    }
+  }, []);
+
   // Animate overlay brightness
   useEffect(() => {
     if (overlayRef.current) {
@@ -76,11 +97,12 @@ export default function HomePage() {
     <div
       className="relative min-h-screen w-full overflow-hidden font-['Sweet_Rosetia_Sans']"
       style={{
-        backgroundImage: `url(${BackgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        background: "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
       }}
     >
+      {/* 🌌 Starfield Background */}
+      <div id="star-container" className="stars absolute w-full h-full"></div>
+
       {/* Dark Overlay */}
       <div
         ref={overlayRef}
@@ -112,7 +134,7 @@ export default function HomePage() {
           "
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: 'easeOut' }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
         />
 
         {/* Title */}
@@ -121,10 +143,10 @@ export default function HomePage() {
             text-4xl xs:text-5xl sm:text-3xl md:text-5xl lg:text-9xl 
             text-white drop-shadow-lg font-bold 
             mt-2 sm:-mt-6
-          " 
+          "
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
+          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
         >
           <b>AVALANCHE'25</b>
         </motion.h1>
@@ -140,7 +162,7 @@ export default function HomePage() {
           "
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.6, ease: 'easeOut' }}
+          transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
         >
           <b>Discover the infinite</b>
         </motion.p>
@@ -154,6 +176,35 @@ export default function HomePage() {
           <StarButton onClick={handleLaunch} />
         </motion.div>
       </div>
+
+      {/* ⭐ Star CSS (scoped) */}
+      <style jsx>{`
+        .stars .star {
+          position: absolute;
+          background: white;
+          border-radius: 50%;
+          opacity: 0.8;
+          animation: twinkle 3s infinite alternate, drift 20s linear infinite;
+        }
+        @keyframes twinkle {
+          from {
+            opacity: 0.3;
+            transform: scale(0.8);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1.2);
+          }
+        }
+        @keyframes drift {
+          from {
+            transform: translate(0, 0);
+          }
+          to {
+            transform: translate(20px, 20px);
+          }
+        }
+      `}</style>
     </div>
   );
 }
