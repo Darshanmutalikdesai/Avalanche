@@ -4,6 +4,7 @@ import Background from "../../assets/background.mp4";
 import Logo from "../../assets/weblogo.svg"; 
 import TransitionVideo from "../../assets/Rocket_V3.0 (online-video-cutter.com).mp4";
 import HomePage from "../layout/home";
+import RocketButton from "../layout/Common/RocketButton"; // ✅ import our button
 
 export default function LoadingVideoPage() {
   const [loadingPercent, setLoadingPercent] = useState(0);
@@ -112,22 +113,18 @@ export default function LoadingVideoPage() {
             className="w-40 sm:w-56 md:w-72 lg:w-96 xl:w-[28rem] max-w-full drop-shadow-lg mb-8"
           />
 
-          {/* Button */}
+          {/* Rocket Button instead of normal button */}
           {showButton && (
-            <motion.button
-              className="px-6 py-3 bg-transparent border-2 border-blue-500 text-white font-bold rounded-lg shadow-lg text-lg hover:bg-blue-600 hover:border-blue-600 transition-colors duration-300"
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{
                 opacity: 1,
                 y: 0,
                 transition: { duration: 0.8, delay: 0.5 },
               }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleStartMission}
             >
-              <b>Start the Mission</b>
-            </motion.button>
+              <RocketButton onClick={handleStartMission} />
+            </motion.div>
           )}
         </motion.div>
       )}
