@@ -16,9 +16,8 @@ const StarButton = ({ onClick }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={`
-        relative px-5 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4
-        text-sm sm:text-base md:text-lg lg:text-xl
-        text-white font-semibold
+        relative px-4 sm:px-6 py-2 sm:py-3 
+        text-sm sm:text-base text-white font-semibold
         bg-gradient-to-r from-purple-600 to-pink-600
         rounded-lg shadow-lg
         transition-all duration-300
@@ -70,7 +69,7 @@ export default function HomePage() {
     setLaunch(true);
     setTimeout(() => {
       navigate("/auth");
-    }, 1500);
+    }, 1500); // redirect after animation
   };
 
   return (
@@ -94,34 +93,53 @@ export default function HomePage() {
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-[10] flex flex-col items-center justify-center min-h-screen text-center px-4 sm:px-6 md:px-8 lg:px-16 pt-10 sm:pt-12 lg:pt-16">
-        
+      <div
+        className="
+          relative z-[10] flex flex-col items-center 
+          justify-center sm:justify-start 
+          min-h-screen text-center 
+          px-4 sm:px-6 md:px-8 lg:px-16
+        "
+      >
         {/* Logo */}
         <motion.img
           src={Logo}
           alt="Avalanche Logo"
-          className="w-28 sm:w-40 md:w-56 lg:w-72 xl:w-80 mb-2 sm:mb-4"
+          className="
+            w-40 xs:w-44 sm:w-40 md:w-56 lg:w-72 xl:w-80 
+            mb-2
+          "
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          transition={{ duration: 1.2, ease: 'easeOut' }}
         />
 
         {/* Title */}
         <motion.h1
-          className="text-[clamp(2rem,6vw,6rem)] text-white drop-shadow-lg font-bold -mt-4 sm:-mt-6"
+          className="
+            text-4xl xs:text-5xl sm:text-3xl md:text-5xl lg:text-9xl 
+            text-white drop-shadow-lg font-bold 
+            mt-2 sm:-mt-6
+          " 
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+          transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
         >
           <b>AVALANCHE'25</b>
         </motion.h1>
 
         {/* Subtitle */}
         <motion.p
-          className="text-[clamp(1rem,2.5vw,2rem)] text-white drop-shadow-md mb-6 sm:mb-8 max-w-2xl font-normal -mt-1 sm:-mt-2"
+          className="
+            text-lg xs:text-xl sm:text-base md:text-lg lg:text-2xl 
+            text-white drop-shadow-md 
+            mb-6 sm:mb-8 
+            max-w-xs sm:max-w-md md:max-w-2xl 
+            font-normal
+          "
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
+          transition={{ duration: 1, delay: 0.6, ease: 'easeOut' }}
         >
           <b>Discover the infinite</b>
         </motion.p>
