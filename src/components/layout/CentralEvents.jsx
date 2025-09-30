@@ -14,32 +14,35 @@ const CentralEvents = () => {
       title: "Treasure Hunt",
       description: "A thrilling hunt across campus!",
       image: image1,
-      instructions: "1. Register online.\n2. Teams of 4.\n3. Bring college ID.\n4. Follow the clues to win.",
+      instructions:
+        "1. Register online.\n2. Teams of 4.\n3. Bring college ID.\n4. Follow the clues to win.",
     },
     {
       id: 2,
       title: "Hackathon",
       description: "Show your coding skills in 24 hours.",
       image: image2,
-      instructions: "1. Teams of max 3.\n2. Bring laptops.\n3. Internet will be provided.\n4. Judges' decision is final.",
+      instructions:
+        "1. Teams of max 3.\n2. Bring laptops.\n3. Internet will be provided.\n4. Judges' decision is final.",
     },
     {
       id: 3,
       title: "Quiz Mania",
       description: "Test your knowledge and win exciting prizes.",
       image: image3,
-      instructions: "1. Individual participation.\n2. 3 rounds.\n3. No mobiles allowed.\n4. Top 3 win certificates.",
+      instructions:
+        "1. Individual participation.\n2. 3 rounds.\n3. No mobiles allowed.\n4. Top 3 win certificates.",
     },
   ];
 
   return (
-    <div className="fixed inset-0 w-screen h-screen overflow-y-auto font-['Orbitron',sans-serif] text-[#00f7ff]">
+    <div className="relative w-screen h-screen overflow-y-auto font-['Orbitron',sans-serif] text-[#00f7ff]">
       {/* Background video */}
-      <video 
-        autoPlay 
-        loop 
-        muted 
-        playsInline 
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
         className="fixed top-0 left-0 w-full h-full object-cover z-0"
       >
         <source src={BackgroundVideo} type="video/mp4" />
@@ -48,41 +51,41 @@ const CentralEvents = () => {
       {/* Dark overlay */}
       <div className="fixed top-0 left-0 w-full h-full bg-black/40 z-[1]"></div>
 
-      {/* Content wrapper sits above video */}
-      <div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8">
+      {/* Content wrapper */}
+      <div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8 pt-56 sm:pt-48 lg:pt-52">
         {/* Header */}
-        <div className="text-center mb-16 sm:mb-20 lg:mb-24 pt-8">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
+        <div className="text-center mb-10 sm:mb-20 lg:mb-24">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-semibold text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-2 sm:mb-3">
             Central Events
           </h1>
-          <p className="text-base sm:text-lg lg:text-xl text-[#b0f7ff] opacity-80">
+          <p className="text-sm sm:text-lg lg:text-xl text-[#b0f7ff] opacity-80">
             Discover the main highlights of AVALANCHE
           </p>
         </div>
 
         {/* Grid */}
-        <div className="
-          flex flex-wrap
-          justify-center
-          gap-x-8 gap-y-32
-          sm:gap-x-10 sm:gap-y-36
-          lg:gap-x-12 lg:gap-y-40
+        <div
+          className="
+          grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
+          gap-x-6 gap-y-10 sm:gap-x-10 sm:gap-y-20
           max-w-7xl
           mx-auto
-          px-4
+          px-2 sm:px-4
           pb-16
-        ">
+        "
+        >
           {centralEventsData.map((event) => (
             <div
               key={event.id}
               onClick={() => setSelectedEvent(event)}
-              className="cursor-pointer"
+              className="cursor-pointer flex"
             >
               <EventCard
                 title={event.title}
                 description={event.description}
                 image={event.image}
                 path="#"
+                className="flex flex-col w-full h-auto sm:h-[380px]"
               />
             </div>
           ))}
@@ -91,11 +94,11 @@ const CentralEvents = () => {
 
       {/* Popup Modal */}
       {selectedEvent && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/70 z-[100] flex items-center justify-center p-4"
           onClick={() => setSelectedEvent(null)}
         >
-          <div 
+          <div
             className="
               bg-[rgba(0,15,30,0.95)]
               border-2 border-[#00f7ff]
@@ -108,15 +111,15 @@ const CentralEvents = () => {
             "
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#ffcc00] mb-4 drop-shadow-[0_0_10px_#ffcc00]">
+            <h2 className="text-xl sm:text-3xl font-bold text-[#ffcc00] mb-4 drop-shadow-[0_0_10px_#ffcc00]">
               {selectedEvent.title}
             </h2>
-            <p className="text-base sm:text-lg text-gray-300 whitespace-pre-line leading-relaxed mb-6">
+            <p className="text-sm sm:text-lg text-gray-300 whitespace-pre-line leading-relaxed mb-6">
               {selectedEvent.instructions}
             </p>
-            <button 
+            <button
               className="
-                px-6 py-3
+                px-4 sm:px-6 py-2 sm:py-3
                 bg-transparent
                 border-2 border-[#00f7ff]
                 rounded-lg
@@ -124,6 +127,7 @@ const CentralEvents = () => {
                 transition-all duration-300 ease-in-out
                 hover:bg-[#00f7ff] hover:text-black
                 hover:shadow-[0_0_15px_#00f7ff]
+                text-sm sm:text-base
               "
               onClick={() => setSelectedEvent(null)}
             >
