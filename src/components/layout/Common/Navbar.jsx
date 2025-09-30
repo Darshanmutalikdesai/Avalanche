@@ -57,36 +57,37 @@ const NavigationBar = () => {
           </motion.button>
 
           {/* Nav Items */}
-          <nav className="flex flex-col space-y-8 mt-24">
-            {navItems.map((item, index) => (
-              <motion.div
-                key={item.name}
-                initial={{ x: -50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.1 * index, duration: 0.3 }}
-              >
-                <NavLink
-                  to={item.href}
-                  onClick={() => setIsNavigationOpen(false)}
-                  className={({ isActive }) =>
-                    `flex items-center space-x-5 px-8 py-5 rounded-lg transition-all text-2xl font-semibold ${
-                      isActive
-                        ? "bg-cyan-500/90 text-black shadow-lg shadow-cyan-400/50"
-                        : "text-white hover:text-cyan-300 hover:bg-cyan-400/20 bg-black/20"
-                    }`
-                  }
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.2, rotate: 10 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <item.icon size={28} />
-                  </motion.div>
-                  <span>{item.name}</span>
-                </NavLink>
-              </motion.div>
-            ))}
-          </nav>
+<nav className="flex flex-col space-y-8 mt-24">
+  {navItems.map((item, index) => (
+    <motion.div
+      key={item.name}
+      initial={{ x: -50, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ delay: 0.1 * index, duration: 0.3 }}
+    >
+      <NavLink
+        to={item.href}
+        onClick={() => setIsNavigationOpen(false)}
+        className={({ isActive }) =>
+          `flex items-center space-x-5 px-8 py-5 rounded-lg transition-all text-2xl font-semibold border border-cyan-300 border-opacity-40
+          ${
+            isActive
+              ? "bg-cyan-500/90 text-black shadow-lg shadow-cyan-400/50"
+              : "text-white hover:text-cyan-300 hover:bg-cyan-400/20 bg-black/20"
+          }`
+        }
+      >
+        <motion.div
+          whileHover={{ scale: 1.2, rotate: 10 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <item.icon size={28} />
+        </motion.div>
+        <span>{item.name}</span>
+      </NavLink>
+    </motion.div>
+  ))}
+</nav>
         </motion.div>
       </motion.div>
     </AnimatePresence>
