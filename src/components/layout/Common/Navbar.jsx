@@ -103,46 +103,55 @@ const NavigationBar = () => {
         className="flex items-center justify-between px-4 py-3 sm:px-10 sm:py-1"
       >
         {/* Logo */}
-        <Link to="/" className="flex items-center space-x-3">
+        <Link to="/home" className="flex items-center space-x-3">
           <motion.img
             whileHover={{ scale: 1.1, rotate: 5 }}
             transition={{ type: "spring", stiffness: 300 }}
             src={logo}
             alt="Avalanche Logo"
-            className="h-24 w-auto sm:h-28"
+            className="h-20 w-auto sm:h-24"
           />
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center space-x-10">
-          {navItems.map((item, index) => (
-            <motion.div
-              key={item.name}
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.1 * index, duration: 0.4 }}
-            >
-              <NavLink
-                to={item.href}
-                className={({ isActive }) =>
-                  `flex items-center space-x-3 px-4 py-3 rounded transition-all duration-200 text-lg font-medium ${
-                    isActive
-                      ? "bg-cyan-500 text-black shadow-md shadow-cyan-400/50"
-                      : "text-white hover:text-cyan-300 hover:bg-cyan-400/10"
-                  }`
-                }
-              >
-                <motion.div
-                  whileHover={{ scale: 1.2, rotate: 15 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
-                  <item.icon size={22} />
-                </motion.div>
-                <span>{item.name}</span>
-              </NavLink>
-            </motion.div>
-          ))}
-        </nav>
+<nav className="hidden md:flex items-center space-x-10">
+  {navItems.map((item, index) => (
+    <motion.div
+      key={item.name}
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: 0.1 * index, duration: 0.4 }}
+    >
+      <NavLink
+        to={item.href}
+        className={({ isActive }) =>
+          `group relative flex items-center space-x-3 px-4 py-3 rounded transition-all duration-200 text-lg font-medium ${
+            isActive
+              ? "text-cyan-300"
+              : "text-white hover:text-cyan-300 "
+          }`
+        }
+      >
+        <motion.div
+          whileHover={{ scale: 1.2, rotate: 15 }}
+          transition={{ type: "spring", stiffness: 400 }}
+        >
+          <item.icon size={22} />
+        </motion.div>
+        <span>{item.name}</span>
+
+        {/* 🔥 Underline animation */}
+        <span
+          className={`absolute bottom-0 h-[2px] bg-cyan-300 transition-all duration-300 ease-out ${
+            location.pathname === item.href
+              ? "w-full left-0" // Active link underline visible
+              : "w-0 left-1/2 group-hover:w-full group-hover:left-0" // Hover animation for inactive
+          }`}
+        />
+      </NavLink>
+    </motion.div>
+  ))}
+</nav>
 
         {/* Mobile Menu Button */}
         <motion.button
@@ -167,4 +176,4 @@ const NavigationBar = () => {
   );
 };
 
-export default NavigationBar;
+export default NavigationBar; 

@@ -19,7 +19,7 @@ const StarButton = ({ onClick }) => {
         text-sm sm:text-base text-white font-semibold
         bg-gradient-to-r from-purple-600 to-pink-600
         rounded-lg shadow-lg
-        transition-all duration-300
+        transition-all duration-300 font-['Montserrat']
         ${isHovered ? "shadow-pink-500/60 shadow-2xl" : ""}
       `}
     >
@@ -95,7 +95,7 @@ export default function HomePage() {
 
   return (
     <div
-      className="relative min-h-screen w-full overflow-hidden font-['Sweet_Rosetia_Sans']"
+      className="relative min-h-screen w-full overflow-hidden font-['Montserrat']"
       style={{
         background: "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
       }}
