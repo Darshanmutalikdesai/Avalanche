@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Star } from "lucide-react"; 
 import NavigationBar from "../layout/Common/Navbar";
 import Logo from "../../assets/weblogo.svg";
-import R2D2Image from "../../assets/R2D2.png"; // ✅ Make sure this image exists
+import R2D2Image from "../../assets/R2D2.png"; // ✅ Ensure this exists
 
 // ⭐ Star Button Component
 const StarButton = ({ onClick }) => {
@@ -24,7 +24,7 @@ const StarButton = ({ onClick }) => {
         ${isHovered ? "shadow-pink-500/60 shadow-2xl" : ""}
       `}
     >
-      {/* Shimmer effect */}
+      {/* Shimmer */}
       <div
         className={`absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 transition-opacity duration-700 ${
           isHovered ? "opacity-20" : ""
@@ -63,7 +63,6 @@ export default function HomePage() {
     setMessages([...messages, { sender: "user", text: inputMessage }]);
     setInputMessage("");
 
-    // Example bot reply
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
@@ -76,7 +75,7 @@ export default function HomePage() {
     if (e.key === "Enter") handleSendMessage();
   };
 
-  // ⭐ Generate stars dynamically
+  // ⭐ Stars
   useEffect(() => {
     const numStars = 120;
     const container = document.getElementById("star-container");
@@ -95,7 +94,7 @@ export default function HomePage() {
     }
   }, []);
 
-  // Animate overlay
+  // Overlay
   useEffect(() => {
     if (overlayRef.current) {
       overlayRef.current.style.backgroundColor = "rgba(0, 0, 0, 0.4)";
@@ -106,7 +105,7 @@ export default function HomePage() {
     }
   }, []);
 
-  // Handle launch
+  // Launch
   const handleLaunch = () => {
     setLaunch(true);
     setTimeout(() => {
@@ -121,7 +120,7 @@ export default function HomePage() {
         background: "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
       }}
     >
-      {/* 🌌 Starfield */}
+      {/* 🌌 Stars */}
       <div id="star-container" className="stars absolute w-full h-full"></div>
 
       {/* Dark Overlay */}
@@ -132,17 +131,16 @@ export default function HomePage() {
         <NavigationBar />
       </div>
 
-      {/* Hero Content */}
+      {/* Hero */}
       <div
         className="
           relative z-[10] flex flex-col items-center 
-          justify-start sm:justify-start
+          justify-start sm:justify-center md:justify-center lg:justify-center
           min-h-screen text-center 
           px-4 sm:px-6 md:px-8 lg:px-16
-          pt-[25%] sm:pt-6
+          pt-[25%] sm:pt-6 md:pt-0
         "
       >
-        {/* Logo */}
         <motion.img
           src={Logo}
           alt="Avalanche Logo"
@@ -151,8 +149,6 @@ export default function HomePage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
         />
-
-        {/* Title */}
         <motion.h1
           className="text-4xl xs:text-5xl sm:text-3xl md:text-5xl lg:text-9xl text-white drop-shadow-lg font-bold mt-2 sm:-mt-6"
           initial={{ opacity: 0, y: 40 }}
@@ -161,8 +157,6 @@ export default function HomePage() {
         >
           <b>AVALANCHE'25</b>
         </motion.h1>
-
-        {/* Subtitle */}
         <motion.p
           className="text-lg xs:text-xl sm:text-base md:text-lg lg:text-2xl text-white drop-shadow-md mb-6 sm:mb-8 max-w-xs sm:max-w-md md:max-w-2xl font-normal"
           initial={{ opacity: 0, y: 30 }}
@@ -171,8 +165,6 @@ export default function HomePage() {
         >
           <b>DISCOVER THE INFINITE</b>
         </motion.p>
-
-        {/* ✨ StarButton */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -182,13 +174,13 @@ export default function HomePage() {
         </motion.div>
       </div>
 
-      {/* 🚀 R2-D2 Robot */}
-      <div className="absolute bottom-8 left-0 w-full h-48 z-20">
-        <div className="animate-slide flex justify-start">
+      {/* 🚀 R2-D2 */}
+      <div className="absolute inset-x-0 bottom-[20%] sm:bottom-10 md:bottom-8 flex justify-center z-20">
+        <div className="animate-slide">
           <img
             src={R2D2Image}
             alt="R2-D2"
-            className="h-40 w-auto drop-shadow-lg cursor-pointer 
+            className="h-32 sm:h-40 w-auto drop-shadow-lg cursor-pointer 
                        hover:scale-110 transition-transform 
                        animate-float animate-wiggle animate-glow"
             onClick={() => setChatOpen(true)}
@@ -199,7 +191,7 @@ export default function HomePage() {
       {/* ✅ Chatbot */}
       {chatOpen && (
         <div className="fixed bottom-4 right-4 w-80 h-96 bg-white rounded-lg shadow-2xl flex flex-col z-50">
-          {/* Chat Header */}
+          {/* Header */}
           <div className="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-blue-600 font-bold">
@@ -214,8 +206,7 @@ export default function HomePage() {
               ×
             </button>
           </div>
-
-          {/* Chat Messages */}
+          {/* Messages */}
           <div className="flex-1 overflow-y-auto p-4 space-y-3">
             {messages.map((msg, index) => (
               <div
@@ -234,8 +225,7 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-
-          {/* Chat Input */}
+          {/* Input */}
           <div className="p-4 border-t border-gray-200">
             <div className="flex gap-2">
               <input
@@ -267,57 +257,34 @@ export default function HomePage() {
           animation: twinkle 3s infinite alternate, drift 20s linear infinite;
         }
         @keyframes twinkle {
-          from {
-            opacity: 0.3;
-            transform: scale(0.8);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1.2);
-          }
+          from { opacity: 0.3; transform: scale(0.8); }
+          to { opacity: 1; transform: scale(1.2); }
         }
         @keyframes drift {
-          from {
-            transform: translate(0, 0);
-          }
-          to {
-            transform: translate(20px, 20px);
-          }
+          from { transform: translate(0, 0); }
+          to { transform: translate(20px, 20px); }
         }
-
-        /* R2-D2 Animations */
         @keyframes slide {
           0% { transform: translateX(-150px); }
           100% { transform: translateX(100vw); }
         }
-        .animate-slide {
-          animation: slide 30s linear infinite;
-        }
-
+        .animate-slide { animation: slide 30s linear infinite; }
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-12px); }
         }
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
-
+        .animate-float { animation: float 3s ease-in-out infinite; }
         @keyframes wiggle {
           0%, 100% { transform: rotate(0deg); }
           25% { transform: rotate(2deg); }
           75% { transform: rotate(-2deg); }
         }
-        .animate-wiggle {
-          animation: wiggle 4s ease-in-out infinite;
-        }
-
+        .animate-wiggle { animation: wiggle 4s ease-in-out infinite; }
         @keyframes glow {
           0%, 100% { filter: drop-shadow(0 0 6px #3b82f6); }
           50% { filter: drop-shadow(0 0 16px #2563eb); }
         }
-        .animate-glow {
-          animation: glow 2.5s ease-in-out infinite;
-        }
+        .animate-glow { animation: glow 2.5s ease-in-out infinite; }
       `}</style>
     </div>
   );
