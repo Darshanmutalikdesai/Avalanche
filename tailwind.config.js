@@ -5,6 +5,9 @@ export default {
   content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        nasal: ["Nasalization", "sans-serif"], // ✅ custom font
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
@@ -56,7 +59,7 @@ export default {
         'slide-in': 'slide-in 1s ease-out forwards',
         'rotate-slide-in': 'rotate-slide-in 2s ease-out forwards',
         'swirl': 'swirl 2s infinite',
-        'spin-slow': 'spin 2.5s linear infinite', // loader spin speed
+        'spin-slow': 'spin 2.5s linear infinite',
       },
       keyframes: {
         'slide-in': {
@@ -64,14 +67,8 @@ export default {
           '100%': { transform: 'translateX(0)', opacity: '1' },
         },
         'rotate-slide-in': {
-          '0%': {
-            transform: 'translateX(100%) rotate(0deg)',
-            opacity: '0',
-          },
-          '100%': {
-            transform: 'translateX(0) rotate(360deg)',
-            opacity: '1',
-          },
+          '0%': { transform: 'translateX(100%) rotate(0deg)', opacity: '0' },
+          '100%': { transform: 'translateX(0) rotate(360deg)', opacity: '1' },
         },
         'swirl': {
           '0%': { transform: 'rotate(0deg) scale(1)' },
@@ -81,7 +78,5 @@ export default {
       },
     },
   },
-  plugins: [
-    tailwindcssAnimate,
-  ],
+  plugins: [tailwindcssAnimate],
 };

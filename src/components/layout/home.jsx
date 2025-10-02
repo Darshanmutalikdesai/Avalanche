@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Star } from "lucide-react"; 
+import { Star } from "lucide-react";
 import NavigationBar from "../layout/Common/Navbar";
 import Logo from "../../assets/weblogo.svg";
-import R2D2Image from "../../assets/R2D2.png"; // ✅ Ensure this exists
+import R2D2Image from "../../assets/R2D2.png";
 
 // ⭐ Star Button Component
 const StarButton = ({ onClick }) => {
@@ -20,11 +20,10 @@ const StarButton = ({ onClick }) => {
         text-sm sm:text-base text-white font-semibold
         bg-gradient-to-r from-purple-600 to-pink-600
         rounded-lg shadow-lg
-        transition-all duration-300 font-['Montserrat']
+        transition-all duration-300 font-['Nasalization']
         ${isHovered ? "shadow-pink-500/60 shadow-2xl" : ""}
       `}
     >
-      {/* Shimmer */}
       <div
         className={`absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 transition-opacity duration-700 ${
           isHovered ? "opacity-20" : ""
@@ -52,7 +51,7 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [launch, setLaunch] = useState(false);
 
-  // ✅ Chatbot state
+  // Chatbot state
   const [chatOpen, setChatOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
@@ -75,7 +74,7 @@ export default function HomePage() {
     if (e.key === "Enter") handleSendMessage();
   };
 
-  // ⭐ Stars
+  // Stars
   useEffect(() => {
     const numStars = 120;
     const container = document.getElementById("star-container");
@@ -115,15 +114,15 @@ export default function HomePage() {
 
   return (
     <div
-      className="relative min-h-screen w-full overflow-hidden font-['Montserrat']"
+      className="relative min-h-screen w-full overflow-hidden font-['Nasalization']"
       style={{
         background: "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
       }}
     >
-      {/* 🌌 Stars */}
+      {/* Stars */}
       <div id="star-container" className="stars absolute w-full h-full"></div>
 
-      {/* Dark Overlay */}
+      {/* Overlay */}
       <div ref={overlayRef} className="absolute top-0 left-0 w-full h-full z-[5]" />
 
       {/* Navbar */}
@@ -131,7 +130,7 @@ export default function HomePage() {
         <NavigationBar />
       </div>
 
-      {/* Hero */}
+      {/* Hero Section */}
       <div
         className="
           relative z-[10] flex flex-col items-center 
@@ -155,7 +154,7 @@ export default function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
         >
-          <b>AVALANCHE'25</b>
+          <b>A V A L A N C H E '2 5</b>
         </motion.h1>
         <motion.p
           className="text-lg xs:text-xl sm:text-base md:text-lg lg:text-2xl text-white drop-shadow-md mb-6 sm:mb-8 max-w-xs sm:max-w-md md:max-w-2xl font-normal"
@@ -174,7 +173,7 @@ export default function HomePage() {
         </motion.div>
       </div>
 
-      {/* 🚀 R2-D2 */}
+      {/* R2-D2 */}
       <div className="absolute inset-x-0 bottom-[20%] sm:bottom-10 md:bottom-8 flex justify-center z-20">
         <div className="animate-slide">
           <img
@@ -188,10 +187,9 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ✅ Chatbot */}
+      {/* Chatbot */}
       {chatOpen && (
         <div className="fixed bottom-4 right-4 w-80 h-96 bg-white rounded-lg shadow-2xl flex flex-col z-50">
-          {/* Header */}
           <div className="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-blue-600 font-bold">
@@ -206,7 +204,6 @@ export default function HomePage() {
               ×
             </button>
           </div>
-          {/* Messages */}
           <div className="flex-1 overflow-y-auto p-4 space-y-3">
             {messages.map((msg, index) => (
               <div
@@ -225,7 +222,6 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          {/* Input */}
           <div className="p-4 border-t border-gray-200">
             <div className="flex gap-2">
               <input
@@ -247,8 +243,15 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* ⭐ Animations */}
+      {/* ⭐ Animations + Font Face */}
       <style jsx>{`
+        @font-face {
+          font-family: 'Nasalization';
+          src: url('/src/assets/fonts/NASALIZA.TTF') format('truetype');
+          font-weight: normal;
+          font-style: normal;
+        }
+
         .stars .star {
           position: absolute;
           background: white;
