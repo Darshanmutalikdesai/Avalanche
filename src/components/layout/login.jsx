@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
 import BackgroundVideo from "../../assets/backround1.mp4"; // 🎥 your video file
-import api from "../uitls/api"; // ✅ axios instance for backend
 
 const ArwesAuthPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [animateGlow, setAnimateGlow] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState(null);
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    collegeName: "",
+    clgName: "",
     usn: "",
     password: "",
     confirmPassword: "",
@@ -34,46 +30,20 @@ const ArwesAuthPage = () => {
     });
   };
 
-  const handleSubmit = async () => {
-    setMessage(null);
-    setLoading(true);
-
-    try {
-      if (isSignUp) {
-        if (formData.password !== formData.confirmPassword) {
-          setMessage({ type: "error", text: "Passwords do not match!" });
-          return;
-        }
-
-        const res = await api.post("/auth/signup", {
-          username: formData.name,
-          email: formData.email,
-          password: formData.password,
-          phone: formData.phone,
-          clgName: formData.clgName,
-          usn: formData.usn,
-          registrationType: "individual", // adjust if you have team flow
-          // captchaToken: "test", // 🔥 replace with real reCAPTCHA later
-        });
-
-        setMessage({ type: "success", text: res.data.message || "Signup successful!" });
-      } else {
-        const res = await api.post("/auth/login", {
-          email: formData.email,
-          password: formData.password,
-          captchaToken: "test",
-        });
-
-        localStorage.setItem("token", res.data.token);
-        setMessage({ type: "success", text: "Login successful!" });
+  const handleSubmit = () => {
+    if (isSignUp) {
+      if (formData.password !== formData.confirmPassword) {
+        alert("Passwords do not match!");
+        return;
       }
-    } catch (err) {
-      setMessage({
-        type: "error",
-        text: err.response?.data?.message || "Something went wrong!",
+      console.log("Sign Up Data:", formData);
+      alert("Sign Up Successful!");
+    } else {
+      console.log("Sign In Data:", {
+        email: formData.email,
+        password: formData.password,
       });
-    } finally {
-      setLoading(false);
+      alert("Sign In Successful!");
     }
   };
 
@@ -88,7 +58,6 @@ const ArwesAuthPage = () => {
       password: "",
       confirmPassword: "",
     });
-    setMessage(null);
   };
 
   return (
@@ -217,31 +186,15 @@ const ArwesAuthPage = () => {
                 </div>
               )}
 
-              {/* Feedback Message */}
-              {message && (
-                <p
-                  className={`text-xs text-center ${
-                    message.type === "error" ? "text-red-400" : "text-green-400"
-                  }`}
-                >
-                  {message.text}
-                </p>
-              )}
-
               {/* Submit */}
               <div className="group/manual relative text-center bg-[rgba(255,204,0,0.1)] border border-[#ffcc00] rounded-lg shadow-[0_0_10px_rgba(255,204,0,0.3)] transition-all duration-300 ease-in-out hover:shadow-[0_0_15px_rgba(255,204,0,0.5)] overflow-hidden mt-4">
                 <button
                   onClick={handleSubmit}
-                  disabled={loading}
                   className="w-full p-3 text-sm text-[#ffcc00] font-semibold transition-all duration-300 hover:bg-[rgba(255,204,0,0.1)] transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2"
                 >
                   <span className="text-lg">{isSignUp ? "🔐" : "⚡"}</span>
                   <span className="tracking-wide">
-                    {loading
-                      ? "Processing..."
-                      : isSignUp
-                      ? "INITIALIZE ACCOUNT"
-                      : "ACCESS SYSTEM"}
+                    {isSignUp ? "INITIALIZE ACCOUNT" : "ACCESS SYSTEM"}
                   </span>
                 </button>
               </div>

@@ -164,7 +164,7 @@ export default function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
         >
-          <b>Discover the infinite</b>
+          <b>DISCOVER THE INFINITE</b>
         </motion.p>
 
         {/* ✨ StarButton */}

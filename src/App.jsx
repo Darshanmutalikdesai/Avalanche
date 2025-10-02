@@ -8,15 +8,14 @@ import QueryProvider from "./components/layout/Common/QueryProvider";
 
 import NotFound from "./components/pages/Pagenotfound";
 import RocketCursor from "./components/layout/Common/RocketCursor"; // 🚀 Cursor import
-
-// 🔊 Import the click sound provider
-import ClickSoundProvider from "./components/layout/Common/ClickSoundProvider";
+import ClickSoundProvider from "./components/layout/Common/ClickSoundProvider"; // 🔊 Click sound
 
 // Lazy load pages
 const LandingPage = lazy(() => import("./components/pages/landing"));
 const Home = lazy(() => import("./components/pages/home"));
 const Auth = lazy(() => import("./components/pages/auth"));
 const Events = lazy(() => import("./components/pages/Events"));
+const Developer = lazy(() => import("./components/pages/Developer"));
 
 
 function AppRoutes() {
@@ -27,6 +26,11 @@ function AppRoutes() {
         <Route path="/home" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/events/*" element={<Events />} />
+        <Route path="/developer" element={<Developer />} />
+
+      
+
+        {/* 404 Page */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

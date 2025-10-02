@@ -19,8 +19,8 @@ const NavigationBar = () => {
   const navItems = [
     { name: "Home", href: "/home", icon: Zap },
     { name: "Event Registration", href: "/events", icon: UserPlus },
-    { name: "Developer", href: "/developer", icon: Code2 },
     { name: "Schedules", href: "/schedules", icon: CalendarDays },
+    { name: "Developer", href: "/developer", icon: Code2 },
     { name: "Login", href: "/auth", icon: LogIn },
   ];
 
