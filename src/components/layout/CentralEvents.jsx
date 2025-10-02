@@ -61,45 +61,46 @@ const CentralEvents = () => {
       <div className="fixed top-0 left-0 w-full h-full bg-black/40 z-[1]"></div>
 
       {/* Content wrapper */}
-      <div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8 pt-28 sm:pt-32">
-        {/* Header */}
-        <div className="text-center mb-16 sm:mb-20 lg:mb-24">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
-            Central Events
-          </h1>
-          <p className="text-base sm:text-lg lg:text-xl text-[#b0f7ff] opacity-80">
-            Discover the main highlights of AVALANCHE
-          </p>
-        </div>
+<div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8 pt-36 sm:pt-32 lg:pt-28">
+  {/* Header */}
+  <div className="text-center mb-20 sm:mb-20 lg:mb-24">
+    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
+      Central Events
+    </h1>
+    <p className="text-base sm:text-lg lg:text-xl text-[#b0f7ff] opacity-80">
+      Discover the main highlights of AVALANCHE
+    </p>
+  </div>
 
-        {/* Grid */}
-        <div
-          className="
-          grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
-          gap-x-8 gap-y-16 sm:gap-x-10 sm:gap-y-20
-          max-w-7xl
-          mx-auto
-          px-4
-          pb-16
-        "
-        >
-          {centralEventsData.map((event) => (
-            <div
-              key={event.id}
-              onClick={() => setSelectedEvent(event)}
-              className="cursor-pointer flex"
-            >
-              <EventCard
-                title={event.title}
-                description={event.description}
-                image={event.image}
-                path="#"
-                className="flex flex-col h-[380px] w-full" // ✅ same height for all cards
-              />
-            </div>
-          ))}
-        </div>
+  {/* Grid */}
+  <div
+    className="
+      grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4
+      justify-items-center
+      gap-x-8 gap-y-16 sm:gap-x-10 sm:gap-y-20
+      max-w-8xl
+      mx-auto
+      px-4
+      pb-16
+    "
+  >
+    {centralEventsData.map((event) => (
+      <div
+        key={event.id}
+        onClick={() => setSelectedEvent(event)}
+        className="cursor-pointer flex"
+      >
+        <EventCard
+          title={event.title}
+          description={event.description}
+          image={event.image}
+          path="#"
+          className="flex flex-col h-[380px] w-full"
+        />
       </div>
+    ))}
+  </div>
+</div>
 
       {/* Popup Modal */}
       {selectedEvent && (
