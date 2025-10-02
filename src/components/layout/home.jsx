@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Star } from "lucide-react"; // ✅ Import Star icon
+import { Star } from "lucide-react"; 
 import NavigationBar from "../layout/Common/Navbar";
 import Logo from "../../assets/weblogo.svg";
+import R2D2Image from "../../assets/R2D2.png"; // ✅ Make sure this image exists
 
 // ⭐ Star Button Component
 const StarButton = ({ onClick }) => {
@@ -33,7 +34,6 @@ const StarButton = ({ onClick }) => {
           transition: "transform 0.7s, opacity 0.7s",
         }}
       />
-
       <div className="flex items-center gap-2 relative z-10">
         <Star
           className={`transition-all duration-500 ${
@@ -52,15 +52,36 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [launch, setLaunch] = useState(false);
 
+  // ✅ Chatbot state
+  const [chatOpen, setChatOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState("");
+
+  // Send message
+  const handleSendMessage = () => {
+    if (!inputMessage.trim()) return;
+    setMessages([...messages, { sender: "user", text: inputMessage }]);
+    setInputMessage("");
+
+    // Example bot reply
+    setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        { sender: "bot", text: "Beep boop! R2-D2 at your service 🤖" },
+      ]);
+    }, 600);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") handleSendMessage();
+  };
+
   // ⭐ Generate stars dynamically
   useEffect(() => {
-    const numStars = 120; // Adjust density
+    const numStars = 120;
     const container = document.getElementById("star-container");
     if (!container) return;
-
-    // clear old stars if any
     container.innerHTML = "";
-
     for (let i = 0; i < numStars; i++) {
       const star = document.createElement("div");
       star.className = "star";
@@ -74,7 +95,7 @@ export default function HomePage() {
     }
   }, []);
 
-  // Animate overlay brightness
+  // Animate overlay
   useEffect(() => {
     if (overlayRef.current) {
       overlayRef.current.style.backgroundColor = "rgba(0, 0, 0, 0.4)";
@@ -85,12 +106,12 @@ export default function HomePage() {
     }
   }, []);
 
-  // Handle rocket launch and redirect
+  // Handle launch
   const handleLaunch = () => {
     setLaunch(true);
     setTimeout(() => {
       navigate("/auth");
-    }, 1500); // redirect after animation
+    }, 1500);
   };
 
   return (
@@ -100,14 +121,11 @@ export default function HomePage() {
         background: "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
       }}
     >
-      {/* 🌌 Starfield Background */}
+      {/* 🌌 Starfield */}
       <div id="star-container" className="stars absolute w-full h-full"></div>
 
       {/* Dark Overlay */}
-      <div
-        ref={overlayRef}
-        className="absolute top-0 left-0 w-full h-full z-[5]"
-      ></div>
+      <div ref={overlayRef} className="absolute top-0 left-0 w-full h-full z-[5]" />
 
       {/* Navbar */}
       <div className="relative z-[60]">
@@ -128,10 +146,7 @@ export default function HomePage() {
         <motion.img
           src={Logo}
           alt="Avalanche Logo"
-          className="
-            w-40 xs:w-44 sm:w-40 md:w-56 lg:w-72 xl:w-80 
-            mb-2
-          "
+          className="w-40 xs:w-44 sm:w-40 md:w-56 lg:w-72 xl:w-80 mb-2"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
@@ -139,11 +154,7 @@ export default function HomePage() {
 
         {/* Title */}
         <motion.h1
-          className="
-            text-4xl xs:text-5xl sm:text-3xl md:text-5xl lg:text-9xl 
-            text-white drop-shadow-lg font-bold 
-            mt-2 sm:-mt-6
-          "
+          className="text-4xl xs:text-5xl sm:text-3xl md:text-5xl lg:text-9xl text-white drop-shadow-lg font-bold mt-2 sm:-mt-6"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
@@ -153,13 +164,7 @@ export default function HomePage() {
 
         {/* Subtitle */}
         <motion.p
-          className="
-            text-lg xs:text-xl sm:text-base md:text-lg lg:text-2xl 
-            text-white drop-shadow-md 
-            mb-6 sm:mb-8 
-            max-w-xs sm:max-w-md md:max-w-2xl 
-            font-normal
-          "
+          className="text-lg xs:text-xl sm:text-base md:text-lg lg:text-2xl text-white drop-shadow-md mb-6 sm:mb-8 max-w-xs sm:max-w-md md:max-w-2xl font-normal"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
@@ -177,7 +182,82 @@ export default function HomePage() {
         </motion.div>
       </div>
 
-      {/* ⭐ Star CSS (scoped) */}
+      {/* 🚀 R2-D2 Robot */}
+      <div className="absolute bottom-8 left-0 w-full h-48 z-20">
+        <div className="animate-slide flex justify-start">
+          <img
+            src={R2D2Image}
+            alt="R2-D2"
+            className="h-40 w-auto drop-shadow-lg cursor-pointer 
+                       hover:scale-110 transition-transform 
+                       animate-float animate-wiggle animate-glow"
+            onClick={() => setChatOpen(true)}
+          />
+        </div>
+      </div>
+
+      {/* ✅ Chatbot */}
+      {chatOpen && (
+        <div className="fixed bottom-4 right-4 w-80 h-96 bg-white rounded-lg shadow-2xl flex flex-col z-50">
+          {/* Chat Header */}
+          <div className="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-blue-600 font-bold">
+                R2
+              </div>
+              <span className="font-semibold">R2-D2 Assistant</span>
+            </div>
+            <button
+              onClick={() => setChatOpen(false)}
+              className="text-white hover:text-gray-200 text-xl font-bold"
+            >
+              ×
+            </button>
+          </div>
+
+          {/* Chat Messages */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            {messages.map((msg, index) => (
+              <div
+                key={index}
+                className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+              >
+                <div
+                  className={`max-w-xs px-4 py-2 rounded-lg ${
+                    msg.sender === "user"
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 text-gray-800"
+                  }`}
+                >
+                  {msg.text}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Chat Input */}
+          <div className="p-4 border-t border-gray-200">
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Type a message..."
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              />
+              <button
+                onClick={handleSendMessage}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ⭐ Animations */}
       <style jsx>{`
         .stars .star {
           position: absolute;
@@ -203,6 +283,40 @@ export default function HomePage() {
           to {
             transform: translate(20px, 20px);
           }
+        }
+
+        /* R2-D2 Animations */
+        @keyframes slide {
+          0% { transform: translateX(-150px); }
+          100% { transform: translateX(100vw); }
+        }
+        .animate-slide {
+          animation: slide 30s linear infinite;
+        }
+
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-12px); }
+        }
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes wiggle {
+          0%, 100% { transform: rotate(0deg); }
+          25% { transform: rotate(2deg); }
+          75% { transform: rotate(-2deg); }
+        }
+        .animate-wiggle {
+          animation: wiggle 4s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+          0%, 100% { filter: drop-shadow(0 0 6px #3b82f6); }
+          50% { filter: drop-shadow(0 0 16px #2563eb); }
+        }
+        .animate-glow {
+          animation: glow 2.5s ease-in-out infinite;
         }
       `}</style>
     </div>
