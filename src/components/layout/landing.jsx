@@ -4,6 +4,7 @@ import Background from "../../assets/background.mp4";
 import Logo from "../../assets/weblogo.svg";
 import HomePage from "../layout/home";
 import RocketButton from "../layout/Common/RocketButton"; // ✅ Rocket button
+import back from "../../assets/Rocket_V3.0 (online-video-cutter.com).mp4"
 
 export default function LoadingVideoPage() {
   const [loadingPercent, setLoadingPercent] = useState(0);
@@ -143,7 +144,7 @@ export default function LoadingVideoPage() {
           exit={{ opacity: 0, transition: { duration: 0.8 } }}
         >
           <source
-            src="https://d2j4u5h82d96vr.cloudfront.net/Rocket_V3.0"
+            src={back}
             type="video/mp4"
           />
         </motion.video>
