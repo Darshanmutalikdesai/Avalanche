@@ -89,7 +89,7 @@ const DevelopersPage = () => {
     {
       id: 1,
       name: "Koushal",
-      designation: "Lead Developer",
+      designation: "Technical Secretary",
       developerType: "Full Stack Developer",
       linkedin: "https://linkedin.com/in/johndoe",
       phone: "+1234567890",
@@ -97,16 +97,16 @@ const DevelopersPage = () => {
     },
     {
       id: 2,
-      name: "Jane Smith",
-      designation: "Frontend Lead",
-      developerType: "Frontend Developer",
+      name: "Darshan Mutalikdesai",
+      designation: "Student Council",
+      developerType: "Full Stack Developer",
       linkedin: "https://linkedin.com/in/janesmith",
       phone: "+1234567891",
       image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop"
     },
     {
       id: 3,
-      name: "Mike Johnson",
+      name: "Pratik ",
       designation: "Backend Lead",
       developerType: "Backend Developer",
       linkedin: "https://linkedin.com/in/mikejohnson",
