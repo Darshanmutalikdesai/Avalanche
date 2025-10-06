@@ -26,7 +26,7 @@ export default function Events() {
       <Routes>
         <Route path="/" element={<EventsPage  />} />
         <Route path="/central-events" element={<CentralEvents />} />
-        <Route path="/department-events" element={<DepartmentEvents  />} />
+        <Route path="/department-events" element={<DepartmentEvents/>} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </EventsLayout>

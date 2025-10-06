@@ -17,7 +17,7 @@ const EventsPage = () => {
 {
   id: 2,
   title: "Andromeda Galaxy",
-  description: "Department",
+  description: "Departmental Events",
   image: image2,
   path: "/events/department-events",
 },

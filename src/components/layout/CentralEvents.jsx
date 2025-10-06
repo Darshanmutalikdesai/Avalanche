@@ -12,11 +12,11 @@ const CentralEvents = () => {
   const centralEventsData = [
     {
       id: 1,
-      title: "Treasure Hunt",
-      description: "A thrilling hunt across campus!",
+      title: "Paper Presentation",
+      description: "Present your research ideas and findings.",
       image: image1,
       instructions:
-        "1. Register online.\n2. Teams of 4.\n3. Bring college ID.\n4. Follow the clues to win.",
+        "To be added...",
     },
     {
       id: 2,
@@ -24,23 +24,15 @@ const CentralEvents = () => {
       description: "Show your coding skills in 24 hours.",
       image: image2,
       instructions:
-        "1. Teams of max 3.\n2. Bring laptops.\n3. Internet will be provided.\n4. Judges' decision is final.",
+        "To be added...",
     },
     {
       id: 3,
-      title: "Quiz Mania",
+      title: "Technical Quiz",
       description: "Test your knowledge and win exciting prizes.",
       image: image3,
       instructions:
-        "1. Individual participation.\n2. 3 rounds.\n3. No mobiles allowed.\n4. Top 3 win certificates.",
-    },
-    {
-      id: 4,
-      title: "Battle of Bands",
-      description: "Feel the rhythm, rock the stage!",
-      image: image4,
-      instructions:
-        "1. Teams of 5-8 members.\n2. 15 minutes stage time.\n3. Original or cover songs allowed.\n4. Bring your instruments.",
+        "To be added...",
     },
   ];
 
@@ -64,10 +56,10 @@ const CentralEvents = () => {
 <div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8 pt-36 sm:pt-32 lg:pt-28">
   {/* Header */}
   <div className="text-center mb-20 sm:mb-20 lg:mb-24">
-    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
+    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-nasal text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
       Central Events
     </h1>
-    <p className="text-base sm:text-lg lg:text-xl text-[#b0f7ff] opacity-80">
+    <p className="text-base sm:text-lg font-orbitron lg:text-xl text-[#b0f7ff] opacity-80">
       Discover the main highlights of AVALANCHE
     </p>
   </div>
@@ -75,7 +67,7 @@ const CentralEvents = () => {
   {/* Grid */}
   <div
     className="
-      grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4
+      grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3
       justify-items-center
       gap-x-8 gap-y-16 sm:gap-x-10 sm:gap-y-20
       max-w-8xl
