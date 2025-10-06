@@ -29,14 +29,14 @@ export default function Events() {
         <Route path="/" element={<EventsPage />} />
 
         {/* Central & Department Events */}
-        <Route path="/central-events" element={<CentralEvents />} />
-        <Route path="/department-events" element={<DepartmentEvents />} />
+        <Route path="central-events" element={<CentralEvents />} />
+        <Route path="department-events" element={<DepartmentEvents />} />
 
         {/* Register Event (receives state from CentralEvents/DepartmentEvents) */}
-        <Route path="/register-events" element={<RegisterEvents />} />
+        <Route path="register-events" element={<RegisterEvents />} />
 
         {/* Catch all → redirect back */}
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="*" element={<Navigate to="/events" />} />
       </Routes>
     </EventsLayout>
   );
