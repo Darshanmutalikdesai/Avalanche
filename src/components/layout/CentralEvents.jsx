@@ -37,8 +37,8 @@ const CentralEvents = () => {
     },
     {
       id: 4,
-      title: "Battle of Bands",
-      description: "Feel the rhythm, rock the stage!",
+      title: "Technical Debate",
+      description: "Battle of Code Words!",
       image: image4,
       instructions:
         "1. Teams of 5-8 members.\n2. 15 minutes stage time.\n3. Original or cover songs allowed.\n4. Bring your instruments.",
