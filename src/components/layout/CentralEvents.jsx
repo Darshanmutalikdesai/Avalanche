@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom"; // ✅ Import Link
 import EventCard from "../layout/Events/EventCard";
 import BackgroundVideo from "../../assets/backround1.mp4";
 import image1 from "../../assets/treasure_image.jpg";
 import image2 from "../../assets/hackathon_image.jpg";
 import image3 from "../../assets/debate_image.jpg";
-import image4 from "../../assets/logo5.jpeg"; // 🎵 Example new image
+import image4 from "../../assets/logo5.jpeg";
 
 const CentralEvents = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -61,52 +62,53 @@ const CentralEvents = () => {
       <div className="fixed top-0 left-0 w-full h-full bg-black/40 z-[1]"></div>
 
       {/* Content wrapper */}
-<div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8 pt-36 sm:pt-32 lg:pt-28">
-  {/* Header */}
-  <div className="text-center mb-20 sm:mb-20 lg:mb-24">
-    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
-      Central Events
-    </h1>
-    <p className="text-base sm:text-lg lg:text-xl text-[#b0f7ff] opacity-80">
-      Discover the main highlights of AVALANCHE
-    </p>
-  </div>
+      <div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8 pt-36 sm:pt-32 lg:pt-28">
+        {/* Header */}
+        <div className="text-center mb-20 sm:mb-20 lg:mb-24">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
+            Central Events
+          </h1>
+          <p className="text-base sm:text-lg lg:text-xl text-[#b0f7ff] opacity-80">
+            Discover the main highlights of AVALANCHE
+          </p>
+        </div>
 
-  {/* Grid */}
-  <div
-    className="
-      grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4
-      justify-items-center
-      gap-x-8 gap-y-16 sm:gap-x-10 sm:gap-y-20
-      max-w-8xl
-      mx-auto
-      px-4
-      pb-16
-    "
-  >
-    {centralEventsData.map((event) => (
-      <div
-        key={event.id}
-        onClick={() => setSelectedEvent(event)}
-        className="cursor-pointer flex"
-      >
-        <EventCard
-          title={event.title}
-          description={event.description}
-          image={event.image}
-          path="#"
-          className="flex flex-col h-[380px] w-full"
-        />
+        {/* Events Grid */}
+        <div
+          className="
+            grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4
+            justify-items-center
+            gap-x-8 gap-y-16 sm:gap-x-10 sm:gap-y-20
+            max-w-8xl
+            mx-auto
+            px-4
+            pb-16
+          "
+        >
+          {centralEventsData.map((event) => (
+            <div
+              key={event.id}
+              onClick={() => setSelectedEvent(event)}
+              className="cursor-pointer flex"
+            >
+              <EventCard
+                title={event.title}
+                description={event.description}
+                image={event.image}
+                className="flex flex-col h-[380px] w-full"
+              />
+            </div>
+          ))}
+        </div>
       </div>
-    ))}
-  </div>
-</div>
 
       {/* Popup Modal */}
       {selectedEvent && (
         <div
           className="fixed inset-0 bg-black/70 z-[100] flex items-center justify-center p-4"
           onClick={() => setSelectedEvent(null)}
+          role="dialog"
+          aria-modal="true"
         >
           <div
             className="
@@ -127,21 +129,44 @@ const CentralEvents = () => {
             <p className="text-base sm:text-lg text-gray-300 whitespace-pre-line leading-relaxed mb-6">
               {selectedEvent.instructions}
             </p>
-            <button
-              className="
-                px-6 py-3
-                bg-transparent
-                border-2 border-[#00f7ff]
-                rounded-lg
-                text-[#00f7ff] font-bold
-                transition-all duration-300 ease-in-out
-                hover:bg-[#00f7ff] hover:text-black
-                hover:shadow-[0_0_15px_#00f7ff]
-              "
-              onClick={() => setSelectedEvent(null)}
-            >
-              Close
-            </button>
+
+            {/* Buttons Row */}
+            <div className="flex gap-4 justify-end">
+              {/* Close Button */}
+              <button
+                className="
+                  px-6 py-3
+                  bg-transparent
+                  border-2 border-[#00f7ff]
+                  rounded-lg
+                  text-[#00f7ff] font-bold
+                  transition-all duration-300 ease-in-out
+                  hover:bg-[#00f7ff] hover:text-black
+                  hover:shadow-[0_0_15px_#00f7ff]
+                "
+                onClick={() => setSelectedEvent(null)}
+              >
+                Close
+              </button>
+
+              {/* Register Button with event data */}
+              <Link
+                to="/events/register-events"
+                state={{ event: selectedEvent }} // ✅ Pass event data
+                className="
+                  px-6 py-3
+                  bg-[#00f7ff]
+                  border-2 border-[#00f7ff]
+                  rounded-lg
+                  text-black font-bold
+                  transition-all duration-300 ease-in-out
+                  hover:bg-transparent hover:text-[#00f7ff]
+                  hover:shadow-[0_0_15px_#00f7ff]
+                "
+              >
+                Register
+              </Link>
+            </div>
           </div>
         </div>
       )}

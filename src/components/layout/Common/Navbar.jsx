@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Menu,
   X,
@@ -14,7 +14,20 @@ import logo from "../../../assets/weblogo.svg";
 
 const NavigationBar = () => {
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems = [
     { name: "Home", href: "/home", icon: Zap },
@@ -24,7 +37,6 @@ const NavigationBar = () => {
     { name: "Login", href: "/auth", icon: LogIn },
   ];
 
-  // Mobile Slide-in Navigation
   const NavigationModal = () => (
     <AnimatePresence>
       <motion.div
@@ -43,7 +55,6 @@ const NavigationBar = () => {
           className="w-full max-w-md px-8"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Close Button */}
           <motion.button
             initial={{ rotate: -90, opacity: 0 }}
             animate={{ rotate: 0, opacity: 1 }}
@@ -56,7 +67,6 @@ const NavigationBar = () => {
             <X size={36} />
           </motion.button>
 
-          {/* Nav Items */}
           <nav className="flex flex-col space-y-8 mt-24">
             {navItems.map((item, index) => (
               <motion.div
@@ -94,26 +104,31 @@ const NavigationBar = () => {
   );
 
   return (
-    <header className="relative z-10 w-full font-nasal">
-      {/* Top Nav Bar */}
+    <header
+      className={`fixed top-0 left-0 w-full z-50 font-nasal transition-all duration-500 ${
+        isScrolled
+          ? "backdrop-blur-lg bg-black/40 border-b border-white/10 shadow-md py-2"
+          : "bg-transparent py-5"
+      }`}
+    >
       <motion.div
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="flex items-center justify-between px-4 py-3 sm:px-10 sm:py-1"
+        className="flex items-center justify-between px-4 sm:px-10"
       >
-        {/* Logo */}
         <Link to="/home" className="flex items-center space-x-3">
           <motion.img
             whileHover={{ scale: 1.1, rotate: 5 }}
             transition={{ type: "spring", stiffness: 300 }}
             src={logo}
             alt="Avalanche Logo"
-            className="h-20 w-auto sm:h-24"
+            className={`transition-all duration-300 ${
+              isScrolled ? "h-14" : "h-20 sm:h-24"
+            }`}
           />
         </Link>
 
-        {/* Desktop Nav */}
         <nav className="hidden md:flex items-center space-x-10">
           {navItems.map((item, index) => (
             <motion.div
@@ -139,8 +154,6 @@ const NavigationBar = () => {
                   <item.icon size={22} />
                 </motion.div>
                 <span>{item.name}</span>
-
-                {/* 🔥 Underline animation */}
                 <span
                   className={`absolute bottom-0 h-[2px] bg-cyan-300 transition-all duration-300 ease-out ${
                     location.pathname === item.href
@@ -153,7 +166,6 @@ const NavigationBar = () => {
           ))}
         </nav>
 
-        {/* Mobile Menu Button */}
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
@@ -170,7 +182,6 @@ const NavigationBar = () => {
         </motion.button>
       </motion.div>
 
-      {/* Mobile Modal */}
       {isNavigationOpen && <NavigationModal />}
     </header>
   );
