@@ -4,84 +4,99 @@ import { Link } from "react-router-dom";
 const EventCard = ({ title, description, image, path }) => {
   return (
     <div
+  className="
+    group relative text-center
+    bg-gradient-to-b from-[#000a1f] via-[#001933] to-[#000a1f]
+    border border-cyan-400/40
+    rounded-2xl
+    shadow-[0_0_20px_rgba(0,255,255,0.15),inset_0_0_20px_rgba(0,0,80,0.4)]
+    transition-all duration-500 ease-out
+    hover:-translate-y-2 hover:scale-[1.03]
+    hover:shadow-[0_0_25px_#00f7ff,0_0_40px_#0077ff,inset_0_0_25px_#001a3f]
+    px-4 pt-16 pb-6
+    overflow-visible
+    w-full max-w-[260px]
+    sm:max-w-[280px]
+    md:max-w-[300px]
+    font-nasal
+  "
+>
+  <div
+    className="
+      absolute -top-16 left-1/2 -translate-x-1/2
+      w-32 h-32 rounded-full
+      bg-cyan-400/20 blur-2xl
+      animate-pulse
+      group-hover:scale-110 group-hover:opacity-90
+      transition-all duration-700
+    "
+  ></div>
+
+  <div
+    className="
+      absolute -top-14 left-1/2 -translate-x-1/2
+      transition-all duration-700 ease-in-out
+      group-hover:left-auto group-hover:right-3 group-hover:translate-x-0
+    "
+  >
+    <img
+      src={image}
+      alt={title}
       className="
-        group relative text-center
-        bg-[rgba(0,15,30,0.85)]
-        border border-[#00f7ffb7]
-        rounded-lg
-        shadow-[0_0_15px_rgba(0,247,255,0.25)]
-        transition-all duration-300 ease-in-out
-        hover:-translate-y-1.5 hover:scale-[1.01]
-        hover:shadow-[0_0_20px_#00f7ffb7,0_0_30px_#00f7ffb7]
-        px-3 pt-16 pb-6
-        overflow-visible
-        w-full max-w-[220px]
-        sm:max-w-[240px]
-        md:max-w-[260px]
-        lg:max-w-[280px]
-        font-['Titillium_Web']
+        w-28 h-28
+        rounded-full object-cover
+        border border-cyan-300/40
+        shadow-[0_0_25px_rgba(0,247,255,0.6)]
+        transition-transform duration-700 ease-in-out
+        group-hover:rotate-[10deg]
+      "
+    />
+  </div>
+
+  <div className="absolute inset-0 pointer-events-none overflow-hidden">
+    <div className="absolute top-6 left-6 w-1 h-1 bg-cyan-200 rounded-full animate-ping delay-100"></div>
+    <div className="absolute bottom-8 right-10 w-1.5 h-1.5 bg-yellow-300 rounded-full animate-ping delay-500"></div>
+    <div className="absolute top-10 right-4 w-1 h-1 bg-blue-300 rounded-full animate-ping delay-700"></div>
+  </div>
+
+  <div className="mt-14 px-2">
+    <h2
+      className="
+        text-xl sm:text-2xl
+        font-semibold text-[#ffe680]
+        mb-2 tracking-wide
+        drop-shadow-[0_0_12px_#ffe680]
       "
     >
-      {/* Planet Image */}
-      <div
-        className="
-          absolute -top-14 left-1/2 -translate-x-1/2
-          transition-all duration-700 ease-in-out
-          group-hover:left-auto group-hover:right-3 group-hover:translate-x-0
-        "
-      >
-        <img
-          src={image}
-          alt={title}
-          className="
-            w-28 h-26
-            rounded-full object-cover
-            shadow-[0_0_18px_rgba(0,247,255,0.5)]
-            border border-[#00f7ff40]
-            transition-transform duration-600 ease-in-out
-          "
-        />
-      </div>
-
-      {/* Card Content */}
-      <div className="mt-14 px-2">
-        <h2
-          className="
-            text-lg sm:text-xl
-            font-semibold text-[#ffcc00] mb-2
-            drop-shadow-[0_0_8px_#ffcc00]
-          "
-        >
-          {title}
-        </h2>
-        <p
-          className="
-            text-xs sm:text-sm
-            text-[#cfcfcf] mb-3
-            min-h-[50px]
-          "
-        >
-          {description}
-        </p>
-        <Link
-          to={path}
-          className="
-            inline-block
-            px-3 py-1.5
-            sm:px-4 sm:py-2
-            border border-[#00f7ff]
-            rounded-md
-            text-xs sm:text-sm
-            text-[#00f7ff] font-bold
-            transition-all duration-300 ease-in-out
-            hover:bg-[#00f7ff] hover:text-black
-            hover:shadow-[0_0_12px_#00f7ff]
-          "
-        >
-          Explore
-        </Link>
-      </div>
-    </div>
+      {title}
+    </h2>
+    <p
+      className="
+        text-sm sm:text-base
+        text-[#cdd9e5] mb-4 leading-snug
+        min-h-[60px] font-Orbitron
+      "
+    >
+      {description}
+    </p>
+    <Link
+      to={path}
+      className="
+        inline-block
+        px-4 py-2
+        border border-cyan-400/80
+        rounded-md
+        text-sm sm:text-base
+        text-cyan-300 font-semibold tracking-wider
+        transition-all duration-300 ease-in-out
+        hover:bg-cyan-400 hover:text-black
+        hover:shadow-[0_0_18px_#00f7ff,0_0_25px_#0077ff]
+      "
+    >
+      Explore
+    </Link>
+  </div>
+</div>
   );
 };
 
