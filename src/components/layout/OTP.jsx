@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useLocation } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom"; // ✅ Added
 
 const OTPVerification = () => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -8,29 +7,22 @@ const OTPVerification = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const inputRefs = useRef([]);
+  const navigate = useNavigate(); // ✅ Added
 
   useEffect(() => {
-    // Focus first input on mount
     inputRefs.current[0]?.focus();
   }, []);
 
   const handleChange = (index, value) => {
-    // Only allow numbers
     if (value && !/^\d$/.test(value)) return;
-
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
     setError('');
-
-    // Move to next input
-    if (value && index < 5) {
-      inputRefs.current[index + 1]?.focus();
-    }
+    if (value && index < 5) inputRefs.current[index + 1]?.focus();
   };
 
   const handleKeyDown = (index, e) => {
-    // Move to previous input on backspace
     if (e.key === 'Backspace' && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
@@ -39,28 +31,24 @@ const OTPVerification = () => {
   const handlePaste = (e) => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData('text').slice(0, 6);
-    
     if (!/^\d+$/.test(pastedData)) return;
-
     const newOtp = pastedData.split('');
     setOtp([...newOtp, ...Array(6 - newOtp.length).fill('')]);
-    
-    // Focus last filled input
     inputRefs.current[Math.min(pastedData.length, 5)]?.focus();
   };
 
   const handleVerify = () => {
     const otpValue = otp.join('');
-    
     if (otpValue.length !== 6) {
       setError('Please enter all 6 digits');
       return;
     }
 
-    // Simulate verification
     setSuccess(true);
+
     setTimeout(() => {
       alert(`OTP Verified: ${otpValue}`);
+      navigate("/auth"); // ✅ Navigate to login page after success
     }, 500);
   };
 
@@ -69,12 +57,11 @@ const OTPVerification = () => {
     setError('');
     setSuccess(false);
     inputRefs.current[0]?.focus();
-    // Simulate resend
     alert('OTP has been resent!');
   };
 
   return (
-    <div 
+   <div 
       className="min-h-screen bg-gradient-to-br from-[#051320] via-[#0a1929] to-[#051320] flex items-center justify-center p-4"
       style={{ fontFamily: 'Nasalization, sans-serif' }}
     >

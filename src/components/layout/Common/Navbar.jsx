@@ -7,6 +7,7 @@ import {
   Code2,
   CalendarDays,
   LogIn,
+  User,
 } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,6 +16,7 @@ import logo from "../../../assets/weblogo.svg";
 const NavigationBar = () => {
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -29,13 +31,25 @@ const NavigationBar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    // Check if user is logged in
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, [location]);
+
   const navItems = [
     { name: "Home", href: "/home", icon: Zap },
     { name: "Event Registration", href: "/events", icon: UserPlus },
     { name: "Schedules", href: "/schedules", icon: CalendarDays },
     { name: "Developer", href: "/developer", icon: Code2 },
-    { name: "Login", href: "/auth", icon: LogIn },
   ];
+
+  // Add login or user portal dynamically
+  if (isLoggedIn) {
+    navItems.push({ name: "User Portal", href: "/user-portal", icon: User });
+  } else {
+    navItems.push({ name: "Login", href: "/auth", icon: LogIn });
+  }
 
   const NavigationModal = () => (
     <AnimatePresence>
