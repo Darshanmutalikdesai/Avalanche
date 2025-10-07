@@ -79,11 +79,19 @@ const DeveloperCard = ({ name, designation, developerType, linkedin, phone, imag
           </div>
         </div>
 
-        {/* Corners */}
-        <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-[#00f7ff]"></div>
-        <div className="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-[#00f7ff]"></div>
-        <div className="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-[#00f7ff]"></div>
-        <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-[#00f7ff]"></div>
+        {/* Diamond Cut Corners */}
+        <div className="absolute top-0 left-0 w-8 h-8 overflow-hidden">
+          <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-[#ffcc00] rotate-[-45deg] origin-top-left"></div>
+        </div>
+        <div className="absolute top-0 right-0 w-8 h-8 overflow-hidden">
+          <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-[#ffcc00] rotate-[45deg] origin-top-right"></div>
+        </div>
+        <div className="absolute bottom-0 left-0 w-8 h-8 overflow-hidden">
+          <div className="absolute bottom-0 left-0 w-12 h-12 border-b-2 border-l-2 border-[#ffcc00] rotate-[45deg] origin-bottom-left"></div>
+        </div>
+        <div className="absolute bottom-0 right-0 w-8 h-8 overflow-hidden">
+          <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-[#ffcc00] rotate-[-45deg] origin-bottom-right"></div>
+        </div>
       </div>
     </div>
   );
@@ -148,7 +156,7 @@ const DevelopersPage = () => {
   ];
 
   return (
-    <div className="min-h-screen w-full overflow-y-auto font-sans bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" style={{ fontFamily: 'Nasalization, sans-serif' }}>
+    <div className="fixed inset-0 w-screen h-screen overflow-y-auto" style={{ fontFamily: 'Nasalization, sans-serif' }}>
       {/* Load Font */}
       <style jsx>{`
         @font-face {
@@ -159,11 +167,22 @@ const DevelopersPage = () => {
         }
       `}</style>
 
-      {/* Background Pattern */}
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-900/20 via-slate-900 to-slate-900 z-0"></div>
+      {/* Background Video - REPLACE WITH YOUR VIDEO PATH */}
+      <video
+        className="fixed top-0 left-0 w-full h-full object-cover z-0"
+        autoPlay
+        loop
+        muted
+        playsInline
+      >
+        <source src="/src/assets/backround1.mp4" type="video/mp4" />
+      </video>
       
+      {/* Dark Overlay */}
+      <div className="fixed top-0 left-0 w-full h-full bg-black/50 z-[1]"></div>
+
       {/* Content */}
-      <div className="relative z-10 min-h-screen p-4 sm:p-6 lg:p-8">
+      <div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8">
         <div className="text-center mb-20 sm:mb-24 lg:mb-28 pt-16">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
             MEET THE DEVELOPERS
@@ -192,3 +211,93 @@ const DevelopersPage = () => {
 };
 
 export default DevelopersPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

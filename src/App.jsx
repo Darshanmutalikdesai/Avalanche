@@ -7,30 +7,34 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import QueryProvider from "./components/layout/Common/QueryProvider";
 
 import NotFound from "./components/pages/Pagenotfound";
-import RocketCursor from "./components/layout/Common/RocketCursor"; // 🚀 Cursor import
+import RocketCursor from "./components/layout/Common/RocketCursor"; // 🚀 Cursor
 import ClickSoundProvider from "./components/layout/Common/ClickSoundProvider"; // 🔊 Click sound
 
 // Lazy load pages
 const LandingPage = lazy(() => import("./components/pages/landing"));
 const Home = lazy(() => import("./components/pages/home"));
-const Auth = lazy(() => import("./components/pages/auth"));
+const LoginPage = lazy(() => import("./components/layout/login")); // ✅ login.jsx with signup & signin
+const OTPPage = lazy(() => import("./components/layout/OTP"));     // ✅ OTP page
 const Events = lazy(() => import("./components/pages/Events"));
 const Developer = lazy(() => import("./components/pages/Developer"));
-
 
 function AppRoutes() {
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
+        {/* Landing and Home */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/auth" element={<Auth />} />
+
+        {/* Auth Pages */}
+        <Route path="/auth" element={<LoginPage />} />
+        <Route path="/otp" element={<OTPPage />} />
+
+        {/* Other Pages */}
         <Route path="/events/*" element={<Events />} />
         <Route path="/developer" element={<Developer />} />
 
-      
-
-        {/* 404 Page */}
+        {/* Fallback / 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

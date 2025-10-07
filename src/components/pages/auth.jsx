@@ -1,25 +1,31 @@
 import React from "react";
-import NavigationBar from "../layout/Common/Navbar"; // adjust path if needed
-import OAuthSignup from "../layout/login";   
-const Auth = () => {
-  return (
-    <div className="flex flex-col items-start relative bg-white min-h-screen">
-      {/* Navbar */}
-      <div className="w-full z-20">
-        <NavigationBar />
-      </div>
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
-      {/* Login Section */}
-      <div className="flex flex-1 w-full items-center justify-center px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-6 sm:p-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">
-            Sign in to Avalanche
-          </h2>
-          <OAuthSignup />
-        </div>
-      </div>
-    </div>
+import OTPPage from "../layout/OTP";   
+import Auth from "../layout/login";   
+import Navbar from "../layout/Common/Navbar"; // Capitalized
+
+// <-- Import your RegisterPage if needed
+// import RegisterPage from "../layout/RegisterPage";
+
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/navbar" element={<Navbar />} />  {/* Correct component usage */}
+        
+        {/* Auth Pages */}
+        <Route path="/login" element={<Auth />} />
+        {/* Uncomment if you have a RegisterPage */}
+        {/* <Route path="/register" element={<RegisterPage />} /> */}
+        
+        <Route path="/otp" element={<OTPPage />} />
+
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/login" replace />} /> {/* Redirect unknown paths */}
+      </Routes>
+    </Router>
   );
 };
 
-export default Auth;
+export default App;
