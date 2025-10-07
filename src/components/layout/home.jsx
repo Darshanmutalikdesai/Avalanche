@@ -93,7 +93,7 @@ export default function HomePage() {
     }
   }, []);
 
-  // Overlay
+  // Overlay fade
   useEffect(() => {
     if (overlayRef.current) {
       overlayRef.current.style.backgroundColor = "rgba(0, 0, 0, 0.4)";
@@ -104,7 +104,7 @@ export default function HomePage() {
     }
   }, []);
 
-  // Launch
+  // Launch button
   const handleLaunch = () => {
     setLaunch(true);
     setTimeout(() => {
@@ -114,9 +114,10 @@ export default function HomePage() {
 
   return (
     <div
-      className="relative min-h-screen w-full overflow-hidden font-['Nasalization']"
+      className="relative min-h-screen w-screen overflow-x-hidden overflow-y-auto font-['Nasalization'] scroll-smooth"
       style={{
-        background: "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
+        background:
+          "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
       }}
     >
       {/* Stars */}
@@ -173,6 +174,62 @@ export default function HomePage() {
         </motion.div>
       </div>
 
+      {/* About Section */}
+      <section
+        id="about"
+        className="relative z-20 py-24 px-6 sm:px-12 md:px-24 lg:px-32 text-center bg-black/60 backdrop-blur-md border-t border-white/10"
+      >
+        <h2 className="text-4xl md:text-5xl text-white font-bold mb-6">
+          About Avalanche
+        </h2>
+        <p className="text-gray-300 text-lg max-w-3xl mx-auto leading-relaxed">
+          Avalanche is a tech and cultural fest celebrating innovation,
+          creativity, and collaboration. Each year, thousands of brilliant minds
+          gather to showcase their ideas and ignite the spark of the future.
+          From robotics to art, from AI to design — Avalanche unites them all.
+        </p>
+      </section>
+
+      {/* Glances Section */}
+      <section
+        id="glances"
+        className="relative z-20 py-24 px-6 sm:px-12 md:px-24 lg:px-32 text-center bg-gradient-to-b from-gray-900 to-black border-t border-white/10"
+      >
+        <h2 className="text-4xl md:text-5xl text-white font-bold mb-10">
+          Avalanche '24 Glances
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[
+            "Hackathon Highlights",
+            "Robowars Showdown",
+            "Gaming Arena",
+            "Cultural Extravaganza",
+            "Tech Talks & Panels",
+            "Award Ceremony",
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              className="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-white shadow-lg hover:shadow-pink-500/40 transition-all"
+            >
+              <h3 className="text-xl font-semibold mb-2">{item}</h3>
+              <p className="text-gray-300 text-sm">
+                A glimpse into one of the most exciting events of Avalanche ‘24.
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-black/70 border-t border-white/10 text-center py-6 text-gray-400 text-sm">
+        <p>
+          © {new Date().getFullYear()} Avalanche. All rights reserved | Tech team of KLS GIT
+        </p>
+      </footer>
+
       {/* R2-D2 */}
       <div className="absolute inset-x-0 bottom-[20%] sm:bottom-10 md:bottom-8 flex justify-center z-20">
         <div className="animate-slide">
@@ -189,7 +246,7 @@ export default function HomePage() {
 
       {/* Chatbot */}
       {chatOpen && (
-        <div className="fixed bottom-4 right-4 w-80 h-96 bg-white rounded-lg shadow-2xl flex flex-col z-50">
+        <div className="fixed bottom-4 right-4 w-80 h-96 bg-white rounded-lg shadow-2xl flex flex-col z-50 overflow-hidden">
           <div className="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-blue-600 font-bold">
@@ -243,15 +300,13 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* ⭐ Animations + Font Face */}
+      {/* CSS Animations & Scroll Fix */}
       <style jsx>{`
-        @font-face {
-          font-family: 'Nasalization';
-          src: url('/src/assets/fonts/NASALIZA.TTF') format('truetype');
-          font-weight: normal;
-          font-style: normal;
+        html, body {
+          overflow-x: hidden !important;
+          width: 100%;
+          max-width: 100vw;
         }
-
         .stars .star {
           position: absolute;
           background: white;
@@ -268,26 +323,34 @@ export default function HomePage() {
           to { transform: translate(20px, 20px); }
         }
         @keyframes slide {
-          0% { transform: translateX(-150px); }
-          100% { transform: translateX(100vw); }
+          0% { transform: translateX(-200px); }
+          100% { transform: translateX(calc(100vw + 200px)); }
         }
-        .animate-slide { animation: slide 30s linear infinite; }
+        .animate-slide {
+          animation: slide 30s linear infinite;
+        }
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-12px); }
         }
-        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
         @keyframes wiggle {
           0%, 100% { transform: rotate(0deg); }
           25% { transform: rotate(2deg); }
           75% { transform: rotate(-2deg); }
         }
-        .animate-wiggle { animation: wiggle 4s ease-in-out infinite; }
+        .animate-wiggle {
+          animation: wiggle 4s ease-in-out infinite;
+        }
         @keyframes glow {
           0%, 100% { filter: drop-shadow(0 0 6px #3b82f6); }
           50% { filter: drop-shadow(0 0 16px #2563eb); }
         }
-        .animate-glow { animation: glow 2.5s ease-in-out infinite; }
+        .animate-glow {
+          animation: glow 2.5s ease-in-out infinite;
+        }
       `}</style>
     </div>
   );
