@@ -116,47 +116,56 @@ const DevelopersPage = () => {
       {
       id: 1,
       name: "Darshan Mutalikdesai",
-      designation: "Student Council",
+      designation: "STUDENT COUNCIL",
       developerType: "Full Stack Developer",
-      linkedin: "https://linkedin.com/in/janesmith",
-      phone: "+1234567891",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop"
+      linkedin: "https://www.linkedin.com/in/darshan-mutalikdesai-b4a4832a0/",
+      phone: "+917204092064",
+      image: "https://media.licdn.com/dms/image/v2/D4D03AQGY3l8bfEjMCA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1719248728280?e=1762992000&v=beta&t=3wyfgKAS7Kp_oknX1s38MbKorBItcLGP3H4dorp0zCw"
     },
     {
       id: 2,
       name: "KOUSHAL KEDARI",
       designation: "Technical Secretary",
       developerType: "Full Stack Developer",
-      linkedin: "https://linkedin.com/in/johndoe",
-      phone: "+1234567890",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"
+      linkedin: "https://www.linkedin.com/in/koushal-kedari/",
+      phone: "+919663362250",
+      image: "https://media.licdn.com/dms/image/v2/D5603AQGFeQsVpYBQkg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1706472933559?e=1762387200&v=beta&t=6EMTzXzUvHGXjN7BHVro4hItrUo_Tdw155uF-xEVS2w"
     },
     {
       id: 3,
       name: "PRATIK SADEKAR ",
       designation: "Backend Lead",
       developerType: "Backend Developer",
-      linkedin: "https://linkedin.com/in/mikejohnson",
-      phone: "+1234567892",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop"
+      linkedin: "https://www.linkedin.com/in/pratik-sadekar-3a9394271/",
+      phone: "+919380313099",
+      image: "https://media.licdn.com/dms/image/v2/D5603AQGFVOv9mUCJLQ/profile-displayphoto-shrink_200_200/B56ZP2Qt8zG8AY-/0/1735003399375?e=1762992000&v=beta&t=ykc13YneslZ2iODxA99QKc2ud-Y_d5V1EsDdRoXIYHA"
     },
     {
       id: 4,
       name: "AMOGH KALLIMATH",
-      designation: "UI/UX Designer",
-      developerType: "Designer",
-      linkedin: "https://linkedin.com/in/sarahwilliams",
-      phone: "+1234567893",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop"
+      designation: "STUDENT COUNCIL",
+      developerType: "Developer",
+      linkedin: "https://www.linkedin.com/in/amogh-kallimath-a6b06a292/",
+      phone: "+916361234618",
+      image: "https://media.licdn.com/dms/image/v2/D4D03AQFG1d46lHrwNQ/profile-displayphoto-shrink_400_400/B4DZTz1LdAHYAg-/0/1739257592265?e=2147483647&v=beta&t=X6xKR1O3ukifNEizM2Hl7ZbtZPyHGPIxOX5UizojqZo"
     },
     {
       id: 5,
+      name: "IAN D'SOUZA",
+      designation: "Graphic Designer",
+      developerType: "Frontend Designer",
+      linkedin: "https://www.linkedin.com/in/dsouza-ian/",
+      phone: "+919513421759",
+      image: "https://media.licdn.com/dms/image/v2/D5603AQG4iYpm6_a63g/profile-displayphoto-shrink_400_400/B56ZSotL2NHwAk-/0/1737997206706?e=1762992000&v=beta&t=NzqEl6BYa_WqxF-GUmGSpDZWOGp2vj-TT8hMZ74KHMc"
+    },
+    {
+      id: 6,
       name: "LAXMAN DESAI",
       designation: "DevOps Engineer",
       developerType: "DevOps",
-      linkedin: "https://linkedin.com/in/davidbrown",
-      phone: "+1234567894",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop"
+      linkedin: "https://www.linkedin.com/in/desai-laxman/",
+      phone: "+919380055232",
+      image: "https://media.licdn.com/dms/image/v2/D5603AQEvGCv7y6GM5w/profile-displayphoto-shrink_200_200/B56Zc0rsfJHoAY-/0/1748935560749?e=1762992000&v=beta&t=7hf1MEudIAVXl0o_4y8QECVz0ErqeajZ0fm1jyeICB0"
     },
   ];
 

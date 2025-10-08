@@ -37,7 +37,7 @@ export default function RocketButton({ onClick }) {
           } ${isClicked ? "-translate-y-[200px] opacity-0" : ""}`}
           size={20}
         />
-        <span>Launch space Mission</span>
+        <span className="font-nasal">Launch space Mission</span>
       </div>
     </button>
   );

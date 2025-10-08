@@ -19,10 +19,10 @@ const Loading = () => {
   return (
     <div className="flex items-center justify-center h-screen w-full bg-black text-white">
       <div className="flex flex-col items-center">
-        <h1 className="text-4xl font-bold mb-6">Loading...</h1>
+        <h1 className="text-4xl font-nasal font-bold mb-6">Loading...</h1>
         <div className="w-64 bg-gray-800 rounded-full h-4 overflow-hidden">
           <div
-            className="bg-blue-500 h-4 transition-all"
+            className="bg-blue-500 h-4 font-orbitron transition-all"
             style={{ width: `${progress}%` }}
           ></div>
         </div>
