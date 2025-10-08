@@ -6,7 +6,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        nasal: ["Nasalization", "sans-serif"], // ✅ custom font
+        nasal: ["Nasalization", "sans-serif"],
+        orbitron: ["Orbitron", "sans-serif"],
+        // ✅ custom font
       },
       borderRadius: {
         lg: 'var(--radius)',

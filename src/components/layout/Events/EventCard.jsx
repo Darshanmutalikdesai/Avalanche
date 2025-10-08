@@ -20,6 +20,7 @@ const EventCard = ({ title, description, image, path }) => {
         my-6
         w-[180px] xs:w-[200px] sm:w-[230px] md:w-[260px] lg:w-[280px]
       "
+      
     >
       {/* Glowing blur behind planet */}
       <div

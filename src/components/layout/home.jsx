@@ -157,7 +157,7 @@ export default function HomePage() {
           <b>A V A L A N C H E '25</b>
         </motion.h1>
         <motion.p
-          className="text-lg xs:text-xl sm:text-base md:text-lg lg:text-2xl text-white drop-shadow-md mb-6 sm:mb-8 max-w-xs sm:max-w-md md:max-w-2xl font-normal"
+          className="text-lg xs:text-xl sm:text-base md:text-lg lg:text-2xl text-white drop-shadow-md mb-6 sm:mb-8 max-w-xs sm:max-w-md md:max-w-2xl font-orbitron"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}

@@ -107,8 +107,8 @@ const NavigationBar = () => {
     <header
       className={`fixed top-0 left-0 w-full z-50 font-nasal transition-all duration-500 ${
         isScrolled
-          ? "backdrop-blur-lg bg-black/40 border-b border-white/10 shadow-md py-2"
-          : "bg-transparent py-5"
+          ? `backdrop-blur-lg bg-black/40 border-b border-white/10 shadow-md py-2`
+          : `bg-transparent py-5`
       }`}
     >
       <motion.div

@@ -65,10 +65,10 @@ const CentralEvents = () => {
       <div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8 pt-36 sm:pt-32 lg:pt-28">
         {/* Header */}
         <div className="text-center mb-20 sm:mb-20 lg:mb-24">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-nasal text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
             Central Events
           </h1>
-          <p className="text-base sm:text-lg lg:text-xl text-[#b0f7ff] opacity-80">
+          <p className="text-base sm:text-lg lg:text-xl text-[#b0f7ff] font- orbitron opacity-80">
             Discover the main highlights of AVALANCHE
           </p>
         </div>
