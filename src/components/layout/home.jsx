@@ -301,7 +301,7 @@ export default function HomePage() {
       )}
 
       {/* CSS Animations & Scroll Fix */}
-      <style jsx>{`
+      <style>{`
         html, body {
           overflow-x: hidden !important;
           width: 100%;

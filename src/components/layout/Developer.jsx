@@ -114,7 +114,7 @@ const DevelopersPage = () => {
       designation: "Student Council",
       developerType: "Full Stack Developer",
       linkedin: "https://linkedin.com/in/darshan-mutalikdesai",
-      phone: "+1234567891",
+      phone: "7204092064",
       image: ""
     },
     {

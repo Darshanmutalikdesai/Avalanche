@@ -49,7 +49,7 @@ const RegisterPage = () => {
   const registerUser = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://147.185.221.211:9321/api/users/register", {
+      const response = await fetch("http://hard-investing.gl.at.ply.gg:9321/api/users/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -77,7 +77,7 @@ const RegisterPage = () => {
   const loginUser = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://147.185.221.211:9321/api/users/login", {
+      const response = await fetch("http://hard-investing.gl.at.ply.gg:9321/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

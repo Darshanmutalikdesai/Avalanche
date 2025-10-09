@@ -18,6 +18,8 @@ const OTPPage = lazy(() => import("./components/layout/OTP"));     // ✅ OTP pa
 const Events = lazy(() => import("./components/pages/Events"));
 const Developer = lazy(() => import("./components/pages/Developer"));
 const User = lazy(() => import("./components/pages/user"));
+const Rule = lazy(() => import("./components/pages/rule"));
+
 function AppRoutes() {
   return (
     <Suspense fallback={<Loading />}>
@@ -34,6 +36,7 @@ function AppRoutes() {
         <Route path="/events/*" element={<Events />} />
         <Route path="/developer" element={<Developer />} />
         <Route path="/user-portal/*" element={<User />} />
+        <Route path="/rulebook/*" element={<Rule />} />
 
         {/* Fallback / 404 */}
         <Route path="*" element={<NotFound />} />

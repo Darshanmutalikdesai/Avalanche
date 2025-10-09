@@ -1,196 +1,266 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import axios from "axios";
+import {
+  User,
+  Award,
+  Calendar,
+  Hash,
+  Building2,
+  GraduationCap,
+} from "lucide-react";
 
-const UserPortal = () => {
-  const navigate = useNavigate();
-  const [isHovered, setIsHovered] = useState(false);
-  const [userData, setUserData] = useState(null);
+export default function CosmicProfile() {
+  const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // 🌐 Backend base URL (adjust if deployed)
-  const API_BASE = "http://localhost:5000/api/users";
+  // 🔗 Fetch user profile from backend
+  const fetchProfile = async () => {
+    try {
+      const token = localStorage.getItem("token"); // 👈 get token from localStorage
+      const res = await fetch("http://hard-investing.gl.at.ply.gg:9321/api/users/profile", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-  // 🔒 Fetch logged-in user profile
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          navigate("/auth");
-          return;
-        }
-
-        const res = await axios.get(`${API_BASE}/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setUserData(res.data.user);
-      } catch (err) {
-        console.error("Error fetching user profile:", err);
-        navigate("/auth");
-      } finally {
-        setLoading(false);
+      if (!res.ok) {
+        throw new Error("Unauthorized");
       }
-    };
 
-    fetchProfile();
-  }, [navigate]);
+      const data = await res.json();
+      console.log("Profile data:", data);
 
-  // 🚪 Logout handler
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/auth");
+      // ✅ Update profile state
+      setProfile(data);
+    } catch (error) {
+      console.error("Failed to fetch profile:", error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-[#051320] text-[#00f7ff] text-lg">
-        Loading your portal...
-      </div>
-    );
-  }
+  // 🔹 Call fetchProfile once component mounts
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
-  if (!userData) {
+  if (loading)
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-[#051320] text-[#00f7ff]">
-        <p>Session expired or user not found.</p>
-        <button
-          onClick={() => navigate("/auth")}
-          className="mt-4 bg-[#00f7ff] text-[#051320] px-4 py-2 rounded-md font-semibold hover:scale-105 transition-all"
-        >
-          Go to Login
-        </button>
+      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-cyan-400 text-xl">
+        Loading your cosmic profile...
       </div>
     );
-  }
+
+  if (!profile)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-red-400 text-xl">
+        Unable to fetch profile.
+      </div>
+    );
 
   return (
-    <div
-      className="fixed inset-0 w-screen h-screen overflow-y-auto bg-gradient-to-br from-[#0a1929] to-[#051320]"
-      style={{ fontFamily: "Nasalization, sans-serif" }}
-    >
-      {/* Background Grid */}
-      <div className="fixed inset-0 opacity-10">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `repeating-linear-gradient(0deg, #00f7ff 0px, transparent 1px, transparent 40px),
-                              repeating-linear-gradient(90deg, #00f7ff 0px, transparent 1px, transparent 40px)`,
-          }}
-        />
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Grid background */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `
+          linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)
+        `,
+          backgroundSize: "50px 50px",
+        }}
+      />
+
+      {/* Animated stars */}
+      <div className="absolute inset-0">
+        {[...Array(30)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full bg-cyan-400"
+            style={{
+              width: "2px",
+              height: "2px",
+              top: Math.random() * 100 + "%",
+              left: Math.random() * 100 + "%",
+              animation: `twinkle ${Math.random() * 3 + 2}s infinite ${
+                Math.random() * 3
+              }s`,
+              boxShadow: "0 0 4px rgba(34, 211, 238, 0.8)",
+            }}
+          />
+        ))}
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
-        {/* Title */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-[#00eaff] drop-shadow-[0_0_20px_rgba(0,234,255,0.8)] mb-2">
-            AVALANCHE
-          </h1>
-          <p className="text-[#ffcc00]">USER PORTAL</p>
-        </div>
+      <style>{`
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 1; }
+        }
+        @keyframes glow-pulse {
+          0%, 100% { opacity: 0.5; }
+          50% { opacity: 1; }
+        }
+      `}</style>
 
-        {/* Card */}
+      <div className="relative max-w-4xl w-full z-10">
         <div
-          className="relative w-full max-w-2xl"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+          className="relative bg-slate-900/90 backdrop-blur-sm"
+          style={{
+            clipPath:
+              "polygon(0 20px, 20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px))",
+          }}
         >
           <div
-            className={`relative w-full bg-gradient-to-br from-[#0a1929] to-[#051320]
-              border-2 border-[#00f7ff] rounded-2xl overflow-visible transition-all duration-500 ease-out
-              ${isHovered ? "shadow-[0_0_40px_rgba(0,247,255,0.7)] scale-[1.02]" : "shadow-[0_0_20px_rgba(0,247,255,0.4)]"}
-            `}
-          >
-            <div className="p-10">
-              {/* Avatar */}
-              <div className="flex justify-center mb-8">
-                <div
-                  className={`w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-cover bg-center border-4 border-[#00f7ff] shadow-[0_0_30px_rgba(0,247,255,0.7)] transition-all ${
-                    isHovered ? "scale-110" : "scale-100"
-                  }`}
+            className="absolute inset-0 border-2 border-cyan-500/30"
+            style={{
+              clipPath:
+                "polygon(0 20px, 20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px))",
+              boxShadow:
+                "inset 0 0 20px rgba(34, 211, 238, 0.2), 0 0 20px rgba(34, 211, 238, 0.3)",
+            }}
+          />
+
+          <div className="relative p-8 md:p-12">
+            {/* Header */}
+            <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
+              <div className="relative flex-shrink-0">
+                <div className="relative w-32 h-32">
+                  <div className="relative w-full h-full bg-slate-800 border-2 border-cyan-500 flex items-center justify-center">
+                    <User className="w-16 h-16 text-cyan-400" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex-1 text-center md:text-left">
+                <h1
+                  className="text-4xl md:text-5xl font-bold text-cyan-400 mb-2 tracking-wider"
                   style={{
-                    backgroundImage: `url(https://ui-avatars.com/api/?name=${userData.name
-                      .replace(" ", "+")
-                      .trim()}&size=256&background=00f7ff&color=051320&bold=true&format=png)`,
+                    textShadow: "0 0 10px rgba(34, 211, 238, 0.5)",
+                  }}
+                >
+                  {profile.name || "Participant"}
+                </h1>
+              </div>
+
+              <div className="flex flex-col items-center gap-2">
+                <div
+                  className="w-3 h-3 bg-green-400 rounded-full"
+                  style={{
+                    boxShadow: "0 0 10px rgba(74, 222, 128, 0.8)",
+                    animation: "glow-pulse 2s infinite",
                   }}
                 />
+                <span className="text-green-400 text-xs font-mono">ACTIVE</span>
+              </div>
+            </div>
+
+            <div className="relative h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent mb-8" />
+
+            {/* Info grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <InfoCard
+                icon={<Building2 className="w-5 h-5 text-cyan-400" />}
+                label="INSTITUTE"
+                value={profile.institute || "—"}
+              />
+              <InfoCard
+                icon={<Hash className="w-5 h-5 text-cyan-400" />}
+                label="AVALANCHE ID"
+                value={profile._id || "—"}
+              />
+              <InfoCard
+                icon={<GraduationCap className="w-5 h-5 text-cyan-400" />}
+                label="ROLL NUMBER"
+                value={profile.rollNumber || "—"}
+              />
+            </div>
+
+            {/* Registered events */}
+            <div
+              className="relative bg-slate-800/30 border border-cyan-500/40 p-6"
+              style={{
+                clipPath:
+                  "polygon(0 12px, 12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))",
+              }}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <Calendar className="w-6 h-6 text-cyan-400" />
+                <h2 className="text-2xl font-bold text-cyan-400 tracking-wider">
+                  REGISTERED EVENTS
+                </h2>
               </div>
 
-              {/* User Info */}
-              <h2 className="text-3xl font-bold text-[#00f7ff] text-center mb-6">
-                {userData.name}
-              </h2>
-
-              <div className="space-y-6">
-                <InfoBlock label="Avalanche ID" value={userData.avalancheId || "AVL2024"} color="#00f7ff" />
-                <InfoBlock label="College" value={userData.college || "N/A"} color="#ffcc00" />
-                <InfoBlock label="Email" value={userData.email} color="#00f7ff" />
-                <InfoBlock label="Phone" value={userData.phone || "Not Provided"} color="#00f7ff" />
+              <div className="space-y-4">
+                {(profile.registeredEvents || []).length > 0 ? (
+                  profile.registeredEvents.map((event, index) => (
+                    <div
+                      key={index}
+                      className="relative bg-slate-900/50 border border-cyan-500/30 p-4 hover:bg-slate-900/70 hover:border-cyan-400/50 transition-all"
+                      style={{
+                        clipPath:
+                          "polygon(0 6px, 6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px))",
+                      }}
+                    >
+                      <div className="flex items-center gap-4">
+                        <Award className="w-5 h-5 text-cyan-400 flex-shrink-0" />
+                        <span className="text-white text-lg flex-1">{event}</span>
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                          <span className="text-green-400 text-xs font-mono">
+                            CONFIRMED
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-cyan-300/60 text-sm font-mono">
+                    No events registered yet.
+                  </p>
+                )}
               </div>
+            </div>
 
-              {/* Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                <button
-                  className="flex-1 bg-gradient-to-r from-[#00f7ff] to-[#0099ff] text-[#051320] font-bold py-3 px-6 rounded-lg hover:scale-105 transition-all"
-                  onClick={() => navigate("/edit-profile")}
-                >
-                  Edit Profile
-                </button>
-                <button
-                  className="flex-1 bg-gradient-to-r from-[#ffcc00] to-[#ff9900] text-[#051320] font-bold py-3 px-6 rounded-lg hover:scale-105 transition-all"
-                  onClick={() => navigate("/events")}
-                >
-                  View Events
-                </button>
-              </div>
-
-              <button
-                onClick={handleLogout}
-                className="mt-6 text-sm text-[#b0f7ff] underline hover:text-[#00f7ff] transition"
+            {/* Footer */}
+            <div className="mt-6 flex justify-center">
+              <div
+                className="relative bg-slate-800/50 border border-cyan-500/40 px-6 py-2"
+                style={{
+                  clipPath:
+                    "polygon(10px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 10px 100%, 0 50%)",
+                }}
               >
-                Logout
-              </button>
+                <div className="text-cyan-400 text-sm font-mono tracking-wider">
+                  ◈ AVALANCHE PARTICIPANT 2025 ◈
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* Footer */}
-        <div className="text-center mt-8">
-          <p className="text-xs text-[#b0f7ff] opacity-60">
-            Powered by AVALANCHE TECH TEAM
-          </p>
         </div>
       </div>
     </div>
   );
-};
+}
 
-// Info card component
-const InfoBlock = ({ label, value, color }) => (
-  <div
-    className="rounded-lg p-4 border transition-all duration-300"
-    style={{
-      borderColor: color,
-      backgroundColor: "rgba(0,247,255,0.05)",
-    }}
-  >
-    <label
-      className="text-xs uppercase tracking-wider mb-1 block"
-      style={{ color }}
+// 🔹 InfoCard component
+function InfoCard({ icon, label, value }) {
+  return (
+    <div
+      className="relative bg-slate-800/50 border border-cyan-500/30 p-5"
+      style={{
+        clipPath:
+          "polygon(0 8px, 8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px))",
+      }}
     >
-      {label}
-    </label>
-    <p
-      className="text-lg font-semibold"
-      style={{ color }}
-    >
-      {value}
-    </p>
-  </div>
-);
-
-export default UserPortal;
+      <div className="flex items-start gap-3">
+        {icon}
+        <div>
+          <div className="text-cyan-400/60 text-xs font-mono mb-1">{label}</div>
+          <div className="text-white text-lg">{value}</div>
+        </div>
+      </div>
+    </div>
+  );
+}

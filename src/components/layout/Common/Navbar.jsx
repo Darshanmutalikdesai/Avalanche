@@ -40,8 +40,10 @@ const NavigationBar = () => {
   const navItems = [
     { name: "Home", href: "/home", icon: Zap },
     { name: "Event Registration", href: "/events", icon: UserPlus },
+   { name: "Rule Book", href: "/rulebook", icon: UserPlus },
     { name: "Schedules", href: "/schedules", icon: CalendarDays },
     { name: "Developer", href: "/developer", icon: Code2 },
+    { name: "Contact", href: "/schedules", icon: CalendarDays },
   ];
 
   // Add login or user portal dynamically
