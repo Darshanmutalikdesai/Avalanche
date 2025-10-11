@@ -12,11 +12,14 @@ export default function CosmicProfile() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // 🌐 API URL from .env
+  const API_URL = import.meta.env.VITE_API_SERVER || import.meta.env.VITE_API_DEV;
+
   // 🔗 Fetch user profile from backend
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem("token"); // 👈 get token from localStorage
-      const res = await fetch("http://localhost:5000/api/users/profile", {
+      const res = await fetch(`${API_URL}/api/users/profile`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
