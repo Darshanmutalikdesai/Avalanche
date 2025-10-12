@@ -33,9 +33,6 @@ const RegisterPage = () => {
     "Visvesvaraya Technological University, Belagavi",
   ];
 
-  // 🌐 API URL from .env (Vite requires import.meta.env)
-  const API_URL = import.meta.env.VITE_API_SERVER || import.meta.env.VITE_API_DEV;
-
   useEffect(() => {
     setTimeout(() => setIsLoaded(true), 100);
     const glowInterval = setInterval(() => {
@@ -52,7 +49,7 @@ const RegisterPage = () => {
   const registerUser = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/api/users/register`, {
+      const response = await fetch("http://localhost:5000/api/users/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -80,7 +77,7 @@ const RegisterPage = () => {
   const loginUser = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/api/users/login`, {
+      const response = await fetch("http://localhost:5000/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -4,7 +4,6 @@ import Background from "../../assets/background.mp4";
 import Logo from "../../assets/weblogo.svg";
 import HomePage from "../layout/home";
 import RocketButton from "../layout/Common/RocketButton"; // ✅ Rocket button
-import back from "../../assets/Rocket_V3.0 (online-video-cutter.com).mp4"
 
 export default function LoadingVideoPage() {
   const [loadingPercent, setLoadingPercent] = useState(0);
@@ -12,7 +11,7 @@ export default function LoadingVideoPage() {
   const [showButton, setShowButton] = useState(false);
   const [showTransition, setShowTransition] = useState(false);
   const [showHomePage, setShowHomePage] = useState(false);
-  const transitionRef = useRef(null);
+  const canvasRef = useRef(null);
 
   // Loader increment
   useEffect(() => {
@@ -33,14 +32,137 @@ export default function LoadingVideoPage() {
     return () => clearInterval(interval);
   }, []);
 
-  // Set transition video speed
+  // Lightspeed canvas animation
   useEffect(() => {
-    if (showTransition && transitionRef.current) {
-      transitionRef.current.playbackRate = 1.5; // 1.5x speed
-    }
+    if (!showTransition || !canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    let w = window.innerWidth;
+    let h = window.innerHeight;
+    canvas.width = w;
+    canvas.height = h;
+
+    const n = 512;
+    let x = w / 2;
+    let y = h / 2;
+    const z = (w + h) / 2;
+    const starRatio = 256;
+    let starSpeed = 8;
+    let stars = [];
+    let lightspeedActive = false;
+    let whiteoutActive = false;
+    let whiteoutOpacity = 0;
+    let animationStarted = false;
+    let startTime = null;
+
+    // Initialize stars
+    const initStars = () => {
+      stars = [];
+      for (let i = 0; i < n; i++) {
+        stars.push([
+          Math.random() * w * 2 - x * 2,
+          Math.random() * h * 2 - y * 2,
+          Math.random() * z,
+          0,
+          0,
+        ]);
+      }
+    };
+
+    initStars();
+
+    const animate = () => {
+      if (!animationStarted) {
+        animationStarted = true;
+        startTime = Date.now();
+      }
+
+      const elapsed = (Date.now() - startTime) / 1000;
+
+      // Timeline for cinematic effects
+      if (elapsed >= 3) lightspeedActive = true;
+      if (elapsed >= 4 && starSpeed > 3) starSpeed = 3;
+      if (elapsed >= 4.5) {
+        whiteoutActive = true;
+        whiteoutOpacity += 0.02;
+        if (whiteoutOpacity >= 1) {
+          whiteoutOpacity = 1;
+          // End animation after whiteout
+          setTimeout(() => {
+            whiteoutOpacity = 0;
+            whiteoutActive = false;
+            lightspeedActive = false;
+            starSpeed = 8;
+            animationStarted = false;
+            setShowHomePage(true); // go to homepage
+          }, 150);
+        }
+      }
+
+      // Clear canvas with trail effect
+      ctx.fillStyle =
+        lightspeedActive && !whiteoutActive
+          ? `rgba(0,0,0,0.1)`
+          : "rgb(0,0,0)";
+      ctx.fillRect(0, 0, w, h);
+
+      for (let i = 0; i < n; i++) {
+        const prevX = stars[i][3];
+        const prevY = stars[i][4];
+
+        stars[i][2] -= starSpeed;
+
+        // Wrap stars around edges
+        if (stars[i][0] > x * 2) stars[i][0] -= w * 2;
+        if (stars[i][0] < -x * 2) stars[i][0] += w * 2;
+        if (stars[i][1] > y * 2) stars[i][1] -= h * 2;
+        if (stars[i][1] < -y * 2) stars[i][1] += h * 2;
+        if (stars[i][2] > z) stars[i][2] -= z;
+        if (stars[i][2] < 0) stars[i][2] += z;
+
+        stars[i][3] = x + (stars[i][0] / stars[i][2]) * starRatio;
+        stars[i][4] = y + (stars[i][1] / stars[i][2]) * starRatio;
+
+        if (prevX > 0 && prevX < w && prevY > 0 && prevY < h) {
+          ctx.lineWidth = (1 - stars[i][2] / z) * 3.5;
+          ctx.strokeStyle = "rgb(180,210,240)";
+          ctx.shadowBlur = 0;
+          ctx.beginPath();
+          ctx.moveTo(prevX, prevY);
+          ctx.lineTo(stars[i][3], stars[i][4]);
+          ctx.stroke();
+          ctx.closePath();
+        }
+      }
+
+      // Whiteout flash overlay
+      if (whiteoutActive) {
+        ctx.fillStyle = `rgba(255,255,255,${whiteoutOpacity})`;
+        ctx.fillRect(0, 0, w, h);
+      }
+
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    const handleResize = () => {
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w;
+      canvas.height = h;
+      x = w / 2;
+      y = h / 2;
+      initStars();
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [showTransition]);
 
-  // Handle Start Mission button
+  // Start Mission
   const handleStartMission = () => {
     setShowTransition(true);
   };
@@ -98,7 +220,7 @@ export default function LoadingVideoPage() {
         )}
       </AnimatePresence>
 
-      {/* Main Content (Logo + Button) */}
+      {/* Main Content */}
       {!isLoading && !showTransition && !showHomePage && (
         <motion.div
           key="main-content"
@@ -106,14 +228,11 @@ export default function LoadingVideoPage() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0, transition: { duration: 1 } }}
         >
-          {/* Logo */}
           <img
             src={Logo}
             alt="Avalanche Logo"
             className="w-40 sm:w-56 md:w-72 lg:w-96 xl:w-[28rem] max-w-full drop-shadow-lg mb-8"
           />
-
-          {/* Rocket Button instead of normal button */}
           {showButton && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -129,25 +248,12 @@ export default function LoadingVideoPage() {
         </motion.div>
       )}
 
-      {/* Transition Video */}
+      {/* Lightspeed Canvas */}
       {showTransition && !showHomePage && (
-        <motion.video
-          ref={transitionRef}
-          key="transition-video"
-          autoPlay
-          playsInline
-          // 🔊 sound enabled
-          onEnded={() => setShowHomePage(true)}
+        <canvas
+          ref={canvasRef}
           className="absolute top-0 left-0 w-full h-full object-cover z-30"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.8 } }}
-          exit={{ opacity: 0, transition: { duration: 0.8 } }}
-        >
-          <source
-            src={back}
-            type="video/mp4"
-          />
-        </motion.video>
+        />
       )}
 
       {/* Render Home Page */}
