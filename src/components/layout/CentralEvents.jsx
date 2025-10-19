@@ -65,10 +65,10 @@ const CentralEvents = () => {
       <div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8 pt-36 sm:pt-32 lg:pt-28">
         {/* Header */}
         <div className="text-center mb-20 sm:mb-20 lg:mb-24">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold font-nasal text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
             Central Events
           </h1>
-          <p className="text-base sm:text-lg lg:text-xl text-[#b0f7ff] opacity-80">
+          <p className="text-base sm:text-lg lg:text-xl text-[#b0f7ff] text-orbitron opacity-80">
             Discover the main highlights of AVALANCHE
           </p>
         </div>
@@ -123,10 +123,10 @@ const CentralEvents = () => {
             "
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#ffcc00] mb-4 drop-shadow-[0_0_10px_#ffcc00]">
+            <h2 className="text-2xl sm:text-3xl font-bold font-nasal text-[#ffcc00] mb-4 drop-shadow-[0_0_10px_#ffcc00]">
               {selectedEvent.title}
             </h2>
-            <p className="text-base sm:text-lg text-gray-300 whitespace-pre-line leading-relaxed mb-6">
+            <p className="text-base sm:text-lg text-gray-300 font-orbitron whitespace-pre-line leading-relaxed mb-6">
               {selectedEvent.instructions}
             </p>
 

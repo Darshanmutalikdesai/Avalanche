@@ -7,6 +7,7 @@ export default {
     extend: {
       fontFamily: {
         nasal: ["Nasalization", "sans-serif"], // ✅ custom font
+        orbitron: ["Orbitron", "sans-serif"], 
       },
       borderRadius: {
         lg: 'var(--radius)',

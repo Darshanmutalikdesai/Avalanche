@@ -51,7 +51,7 @@ const DeveloperCard = ({ name, designation, developerType, linkedin, phone, imag
             {designation}
           </p>
           <div>
-            <span className="px-3 py-1 bg-[rgba(0,247,255,0.1)] border border-[#00f7ff] rounded-full text-xs text-[#b0f7ff] font-nasal font-medium">
+            <span className="px-3 py-1 bg-[rgba(0,247,255,0.1)] border border-[#00f7ff] rounded-full text-sm text-[#b0f7ff] font-nasal font-bold">
               {developerType}
             </span>
           </div>
@@ -116,8 +116,8 @@ const DevelopersPage = () => {
     {
       id: 1,
       name: "KOUSHAL KEDARI",
-      designation: "Technical Secretary",
-      developerType: "Full Stack Developer",
+      designation: "403-METADOCK",
+      developerType: "Production Team",
       linkedin: "https://www.linkedin.com/in/koushal-kedari/",
       phone: "+919663362250",
       image: "https://media.licdn.com/dms/image/v2/D5603AQGFeQsVpYBQkg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1706472933559?e=1762387200&v=beta&t=6EMTzXzUvHGXjN7BHVro4hItrUo_Tdw155uF-xEVS2w"
@@ -125,8 +125,8 @@ const DevelopersPage = () => {
       {
       id: 2,
       name: "Darshan Mutalikdesai",
-      designation: "STUDENT COUNCIL",
-      developerType: "Full Stack Developer",
+      designation: "Lorem",
+      developerType: "Frontend Dev`",
       linkedin: "https://www.linkedin.com/in/darshan-mutalikdesai-b4a4832a0/",
       phone: "+917204092064",
       image: "https://media.licdn.com/dms/image/v2/D4D03AQGY3l8bfEjMCA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1719248728280?e=1762992000&v=beta&t=3wyfgKAS7Kp_oknX1s38MbKorBItcLGP3H4dorp0zCw"
@@ -135,8 +135,8 @@ const DevelopersPage = () => {
     {
       id: 3,
       name: "PRATIK SADEKAR ",
-      designation: "Frontend developer ",
-      developerType: "Front Developer",
+      designation: "Ipsum",
+      developerType: "Frontend Dev`",
       linkedin: "https://www.linkedin.com/in/pratik-sadekar-3a9394271/",
       phone: "+919380313099",
       image: "https://media.licdn.com/dms/image/v2/D5603AQGFVOv9mUCJLQ/profile-displayphoto-shrink_200_200/B56ZP2Qt8zG8AY-/0/1735003399375?e=1762992000&v=beta&t=ykc13YneslZ2iODxA99QKc2ud-Y_d5V1EsDdRoXIYHA"
@@ -145,16 +145,16 @@ const DevelopersPage = () => {
     {
       id: 4,
       name: "LAXMAN DESAI",
-      designation: "Backend developer ",
-      developerType: "Backend Developer",
+      designation: "200 OK",
+      developerType: "Backend Dev`",
       linkedin: "https://www.linkedin.com/in/desai-laxman/",
       phone: "+919380055232",
       image: "https://media.licdn.com/dms/image/v2/D5603AQEvGCv7y6GM5w/profile-displayphoto-shrink_200_200/B56Zc0rsfJHoAY-/0/1748935560749?e=1762992000&v=beta&t=7hf1MEudIAVXl0o_4y8QECVz0ErqeajZ0fm1jyeICB0"
     },
      {
-      id: 6,
+      id: 5,
       name: "IAN D'SOUZA",
-      designation: "Graphic Designer",
+      designation: "Export Successful",
       developerType: "Frontend Designer",
       linkedin: "https://www.linkedin.com/in/dsouza-ian/",
       phone: "+919513421759",
@@ -163,8 +163,8 @@ const DevelopersPage = () => {
     {
       id: 6,
       name: "AMOGH KALLIMATH",
-      designation: "STUDENT COUNCIL",
-      developerType: "Developer",
+      designation: "Build-Succeeded-Barely",
+      developerType: "Production Team",
       linkedin: "https://www.linkedin.com/in/amogh-kallimath-a6b06a292/",
       phone: "+916361234618",
       image: "https://media.licdn.com/dms/image/v2/D4D03AQFG1d46lHrwNQ/profile-displayphoto-shrink_400_400/B4DZTz1LdAHYAg-/0/1739257592265?e=2147483647&v=beta&t=X6xKR1O3ukifNEizM2Hl7ZbtZPyHGPIxOX5UizojqZo"

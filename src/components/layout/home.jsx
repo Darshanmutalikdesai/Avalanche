@@ -150,7 +150,7 @@ export default function HomePage() {
           transition={{ duration: 1.2, ease: "easeOut" }}
         />
         <motion.h1
-          className="text-4xl xs:text-5xl sm:text-3xl md:text-5xl lg:text-9xl text-white drop-shadow-lg font-bold mt-2 sm:-mt-6"
+          className="text-4xl xs:text-5xl sm:text-3xl md:text-5xl lg:text-9xl text-white drop-shadow-lg font-nasal font-bold mt-2 sm:-mt-6"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
@@ -158,7 +158,7 @@ export default function HomePage() {
           <b>A V A L A N C H E '25</b>
         </motion.h1>
         <motion.p
-          className="text-lg xs:text-xl sm:text-base md:text-lg lg:text-2xl text-white drop-shadow-md mb-6 sm:mb-8 max-w-xs sm:max-w-md md:max-w-2xl font-normal"
+          className="text-lg xs:text-xl sm:text-base md:text-lg lg:text-2xl text-white drop-shadow-md mb-6 sm:mb-8 max-w-xs sm:max-w-md md:max-w-2xl font-orbitron"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
@@ -172,6 +172,19 @@ export default function HomePage() {
         >
           <StarButton onClick={handleLaunch} />
         </motion.div>
+        {/* R2-D2 */}
+      <div className="absolute inset-x-0 bottom-[20%] sm:bottom-10 md:bottom-8 flex justify-center z-20">
+        <div className="animate-slide">
+          <img
+            src={R2D2Image}
+            alt="R2-D2"
+            className="h-32 sm:h-40 w-auto drop-shadow-lg cursor-pointer 
+                       hover:scale-110 transition-transform 
+                       animate-float animate-wiggle animate-glow"
+            onClick={() => setChatOpen(true)}
+          />
+        </div>
+      </div>
       </div>
 
       {/* About Section */}
@@ -182,7 +195,7 @@ export default function HomePage() {
         <h2 className="text-4xl md:text-5xl text-white font-bold mb-6">
           About Avalanche
         </h2>
-        <p className="text-gray-300 text-lg max-w-3xl mx-auto leading-relaxed">
+        <p className="text-gray-300 text-lg max-w-3xl font-orbitron mx-auto leading-relaxed">
           Avalanche is a tech and cultural fest celebrating innovation,
           creativity, and collaboration. Each year, thousands of brilliant minds
           gather to showcase their ideas and ignite the spark of the future.
@@ -214,7 +227,7 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: i * 0.1 }}
               className="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-white shadow-lg hover:shadow-pink-500/40 transition-all"
             >
-              <h3 className="text-xl font-semibold mb-2">{item}</h3>
+              <h3 className="text-xl font-semibold font-orbitron mb-2">{item}</h3>
               <p className="text-gray-300 text-sm">
                 A glimpse into one of the most exciting events of Avalanche ‘24.
               </p>
@@ -229,20 +242,6 @@ export default function HomePage() {
           © {new Date().getFullYear()} Avalanche. All rights reserved | Tech team of KLS GIT
         </p>
       </footer>
-
-      {/* R2-D2 */}
-      <div className="absolute inset-x-0 bottom-[20%] sm:bottom-10 md:bottom-8 flex justify-center z-20">
-        <div className="animate-slide">
-          <img
-            src={R2D2Image}
-            alt="R2-D2"
-            className="h-32 sm:h-40 w-auto drop-shadow-lg cursor-pointer 
-                       hover:scale-110 transition-transform 
-                       animate-float animate-wiggle animate-glow"
-            onClick={() => setChatOpen(true)}
-          />
-        </div>
-      </div>
 
       {/* Chatbot */}
       {chatOpen && (

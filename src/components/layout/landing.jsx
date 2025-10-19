@@ -168,7 +168,7 @@ export default function LoadingVideoPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden font-['Sweet_Rosetia_Sans']">
+    <div className="relative min-h-screen overflow-hidden font-orbitron">
       {/* Background Video */}
       {!showHomePage && (
         <video
@@ -211,7 +211,7 @@ export default function LoadingVideoPage() {
               ></div>
 
               <div className="absolute inset-3 rounded-full bg-black bg-opacity-80 flex items-center justify-center">
-                <span className="text-white text-xl sm:text-2xl font-bold tracking-wider drop-shadow-lg">
+                <span className="text-white text-xl sm:text-2xl font-bold font-nasal tracking-wider drop-shadow-lg">
                   {loadingPercent}%
                 </span>
               </div>

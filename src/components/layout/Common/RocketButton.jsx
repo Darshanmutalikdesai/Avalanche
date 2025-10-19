@@ -21,7 +21,7 @@ export default function RocketButton({ onClick }) {
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleClick}
       className={`
-        relative px-6 py-3 text-white font-semibold
+        relative px-6 py-3 text-white font-orbitron font-weight-800
         bg-gradient-to-r from-blue-600 to-purple-600
         rounded-lg shadow-lg
         transform transition-all duration-300

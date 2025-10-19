@@ -19,6 +19,7 @@ const Events = lazy(() => import("./components/pages/Events"));
 const Developer = lazy(() => import("./components/pages/Developer"));
 const User = lazy(() => import("./components/pages/user"));
 const Rule = lazy(() => import("./components/pages/rule"));
+const PaymentGateway = lazy(() => import("./components/pages/PaymentGateway"));
 
 function AppRoutes() {
   return (
@@ -37,6 +38,7 @@ function AppRoutes() {
         <Route path="/developer" element={<Developer />} />
         <Route path="/user-portal/*" element={<User />} />
         <Route path="/rulebook/*" element={<Rule />} />
+        <Route path="/payment-gateway" element={<PaymentGateway />} />
 
         {/* Fallback / 404 */}
         <Route path="*" element={<NotFound />} />
