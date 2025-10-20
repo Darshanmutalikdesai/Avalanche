@@ -9,7 +9,7 @@ function PaymentGateway() {
       .then((data) => setMessage(data.message))
       .catch((err) => {
         console.error(err);
-        setMessage("Failed to connect to backend ❌");
+        setMessage("Failed to connect to backend");
       });
   }, []);
 
