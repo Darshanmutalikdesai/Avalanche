@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import BackgroundVideo from "../../assets/backround1.mp4"; // ⬅️ Replace with your actual video path
+import image from "../../assets/image copy.png"; // ⬅️ Replace with your actual image path
 
 const DeveloperCard = ({ name, designation, developerType, linkedin, phone, image }) => {
   const [isHovered, setIsHovered] = useState(false);
