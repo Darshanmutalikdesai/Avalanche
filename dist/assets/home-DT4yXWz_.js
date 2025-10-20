@@ -1,0 +1,1 @@
+import{j as e}from"./index-DDyKt_DV.js";import{H as r}from"./home-QNKQlBgQ.js";import"./Navbar-BcaL3dAo.js";import"./star-DkUumd8N.js";const a=()=>e.jsx("div",{className:"flex flex-col items-start relative bg-white overflow-hidden",children:e.jsx("div",{className:"w-full",children:e.jsx(r,{})})});export{a as default};
