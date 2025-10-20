@@ -15,7 +15,7 @@ function PaymentGateway() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white">
-      <h1 className="text-3xl font-bold mb-4">Payment Gateway Test</h1>
+      <h1 className="text-3xl font-bold mb-4">Payment Gateway testing </h1>
       <p className="text-lg">{message}</p>
     </div>
   );
