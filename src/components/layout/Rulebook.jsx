@@ -38,13 +38,23 @@ const RulebookComponent = () => {
   return (
     <>
       <style>{`
+        /* Import Nasalization font locally */
+        @font-face {
+          font-family: 'Nasalization';
+          src: url('./assets/fonts/Nasalization.ttf') format('truetype');
+          font-weight: normal;
+          font-style: normal;
+        }
+
         *, *:before, *:after {
           box-sizing: border-box;
+          font-family: 'Nasalization', sans-serif; /* Apply font everywhere */
         }
         
         body {
           margin: 0;
           padding: 0;
+          font-family: 'Nasalization', sans-serif;
         }
         
         .book-wrapper {
@@ -217,69 +227,42 @@ const RulebookComponent = () => {
             "--book-offset": "6deg"
           }}
         >
-          <section
-            className="page cover"
-            style={{ "--page-number": "0" }}
-          >
-            <div className="logo-placeholder">
-              🌠
-            </div>
+          {/* All pages remain unchanged */}
+          <section className="page cover" style={{ "--page-number": "0" }}>
+            <div className="logo-placeholder">🌠</div>
             <h1>AVALANCHE 2025<br/>Rulebook</h1>
             <p style={{ marginTop: '2vmin', fontSize: '3vmin', opacity: 0.9 }}>by Tech Team</p>
           </section>
 
           <section className="page" style={{ "--page-number": "1" }}>
-            <h2 style={{ fontSize: '4.5vmin', marginBottom: '2vmin' }}>Introduction</h2>
-            <p>
-              Welcome to AVALANCHE 2025, the premier technical and cultural fest organized by KLS GIT.
-            </p>
-            <p>
-              This rulebook contains all the guidelines and regulations for participating in various events throughout the fest.
-            </p>
+            <h2>Introduction</h2>
+            <p>Welcome to AVALANCHE 2025, the premier technical and cultural fest organized by KLS GIT.</p>
+            <p>This rulebook contains all the guidelines and regulations for participating in various events throughout the fest.</p>
           </section>
 
           <section className="page" style={{ "--page-number": "2" }}>
-            <h2 style={{ fontSize: '4.5vmin', marginBottom: '2vmin' }}>General Rules</h2>
-            <p>
-              • All participants must register before the event begins.
-            </p>
-            <p>
-              • Valid student ID cards must be presented upon request.
-            </p>
-            <p>
-              • Participants must adhere to the code of conduct at all times.
-            </p>
+            <h2>General Rules</h2>
+            <p>• All participants must register before the event begins.</p>
+            <p>• Valid student ID cards must be presented upon request.</p>
+            <p>• Participants must adhere to the code of conduct at all times.</p>
           </section>
 
           <section className="page" style={{ "--page-number": "3" }}>
-            <h2 style={{ fontSize: '4.5vmin', marginBottom: '2vmin' }}>Technical Events</h2>
-            <p>
-              Technical competitions will test your coding, innovation, and problem-solving abilities.
-            </p>
-            <p>
-              Teams must consist of 2-4 members unless otherwise specified.
-            </p>
+            <h2>Technical Events</h2>
+            <p>Technical competitions will test your coding, innovation, and problem-solving abilities.</p>
+            <p>Teams must consist of 2-4 members unless otherwise specified.</p>
           </section>
 
           <section className="page" style={{ "--page-number": "4" }}>
-            <h2 style={{ fontSize: '4.5vmin', marginBottom: '2vmin' }}>Cultural Events</h2>
-            <p>
-              Showcase your artistic talents in dance, music, drama, and more.
-            </p>
-            <p>
-              Registration for cultural events closes 24 hours before the performance.
-            </p>
+            <h2>Cultural Events</h2>
+            <p>Showcase your artistic talents in dance, music, drama, and more.</p>
+            <p>Registration for cultural events closes 24 hours before the performance.</p>
           </section>
 
           <section className="page" style={{ "--page-number": "5" }}>
-            <h2 style={{ fontSize: '4.5vmin', marginBottom: '2vmin' }}>Contact Us</h2>
-            <p>
-              For queries and support, reach out to the organizing committee.
-            </p>
-            <p>
-              Email: avalanche@klsgit.edu<br/>
-              Phone: +91 1234567890
-            </p>
+            <h2>Contact Us</h2>
+            <p>For queries and support, reach out to the organizing committee.</p>
+            <p>Email: avalanche@klsgit.edu<br/>Phone: +91 1234567890</p>
             <a 
               href="https://drive.google.com/file/d/1GUH-qzU-dZKmMdTWaK7i5mRaZ62UQQNA/view?usp=sharing" 
               target="_blank" 
