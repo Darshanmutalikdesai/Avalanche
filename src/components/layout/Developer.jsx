@@ -128,7 +128,7 @@ const DevelopersPage = () => {
       name: "Darshan Mutalikdesai",      designation: "STUDENT ",
       developerType: "Full Stack Developer",
       linkedin: "https://www.linkedin.com/in/darshan-mutalikdesai-b4a4832a0/",
-      phone: "9916690317",
+      phone: "7204092064",
       image: "https://media.licdn.com/dms/image/v2/D4D03AQGY3l8bfEjMCA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1719248728280?e=1762992000&v=beta&t=3wyfgKAS7Kp_oknX1s38MbKorBItcLGP3H4dorp0zCw"
     },
     
