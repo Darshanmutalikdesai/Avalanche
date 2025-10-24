@@ -1,180 +1,97 @@
 import React, { useState, useEffect } from "react";
 import {
-  Menu,
-  X,
   Zap,
   UserPlus,
-  Code2,
+  BookOpen,
   CalendarDays,
-  LogIn,
+  Code2,
+  Phone,
   User,
+  LogIn,
+  Rocket,
+  X,
+  Menu,
 } from "lucide-react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "../../../assets/weblogo.svg";
 
 const NavigationBar = () => {
-  const [isNavigationOpen, setIsNavigationOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
+  // Scroll blur
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 30);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Auth token
   useEffect(() => {
-    // Check if user is logged in
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
   }, [location]);
 
   const navItems = [
     { name: "Home", href: "/home", icon: Zap },
-    { name: "Event Registration", href: "/events", icon: UserPlus },
-   { name: "Rule Book", href: "/rulebook", icon: UserPlus },
+    { name: "Event Registration", href: "/events", icon: Rocket },
+    { name: "Rule Book", href: "/rulebook", icon: BookOpen },
     { name: "Schedules", href: "/schedules", icon: CalendarDays },
     { name: "Developer", href: "/developer", icon: Code2 },
-    { name: "Contact", href: "/schedules", icon: CalendarDays },
+    { name: "Contact", href: "/contact", icon: Phone },
+    isLoggedIn
+      ? { name: "User Portal", href: "/user-portal", icon: User }
+      : { name: "Login", href: "/auth", icon: LogIn },
   ];
-
-  // Add login or user portal dynamically
-  if (isLoggedIn) {
-    navItems.push({ name: "User Portal", href: "/user-portal", icon: User });
-  } else {
-    navItems.push({ name: "Login", href: "/auth", icon: LogIn });
-  }
-
-  const NavigationModal = () => (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3 }}
-        className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center font-nasal"
-        onClick={() => setIsNavigationOpen(false)}
-      >
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.8, opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="w-full max-w-md px-8"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <motion.button
-            initial={{ rotate: -90, opacity: 0 }}
-            animate={{ rotate: 0, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.3 }}
-            whileHover={{ rotate: 90, scale: 1.1 }}
-            onClick={() => setIsNavigationOpen(false)}
-            className="absolute top-8 right-8 text-white hover:text-cyan-300 transition-colors"
-            aria-label="Close menu"
-          >
-            <X size={36} />
-          </motion.button>
-
-          <nav className="flex flex-col space-y-8 mt-24">
-            {navItems.map((item, index) => (
-              <motion.div
-                key={item.name}
-                initial={{ x: -50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.1 * index, duration: 0.3 }}
-              >
-                <NavLink
-                  to={item.href}
-                  onClick={() => setIsNavigationOpen(false)}
-                  className={({ isActive }) =>
-                    `flex items-center space-x-5 px-8 py-5 rounded-lg transition-all text-2xl font-semibold border border-cyan-300 border-opacity-40
-                    ${
-                      isActive
-                        ? "bg-cyan-500/90 text-black shadow-lg shadow-cyan-400/50"
-                        : "text-white hover:text-cyan-300 hover:bg-cyan-400/20 bg-black/20"
-                    }`
-                  }
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.2, rotate: 10 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <item.icon size={28} />
-                  </motion.div>
-                  <span>{item.name}</span>
-                </NavLink>
-              </motion.div>
-            ))}
-          </nav>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
-  );
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 font-nasal transition-all duration-500 ${
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 font-nasal ${
         isScrolled
-          ? "backdrop-blur-lg bg-black/40 shadow-md py-2"
-          : "bg-transparent py-5"
+          ? "bg-black/40 backdrop-blur-lg shadow-md py-2"
+          : "bg-transparent py-4"
       }`}
     >
-      <motion.div
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="flex items-center justify-between px-4 sm:px-10"
-      >
-        <Link to="/home" className="flex items-center space-x-3">
+      <div className="max-w-[1800px] mx-auto flex items-center justify-between px-6 xl:px-12 2xl:px-24 whitespace-nowrap">
+        {/* Logo */}
+        <NavLink to="/home" className="flex items-center gap-3">
           <motion.img
-            whileHover={{ scale: 1.1, rotate: 5 }}
-            transition={{ type: "spring", stiffness: 300 }}
             src={logo}
             alt="Avalanche Logo"
             className={`transition-all duration-300 ${
-              isScrolled ? "h-14" : "h-20 sm:h-24"
+              isScrolled ? "h-12" : "h-16"
             }`}
+            whileHover={{ scale: 1.05, rotate: 3 }}
           />
-        </Link>
+        </NavLink>
 
-        <nav className="hidden md:flex items-center space-x-10">
-          {navItems.map((item, index) => (
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center justify-center gap-8 xl:gap-10 2xl:gap-14">
+          {navItems.map((item, i) => (
             <motion.div
               key={item.name}
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.1 * index, duration: 0.4 }}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
             >
               <NavLink
                 to={item.href}
                 className={({ isActive }) =>
-                  `group relative flex items-center space-x-3 px-4 py-3 rounded transition-all duration-200 text-lg font-medium ${
-                    isActive
-                      ? "text-cyan-300"
-                      : "text-white hover:text-cyan-300"
+                  `group relative flex items-center gap-2 text-[15px] xl:text-[17px] font-semibold transition-colors duration-200 ${
+                    isActive ? "text-cyan-300" : "text-white hover:text-cyan-300"
                   }`
                 }
               >
-                <motion.div
-                  whileHover={{ scale: 1.2, rotate: 15 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
-                  <item.icon size={22} />
-                </motion.div>
-                <span>{item.name}</span>
+                <item.icon size={20} />
+                {item.name}
                 <span
-                  className={`absolute bottom-0 h-[2px] bg-cyan-300 transition-all duration-300 ease-out ${
+                  className={`absolute bottom-[-4px] left-0 h-[2px] bg-cyan-300 transition-all duration-300 ${
                     location.pathname === item.href
-                      ? "w-full left-0"
-                      : "w-0 left-1/2 group-hover:w-full group-hover:left-0"
+                      ? "w-full"
+                      : "w-0 group-hover:w-full"
                   }`}
                 />
               </NavLink>
@@ -182,23 +99,38 @@ const NavigationBar = () => {
           ))}
         </nav>
 
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setIsNavigationOpen(true)}
-          className="text-white hover:text-cyan-300 transition-colors p-3 md:hidden"
-          aria-label="Open menu"
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-white"
+          onClick={() => setMenuOpen(!menuOpen)}
         >
-          <motion.div
-            animate={{ rotate: isNavigationOpen ? 90 : 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Menu size={32} />
-          </motion.div>
-        </motion.button>
-      </motion.div>
+          {menuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+      </div>
 
-      {isNavigationOpen && <NavigationModal />}
+      {/* Mobile Menu (original bordered glowing style) */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute top-full left-0 w-full bg-black/90 backdrop-blur-lg border-t border-cyan-500/30 md:hidden flex flex-col items-center space-y-4 py-6"
+          >
+            {navItems.map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.href}
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-3 text-white hover:text-cyan-300 text-lg font-semibold border border-white/20 hover:border-cyan-400/50 px-6 py-2 rounded-xl transition-all duration-300 w-[85%] justify-center shadow-md hover:shadow-cyan-400/40"
+              >
+                <item.icon size={22} />
+                {item.name}
+              </NavLink>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

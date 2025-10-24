@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // ✅ Import Link
+import { Link } from "react-router-dom";
 import EventCard from "../layout/Events/EventCard";
 import BackgroundVideo from "../../assets/backround1.mp4";
 import image1 from "../../assets/treasure_image.jpg";
@@ -13,11 +13,20 @@ const CentralEvents = () => {
   const centralEventsData = [
     {
       id: 1,
-      title: "Treasure Hunt",
-      description: "A thrilling hunt across campus!",
+      title: "Technical Quiz",
+      description:
+        "Test your technical knowledge.",
       image: image1,
       instructions:
-        "1. Register online.\n2. Teams of 4.\n3. Bring college ID.\n4. Follow the clues to win.",
+        "Technical Quiz Guidelines:\n1. Each team can have a maximum of two participants.\n2. The quiz will consist of two rounds – Preliminary Round and Final Round.\n3. Round 1 (Preliminary) will be a written pen-and-paper round.\n4. Use of mobile phones or electronic devices is strictly prohibited.\n5. Top teams from the preliminary round will qualify for the final round.\n6. Any form of misconduct or unfair means will lead to disqualification.\n7. Decisions of the judges and organizers will be final and binding.\n8. Questions will test technical knowledge, logic, and awareness.\n\nTechnical Quiz General Rules:\n1. The Quizmaster is God and their decision is final.\n2. Use of mobile phones or electronic devices is strictly prohibited.\n3. The quiz will consist of 25 questions in the preliminary round.\n4. ‘*’ (Star mark) questions will act as tie-breakers.\n5. No negative marking in the first round.\n6. No prompting of answers is allowed.\n7. If there are more than three blockers, no further hints will be given.\n8. Any form of misconduct or discussion during the quiz will lead to disqualification.",
+      Dept: "Central Level",
+      MaxReg: "80",
+      MinTeam: "2",
+      MaxTeam: "2",
+      Coord1Name: "Darshan Mutalikdesai",
+      Coord1Pno: "7204092064",
+      Coord2Name: "Yash Deshpande",
+      Coord2Pno: "8971214823",
     },
     {
       id: 2,
@@ -104,72 +113,73 @@ const CentralEvents = () => {
 
       {/* Popup Modal */}
       {selectedEvent && (
-        <div
-          className="fixed inset-0 bg-black/70 z-[100] flex items-center justify-center p-4"
+  <div
+    className="fixed inset-0 bg-black/70 z-[100] flex items-center justify-center p-4"
+    onClick={() => setSelectedEvent(null)}
+    role="dialog"
+    aria-modal="true"
+  >
+    <div
+      className="
+        bg-[rgba(0,15,30,0.95)]
+        border-2 border-[#00f7ff]
+        rounded-xl
+        shadow-[0_0_30px_rgba(0,247,255,0.6)]
+        max-w-2xl w-full
+        p-6 sm:p-8
+        relative
+        animate-[fadeIn_0.3s_ease-in-out]
+        max-h-[80vh]      /* Limit modal height */
+        overflow-y-auto   /* Make content scrollable */
+      "
+      onClick={(e) => e.stopPropagation()}
+    >
+      <h2 className="text-2xl sm:text-3xl font-bold font-nasal text-[#ffcc00] mb-4 drop-shadow-[0_0_10px_#ffcc00]">
+        {selectedEvent.title}
+      </h2>
+      <p className="text-base sm:text-lg text-gray-300 font-orbitron whitespace-pre-line leading-relaxed mb-6">
+        {selectedEvent.instructions}
+      </p>
+
+      {/* Buttons Row */}
+      <div className="flex gap-4 justify-end">
+        <button
+          className="
+            px-6 py-3
+            bg-transparent
+            border-2 border-[#00f7ff]
+            rounded-lg
+            text-[#00f7ff] font-bold
+            transition-all duration-300 ease-in-out
+            hover:bg-[#00f7ff] hover:text-black
+            hover:shadow-[0_0_15px_#00f7ff]
+          "
           onClick={() => setSelectedEvent(null)}
-          role="dialog"
-          aria-modal="true"
         >
-          <div
-            className="
-              bg-[rgba(0,15,30,0.95)]
-              border-2 border-[#00f7ff]
-              rounded-xl
-              shadow-[0_0_30px_rgba(0,247,255,0.6)]
-              max-w-2xl w-full
-              p-6 sm:p-8
-              relative
-              animate-[fadeIn_0.3s_ease-in-out]
-            "
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2 className="text-2xl sm:text-3xl font-bold font-nasal text-[#ffcc00] mb-4 drop-shadow-[0_0_10px_#ffcc00]">
-              {selectedEvent.title}
-            </h2>
-            <p className="text-base sm:text-lg text-gray-300 font-orbitron whitespace-pre-line leading-relaxed mb-6">
-              {selectedEvent.instructions}
-            </p>
+          Close
+        </button>
 
-            {/* Buttons Row */}
-            <div className="flex gap-4 justify-end">
-              {/* Close Button */}
-              <button
-                className="
-                  px-6 py-3
-                  bg-transparent
-                  border-2 border-[#00f7ff]
-                  rounded-lg
-                  text-[#00f7ff] font-bold
-                  transition-all duration-300 ease-in-out
-                  hover:bg-[#00f7ff] hover:text-black
-                  hover:shadow-[0_0_15px_#00f7ff]
-                "
-                onClick={() => setSelectedEvent(null)}
-              >
-                Close
-              </button>
+        <Link
+          to="/events/register-events"
+          state={{ event: selectedEvent }}
+          className="
+            px-6 py-3
+            bg-[#00f7ff]
+            border-2 border-[#00f7ff]
+            rounded-lg
+            text-black font-bold
+            transition-all duration-300 ease-in-out
+            hover:bg-transparent hover:text-[#00f7ff]
+            hover:shadow-[0_0_15px_#00f7ff]
+          "
+        >
+          Register
+        </Link>
+      </div>
+    </div>
+  </div>
+)}
 
-              {/* Register Button with event data */}
-              <Link
-                to="/events/register-events"
-                state={{ event: selectedEvent }} // ✅ Pass event data
-                className="
-                  px-6 py-3
-                  bg-[#00f7ff]
-                  border-2 border-[#00f7ff]
-                  rounded-lg
-                  text-black font-bold
-                  transition-all duration-300 ease-in-out
-                  hover:bg-transparent hover:text-[#00f7ff]
-                  hover:shadow-[0_0_15px_#00f7ff]
-                "
-              >
-                Register
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
