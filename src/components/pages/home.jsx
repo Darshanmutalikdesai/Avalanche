@@ -1,6 +1,5 @@
 import React from "react";
 import Home from "../layout/home";
-import NavigationBar from "../layout/Common/Navbar";
 
 const HomePage = () => {
   return (

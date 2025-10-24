@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from "react";
+import BackgroundVideo from "../../assets/backround1.mp4";
+
 
 const RulebookComponent = () => {
   const bookRef = useRef(null);
@@ -38,7 +40,6 @@ const RulebookComponent = () => {
   return (
     <>
       <style>{`
-        /* Import Nasalization font locally */
         @font-face {
           font-family: 'Nasalization';
           src: url('./assets/fonts/Nasalization.ttf') format('truetype');
@@ -218,7 +219,17 @@ const RulebookComponent = () => {
         }
       `}</style>
 
+
       <div className="book-wrapper">
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="fixed top-0 left-0 w-full h-full object-cover z-0"
+      >
+        <source src={BackgroundVideo} type="video/mp4" />
+      </video>
         <div
           ref={bookRef}
           className="book"

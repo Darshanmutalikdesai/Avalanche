@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import BackgroundVideo from "../../assets/backround1.mp4"; // ⬅️ Replace with your actual video path
 import image from "../../assets/image copy.png"; // ⬅️ Replace with your actual image path
+import NavigationBar from './Common/Navbar';
 
 const DeveloperCard = ({ name, designation, developerType, linkedin, phone, image }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -186,7 +187,11 @@ const DevelopersPage = () => {
       />
       
       {/* Dark Overlay */}
-      <div className="fixed top-0 left-0 w-full h-full bg-black/50 z-[1]"></div>
+      <div className="fixed top-0 left-0 w-full h-full bg-black/50 z-[1]"/>
+      <div className="relative z-[60]">
+        <NavigationBar />
+      </div>
+
 
       {/* Content */}
       <div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8">
