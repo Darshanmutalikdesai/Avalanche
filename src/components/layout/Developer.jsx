@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import BackgroundVideo from "../../assets/backround1.mp4"; // ⬅️ Replace with your actual video path
-import image from "../../assets/image copy.png"; // ⬅️ Replace with your actual image path
 import NavigationBar from './Common/Navbar';
+import amogh from "../../assets/Amogh.png";
 
 const DeveloperCard = ({ name, designation, developerType, linkedin, phone, image }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -22,7 +22,7 @@ const DeveloperCard = ({ name, designation, developerType, linkedin, phone, imag
         <div className="absolute -top-16 left-1/2 -translate-x-1/2 z-20">
           <div
             className={`
-              w-32 h-32 rounded-full bg-cover bg-center border-4 border-[#00f7ff]
+              w-40 h-40 rounded-full bg-cover bg-center border-4 border-[#00f7ff]
               shadow-[0_0_20px_rgba(0,247,255,0.6)]
               transition-all duration-500
               ${isHovered ? "scale-110 shadow-[0_0_30px_rgba(0,247,255,0.9)]" : ""}
@@ -45,7 +45,7 @@ const DeveloperCard = ({ name, designation, developerType, linkedin, phone, imag
           }}
         ></span>
 
-        <div className="pt-20 p-3 space-y-3 relative z-10 text-center">
+        <div className="pt-28 p-3 space-y-3 relative z-10 text-center">
           <h3 className="text-2xl font-nasal font-bold text-[#00f7ff] drop-shadow-[0_0_10px_rgba(0,247,255,0.8)]">
             {name}
           </h3>
@@ -168,7 +168,7 @@ const DevelopersPage = () => {
       developerType: "Production Team",
       linkedin: "https://www.linkedin.com/in/amogh-kallimath-a6b06a292/",
       phone: "+916361234618",
-      image: "https://media.licdn.com/dms/image/v2/D4D03AQFG1d46lHrwNQ/profile-displayphoto-shrink_400_400/B4DZTz1LdAHYAg-/0/1739257592265?e=2147483647&v=beta&t=X6xKR1O3ukifNEizM2Hl7ZbtZPyHGPIxOX5UizojqZo"
+      image: amogh
     },
    
     
