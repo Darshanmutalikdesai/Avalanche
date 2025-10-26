@@ -130,12 +130,12 @@ export default function HomePage() {
           transition={{ duration: 1.2 }}
         />
         <motion.h1
-          className="text-5xl md:text-7xl text-white drop-shadow-lg font-nasal font-bold"
+          className="text-5xl md:text-8xl text-white drop-shadow-lg font-nasal font-bold"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          AVALANCHE '25
+          A V A L A N C H E '25
         </motion.h1>
         <motion.p
           className="text-lg md:text-2xl text-white drop-shadow-md mb-6 font-orbitron"
