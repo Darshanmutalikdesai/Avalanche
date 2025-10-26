@@ -7,6 +7,7 @@ import EventsPage from "../layout/EventsPage";
 import CentralEvents from "../layout/CentralEvents";
 import DepartmentEvents from "../layout/DepartmentEvents";
 import RegisterEvents from "../layout/RegisterEvents";
+import RegisterPaperPage from "../layout/RegisterPaperPage";
 
 // Layout wrapper
 const EventsLayout = ({ children }) => (
@@ -34,6 +35,9 @@ export default function Events() {
 
         {/* Register Event (receives state from CentralEvents/DepartmentEvents) */}
         <Route path="register-events" element={<RegisterEvents />} />
+
+        <Route path="register-paper" element={<RegisterPaperPage />} />
+
 
         {/* Catch all → redirect back */}
         <Route path="*" element={<Navigate to="/events" />} />
