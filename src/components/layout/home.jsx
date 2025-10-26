@@ -5,24 +5,22 @@ import { Star } from "lucide-react";
 import NavigationBar from "../layout/Common/Navbar";
 import Logo from "../../assets/weblogo.svg";
 import R2D2Image from "../../assets/R2D2.png";
+import MegaEventVideo from "../../assets/megaevent_bg.mp4";
 
-// ⭐ Star Button Component
+// Star Button Component
 const StarButton = ({ onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
-
   return (
     <button
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`
-        relative px-4 sm:px-6 py-2 sm:py-3 
+      className={`relative px-4 sm:px-6 py-2 sm:py-3 
         text-sm sm:text-base text-white font-semibold
         bg-gradient-to-r from-purple-600 to-pink-600
         rounded-lg shadow-lg
         transition-all duration-300 font-['Nasalization']
-        ${isHovered ? "shadow-pink-500/60 shadow-2xl" : ""}
-      `}
+        ${isHovered ? "shadow-pink-500/60 shadow-2xl" : ""}`}
     >
       <div
         className={`absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 transition-opacity duration-700 ${
@@ -46,22 +44,20 @@ const StarButton = ({ onClick }) => {
   );
 };
 
+// HomePage Component
 export default function HomePage() {
   const overlayRef = useRef(null);
   const navigate = useNavigate();
   const [launch, setLaunch] = useState(false);
-
-  // Chatbot state
   const [chatOpen, setChatOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
+  const [showModal, setShowModal] = useState(false); // Modal state
 
-  // Send message
   const handleSendMessage = () => {
     if (!inputMessage.trim()) return;
     setMessages([...messages, { sender: "user", text: inputMessage }]);
     setInputMessage("");
-
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
@@ -70,11 +66,10 @@ export default function HomePage() {
     }, 600);
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === "Enter") handleSendMessage();
   };
 
-  // Stars
   useEffect(() => {
     const numStars = 120;
     const container = document.getElementById("star-container");
@@ -93,7 +88,6 @@ export default function HomePage() {
     }
   }, []);
 
-  // Overlay fade
   useEffect(() => {
     if (overlayRef.current) {
       overlayRef.current.style.backgroundColor = "rgba(0, 0, 0, 0.4)";
@@ -104,7 +98,6 @@ export default function HomePage() {
     }
   }, []);
 
-  // Launch button
   const handleLaunch = () => {
     setLaunch(true);
     setTimeout(() => {
@@ -120,72 +113,142 @@ export default function HomePage() {
           "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
       }}
     >
-      {/* Stars */}
       <div id="star-container" className="stars absolute w-full h-full"></div>
-
-      {/* Overlay */}
       <div ref={overlayRef} className="absolute top-0 left-0 w-full h-full z-[5]" />
-
-      {/* Navbar */}
       <div className="relative z-[60]">
         <NavigationBar />
       </div>
 
       {/* Hero Section */}
-      <div
-        className="
-          relative z-[10] flex flex-col items-center 
-          justify-start sm:justify-center md:justify-center lg:justify-center
-          min-h-screen text-center 
-          px-4 sm:px-6 md:px-8 lg:px-16
-          pt-[25%] sm:pt-6 md:pt-0
-        "
-      >
+      <div className="relative z-[10] flex flex-col items-center justify-center min-h-screen text-center px-4 pt-20">
         <motion.img
           src={Logo}
           alt="Avalanche Logo"
-          className="w-40 xs:w-44 sm:w-40 md:w-56 lg:w-72 xl:w-80 mb-2"
+          className="w-40 sm:w-56 lg:w-72 mb-2"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          transition={{ duration: 1.2 }}
         />
         <motion.h1
-          className="text-4xl xs:text-5xl sm:text-3xl md:text-5xl lg:text-9xl text-white drop-shadow-lg font-nasal font-bold mt-2 sm:-mt-6"
+          className="text-5xl md:text-7xl text-white drop-shadow-lg font-nasal font-bold"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+          transition={{ duration: 1 }}
         >
-          <b>A V A L A N C H E '25</b>
+          AVALANCHE '25
         </motion.h1>
         <motion.p
-          className="text-lg xs:text-xl sm:text-base md:text-lg lg:text-2xl text-white drop-shadow-md mb-6 sm:mb-8 max-w-xs sm:max-w-md md:max-w-2xl font-orbitron"
+          className="text-lg md:text-2xl text-white drop-shadow-md mb-6 font-orbitron"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
+          transition={{ duration: 1, delay: 0.6 }}
         >
-          <b>DISCOVER THE INFINITE</b>
+          DISCOVER THE INFINITE
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.9, ease: "easeOut" }}
+          transition={{ duration: 1, delay: 0.9 }}
         >
           <StarButton onClick={handleLaunch} />
         </motion.div>
+
         {/* R2-D2 */}
-      <div className="absolute inset-x-0 bottom-[20%] sm:bottom-10 md:bottom-8 flex justify-center z-20">
-        <div className="animate-slide">
-          <img
-            src={R2D2Image}
-            alt="R2-D2"
-            className="h-32 sm:h-40 w-auto drop-shadow-lg cursor-pointer 
-                       hover:scale-110 transition-transform 
-                       animate-float animate-wiggle animate-glow"
-            onClick={() => setChatOpen(true)}
-          />
+        <div className="absolute inset-x-0 bottom-[15%] flex justify-center z-20">
+          <div className="animate-slide">
+            <img
+              src={R2D2Image}
+              alt="R2-D2"
+              className="h-32 sm:h-40 w-auto drop-shadow-lg cursor-pointer 
+                         hover:scale-110 transition-transform 
+                         animate-float animate-wiggle animate-glow"
+              onClick={() => setChatOpen(true)}
+            />
+          </div>
         </div>
       </div>
-      </div>
+
+      {/* Mega Event Section */}
+      <section
+        id="mega-event"
+        className="relative z-20 flex flex-col justify-between items-center h-[70vh] sm:h-[80vh] md:h-[90vh] w-full overflow-hidden"
+      >
+        <video
+          className="absolute top-0 left-0 w-full h-full object-fill"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src={MegaEventVideo} type="video/mp4" />
+        </video>
+
+        {/* Top Text */}
+        <div className="relative z-10 flex flex-col items-center text-center mt-12 sm:mt-16 md:mt-20 space-y-4 px-4">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl text-white font-bold font-nasal drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
+            MEGA EVENT 2025
+          </h2>
+        </div>
+
+        {/* Bottom Button */}
+        <div className="relative z-10 mb-10 sm:mb-12 md:mb-16">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="
+              px-8 py-4 sm:px-10 sm:py-5
+              text-lg sm:text-xl font-semibold
+              bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500
+              rounded-full shadow-lg shadow-pink-500/50
+              text-white tracking-wide
+              transition-all duration-300 hover:shadow-pink-400/70 hover:shadow-2xl
+            "
+            onClick={() => setShowModal(true)}
+          >
+            Register Now
+          </motion.button>
+        </div>
+      </section>
+
+      {/* Modal */}
+      {showModal && (
+        <motion.div
+          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.div
+            className="bg-gray-900 text-white rounded-2xl p-8 w-11/12 max-w-xl relative"
+            initial={{ y: 50 }}
+            animate={{ y: 0 }}
+            exit={{ y: 50 }}
+          >
+            <h3 className="text-2xl font-bold mb-4">Event Guidelines</h3>
+            <p className="mb-6 text-gray-300 leading-relaxed">
+              1. Follow the schedule strictly.<br />
+              2. Maintain decorum and discipline.<br />
+              3. Bring your ID and registration proof.<br />
+              4. Respect other participants and staff.<br />
+              5. Enjoy and explore all events!
+            </p>
+            <div className="flex justify-end gap-4">
+              <button
+                className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition"
+                onClick={() => setShowModal(false)}
+              >
+                Close
+              </button>
+              <button
+                className="px-4 py-2 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-lg shadow-lg text-white transition hover:scale-105"
+                onClick={() => navigate("/events/register-paper", { state: { eventName: "Mega Event" }})}
+              >
+                Register
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
 
       {/* About Section */}
       <section
@@ -203,6 +266,7 @@ export default function HomePage() {
         </p>
       </section>
 
+      
       {/* Glances Section */}
       <section
         id="glances"
@@ -243,69 +307,8 @@ export default function HomePage() {
         </p>
       </footer>
 
-      {/* Chatbot */}
-      {chatOpen && (
-        <div className="fixed bottom-4 right-4 w-80 h-96 bg-white rounded-lg shadow-2xl flex flex-col z-50 overflow-hidden">
-          <div className="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-blue-600 font-bold">
-                R2
-              </div>
-              <span className="font-semibold">R2-D2 Assistant</span>
-            </div>
-            <button
-              onClick={() => setChatOpen(false)}
-              className="text-white hover:text-gray-200 text-xl font-bold"
-            >
-              ×
-            </button>
-          </div>
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
-              >
-                <div
-                  className={`max-w-xs px-4 py-2 rounded-lg ${
-                    msg.sender === "user"
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-200 text-gray-800"
-                  }`}
-                >
-                  {msg.text}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="p-4 border-t border-gray-200">
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Type a message..."
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-              />
-              <button
-                onClick={handleSendMessage}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
-              >
-                Send
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* CSS Animations & Scroll Fix */}
+      {/* CSS Animations */}
       <style>{`
-        html, body {
-          overflow-x: hidden !important;
-          width: 100%;
-          max-width: 100vw;
-        }
         .stars .star {
           position: absolute;
           background: white;

@@ -9,6 +9,7 @@ import DepartmentEvents from "../layout/DepartmentEvents";
 import RegisterEvents from "../layout/RegisterEvents";
 import RegisterPaperPage from "../layout/RegisterPaperPage";
 
+
 // Layout wrapper
 const EventsLayout = ({ children }) => (
   <div className="relative min-h-screen w-full">
@@ -37,6 +38,7 @@ export default function Events() {
         <Route path="register-events" element={<RegisterEvents />} />
 
         <Route path="register-paper" element={<RegisterPaperPage />} />
+
 
 
         {/* Catch all → redirect back */}

@@ -4,14 +4,15 @@ import NavigationBar from "../layout/Common/Navbar";
 
 const RegisterPaperPage = () => {
   const location = useLocation();
-  const event = location.state?.event || {};
-  const [formData, setFormData] = useState({
-    eventName: event.title || "Paper Presentation",
-    mode: "",
-    department: "",
-    teamMembers: "",
-  });
+  
+const eventNameFromState = location.state?.eventName || "Paper Presentation";
 
+const [formData, setFormData] = useState({
+  eventName: eventNameFromState,
+  mode: "",
+  department: "",
+  teamMembers: "",
+});
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -29,7 +30,7 @@ const RegisterPaperPage = () => {
       <NavigationBar />
       <div className="mt-32 bg-black/60 border border-cyan-400 rounded-2xl shadow-[0_0_20px_#00eaff] p-8 w-[90%] max-w-lg backdrop-blur-md">
         <h1 className="text-3xl font-bold text-cyan-300 text-center mb-6">
-          Paper Presentation Registration
+          {formData.eventName} Registration
         </h1>
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Event Name */}
