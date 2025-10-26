@@ -17,7 +17,7 @@ export default function CosmicProfile() {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http/127.0.0.1:5000/api/users/profile", {
+      const res = await fetch("http://127.0.0.1:5000/api/users/profile", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
