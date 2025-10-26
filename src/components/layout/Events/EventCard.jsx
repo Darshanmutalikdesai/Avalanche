@@ -76,8 +76,8 @@ const EventCard = ({ title, description, image, path }) => {
         <p
           className="
             text-[10px] xs:text-xs sm:text-sm md:text-base
-            text-[#cdd9e5] mb-4 leading-snug
-            min-h-[50px] font-Orbitron
+            text-gray-100 mb-4 leading-snug
+            min-h-[50px] font-orbitron
           "
         >
           {description}

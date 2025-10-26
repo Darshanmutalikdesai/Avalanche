@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import BackgroundVideo from "../../assets/backround1.mp4";
+import NavigationBar from "./Common/Navbar";
 
 const RegisterPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -32,7 +32,23 @@ const RegisterPage = () => {
     "Shaikh College of Engineering and Technology (SCET), Belagavi",
     "Visvesvaraya Technological University, Belagavi",
   ];
-
+    useEffect(() => {
+      const numStars = 79;
+      const container = document.getElementById("star-container");
+      if (!container) return;
+      container.innerHTML = "";
+      for (let i = 0; i < numStars; i++) {
+        const star = document.createElement("div");
+        star.className = "star";
+        star.style.top = Math.random() * 100 + "%";
+        star.style.left = Math.random() * 100 + "%";
+        star.style.animationDelay = Math.random() * 5 + "s";
+        const size = Math.random() * 4 + 1;
+        star.style.width = size + "px";
+        star.style.height = size + "px";
+        container.appendChild(star);
+      }
+    }, []);
   useEffect(() => {
     setTimeout(() => setIsLoaded(true), 100);
     const glowInterval = setInterval(() => {
@@ -126,12 +142,18 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="fixed inset-0 overflow-auto flex flex-col font-['Nasalization'] text-white">
-      <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0">
-        <source src={BackgroundVideo} type="video/mp4" />
-      </video>
-      <div className="absolute inset-0 bg-black/70 z-0"></div>
+    <div className="relative min-h-screen w-screen overflow-x-hidden overflow-y-auto font-['Nasalization'] scroll-smooth"
+      style={{
+        background:
+          "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
+      }}>
 
+        <div id="star-container" className="stars absolute w-full h-full"></div>
+
+
+        <div className="relative z-[60]">
+            <NavigationBar />
+        </div>
       <div className="min-h-screen flex items-center justify-center relative z-10 px-4">
         <div className={`max-w-sm w-full transform transition-all duration-1000 ease-out ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
           <div className="group relative text-center bg-[rgba(0,15,30,0.85)] border border-[#00f7ff] rounded-xl shadow-[0_0_15px_rgba(0,247,255,0.3)] transition-all duration-300 ease-in-out hover:shadow-[0_0_20px_#00f7ff,0_0_30px_#00f7ff] px-4 pt-16 pb-6 overflow-visible">
@@ -235,6 +257,55 @@ const RegisterPage = () => {
         }
         .input-box input::placeholder {
           color: rgba(0,247,255,0.5);
+        }
+        html, body {
+          overflow-x: hidden !important;
+          width: 100%;
+          max-width: 100vw;
+        }
+        .stars .star {
+          position: absolute;
+          background: white;
+          border-radius: 50%;
+          opacity: 1;
+          animation: twinkle 3s infinite alternate, drift 20s linear infinite;
+        }
+        @keyframes twinkle {
+          from { opacity: 0.3; transform: scale(0.8); }
+          to { opacity: 1; transform: scale(1.2); }
+        }
+        @keyframes drift {
+          from { transform: translate(0, 0); }
+          to { transform: translate(20px, 20px); }
+        }
+        @keyframes slide {
+          0% { transform: translateX(-200px); }
+          100% { transform: translateX(calc(100vw + 200px)); }
+        }
+        .animate-slide {
+          animation: slide 30s linear infinite;
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-12px); }
+        }
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+        @keyframes wiggle {
+          0%, 100% { transform: rotate(0deg); }
+          25% { transform: rotate(2deg); }
+          75% { transform: rotate(-2deg); }
+        }
+        .animate-wiggle {
+          animation: wiggle 4s ease-in-out infinite;
+        }
+        @keyframes glow {
+          0%, 100% { filter: drop-shadow(0 0 6px #3b82f6); }
+          50% { filter: drop-shadow(0 0 16px #2563eb); }
+        }
+        .animate-glow {
+          animation: glow 2.5s ease-in-out infinite;
         }
       `}</style>
     </div>

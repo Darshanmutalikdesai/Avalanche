@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import BackgroundVideo from "../../assets/backround1.mp4";
 
 
 const RulebookComponent = () => {
@@ -67,7 +66,6 @@ const RulebookComponent = () => {
           perspective: 2500px;
           transform-style: preserve-3d;
           width: 100%;
-          background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
         }
         
         .book {
@@ -221,15 +219,6 @@ const RulebookComponent = () => {
 
 
       <div className="book-wrapper">
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="fixed top-0 left-0 w-full h-full object-cover z-0"
-      >
-        <source src={BackgroundVideo} type="video/mp4" />
-      </video>
         <div
           ref={bookRef}
           className="book"

@@ -24,7 +24,7 @@ const NavigationBar = () => {
 
   // Scroll blur
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 30);
+    const onScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
