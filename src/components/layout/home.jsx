@@ -170,45 +170,48 @@ export default function HomePage() {
 
       {/* Mega Event Section */}
       <section
-        id="mega-event"
-        className="relative z-20 flex flex-col justify-between items-center h-[70vh] sm:h-[80vh] md:h-[90vh] w-full overflow-hidden"
-      >
-        <video
-          className="absolute top-0 left-0 w-full h-full object-fill"
-          autoPlay
-          loop
-          muted
-          playsInline
-        >
-          <source src={MegaEventVideo} type="video/mp4" />
-        </video>
+  id="mega-event"
+  className="relative z-20 flex flex-col justify-between items-center w-full overflow-hidden h-[60vh] sm:h-[70vh] md:h-[90vh]"
+>
+  {/* Responsive Video */}
+  <video
+    className="absolute top-1/2 left-1/2 w-auto h-full min-w-full min-h-full transform -translate-x-1/2 -translate-y-1/2 object-contain"
+    autoPlay
+    loop
+    muted
+    playsInline
+  >
+    <source src={MegaEventVideo} type="video/mp4" />
+  </video>
 
-        {/* Top Text */}
-        <div className="relative z-10 flex flex-col items-center text-center mt-12 sm:mt-16 md:mt-20 space-y-4 px-4">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl text-white font-bold font-nasal drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
-            MEGA EVENT 2025
-          </h2>
-        </div>
+  {/* Top Text */}
+  <div className="relative z-10 flex flex-col items-center text-center mt-16 sm:mt-4 md:mt-4 space-y-4 px-4">
+    <h2 className="text-4xl sm:text-5xl md:text-6xl text-white font-bold font-nasal drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
+      MEGA EVENT
+    </h2>
+  </div>
 
-        {/* Bottom Button */}
-        <div className="relative z-10 mb-10 sm:mb-12 md:mb-16">
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            className="
-              px-8 py-4 sm:px-10 sm:py-5
-              text-lg sm:text-xl font-semibold
-              bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500
-              rounded-full shadow-lg shadow-pink-500/50
-              text-white tracking-wide
-              transition-all duration-300 hover:shadow-pink-400/70 hover:shadow-2xl
-            "
-            onClick={() => setShowModal(true)}
-          >
-            Register Now
-          </motion.button>
-        </div>
-      </section>
+  {/* Bottom Button */}
+  <div className="relative z-10 mb-10 sm:mb-12 md:mb-16">
+    <motion.button
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      className="
+        px-8 py-4 sm:px-10 sm:py-5
+        text-lg sm:text-xl font-semibold
+        bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500
+        rounded-full shadow-lg shadow-pink-500/50
+        text-white tracking-wide
+        transition-all duration-300 hover:shadow-pink-400/70 hover:shadow-2xl
+      "
+      onClick={() => setShowModal(true)}
+    >
+      Register Now
+    </motion.button>
+  </div>
+</section>
+
+
 
       {/* Modal */}
       {showModal && (
