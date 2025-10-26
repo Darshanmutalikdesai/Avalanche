@@ -1,13 +1,31 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import EventCard from "../layout/Events/EventCard";
 import NavigationBar from "./Common/Navbar";
 import image1 from "../../assets/treasure_image.jpg";
 import image2 from "../../assets/hackathon_image.jpg";
 import image3 from "../../assets/debate_image.jpg";
 
+export const DepartmentsData = [
+    { id: "AERO", title: "Aeronautical", description: "About the Department", image: image1},
+    { id: "ARCH", title: "Architecture", description: "About the Department", image: image2},
+    { id: "Phy", title: "Physics", description: "About the Department", image: image3},
+    { id: "MATH", title: "Maths", description: "About the Department", image: image3},
+    { id: "Chem", title: "Chemistry", description: "About the Department", image: image3},
+    { id: "Bsc", title: "BSc", description: "About the Department", image: image3},
+    { id: "CSE", title: "Computer Science", description: "About the Department", image: image3},
+    { id: "CIVIL", title: "Civil", description: "About the Department", image: image3},
+    { id: "EEE", title: "Electrical and Electronics", description: "About the Department", image: image3},
+    { id: "ECE", title: "Electronics and Communication", description: "About the Department", image: image3},
+    { id: "ISE", title: "Information Science", description: "About the Department", image: image3},
+    { id: "MBA", title: "MBA", description: "About the Department", image: image3},
+    { id: "MECH", title: "Mechanical", description: "About the Department", image: image3},
+    { id: "AIML", title: "AIML", description: "About the Department", image: image3},
+  ];
+
 const DepartmentEvents = () => {
   // ✅ Define state for modal popup
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  const navigate = useNavigate();
   useEffect(() => {
     const numStars = 79;
     const container = document.getElementById("star-container");
@@ -25,22 +43,6 @@ const DepartmentEvents = () => {
       container.appendChild(star);
     }
   }, []);
-
-  const DepartmentsData = [
-    { id: 1, title: "Aeronautical", description: "About the Department", image: image1, instructions: "To be added..." },
-    { id: 2, title: "Architecture", description: "About the Department", image: image2, instructions: "To be added..." },
-    { id: 3, title: "Physics", description: "About the Department", image: image3, instructions: "To be added..." },
-    { id: 4, title: "Maths", description: "About the Department", image: image3, instructions: "To be added..." },
-    { id: 5, title: "Chemistry", description: "About the Department", image: image3, instructions: "To be added..." },
-    { id: 6, title: "BSc", description: "About the Department", image: image3, instructions: "To be added..." },
-    { id: 7, title: "Computer Science", description: "About the Department", image: image3, instructions: "To be added..." },
-    { id: 8, title: "Electrical and Electronics", description: "About the Department", image: image3, instructions: "To be added..." },
-    { id: 9, title: "Electronics and Communication", description: "About the Department", image: image3, instructions: "To be added..." },
-    { id: 10, title: "Information Science", description: "About the Department", image: image3, instructions: "To be added..." },
-    { id: 11, title: "MBA", description: "About the Department", image: image3, instructions: "To be added..." },
-    { id: 12, title: "Mechanical", description: "About the Department", image: image3, instructions: "To be added..." },
-    { id: 13, title: "AIML", description: "About the Department", image: image3, instructions: "To be added..." },
-  ];
 
   return (
     <div className="relative min-h-screen w-screen overflow-x-hidden overflow-y-auto font-['Nasalization'] scroll-smooth"
@@ -79,67 +81,28 @@ const DepartmentEvents = () => {
             pb-16
           "
         >
-          {DepartmentsData.map((event) => (
+
+        {DepartmentsData.map((dept) => {
+          const slug = dept.id
+          return (
             <div
-              key={event.id}
-              onClick={() => setSelectedEvent(event)} // ✅ fixed
+              key={dept.id}
+              onClick={() => navigate(`/events/department-events/${slug}`)}
               className="cursor-pointer flex"
             >
               <EventCard
-                title={event.title}
-                description={event.description}
-                image={event.image}
-                path="#"
+                title={dept.title}
+                description={dept.description}
+                image={dept.image}
                 className="flex flex-col h-[380px] w-full"
               />
             </div>
-          ))}
+          );
+        })}
+
         </div>
       </div>
 
-      {/* Modal popup */}
-      {selectedEvent && (
-        <div
-          className="fixed inset-0 bg-black/70 z-[100] flex items-center justify-center p-4"
-          onClick={() => setSelectedEvent(null)}
-        >
-          <div
-            className="
-              bg-[rgba(0,15,30,0.95)]
-              border-2 border-[#00f7ff]
-              rounded-xl
-              shadow-[0_0_30px_rgba(0,247,255,0.6)]
-              max-w-2xl w-full
-              p-6 sm:p-8
-              relative
-              animate-[fadeIn_0.3s_ease-in-out]
-            "
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#ffcc00] mb-4 drop-shadow-[0_0_10px_#ffcc00]">
-              {selectedEvent.title}
-            </h2>
-            <p className="text-base sm:text-lg text-gray-300 whitespace-pre-line leading-relaxed mb-6">
-              {selectedEvent.instructions}
-            </p>
-            <button
-              className="
-                px-6 py-3
-                bg-transparent
-                border-2 border-[#00f7ff]
-                rounded-lg
-                text-[#00f7ff] font-bold
-                transition-all duration-300 ease-in-out
-                hover:bg-[#00f7ff] hover:text-black
-                hover:shadow-[0_0_15px_#00f7ff]
-              "
-              onClick={() => setSelectedEvent(null)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
       <style>{`
         html, body {
           overflow-x: hidden !important;

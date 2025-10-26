@@ -1,7 +1,8 @@
 // src/pages/Events.jsx
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-
+import DepartmentsData from "../layout/DepartmentEvents";
+import IndividualDeptEvents from "../layout/Common/IndividualDeptEvents";
 import NavigationBar from "../layout/Common/Navbar";
 import EventsPage from "../layout/EventsPage";
 import CentralEvents from "../layout/CentralEvents";
@@ -33,6 +34,8 @@ export default function Events() {
         {/* Central & Department Events */}
         <Route path="central-events" element={<CentralEvents />} />
         <Route path="department-events" element={<DepartmentEvents />} />
+        <Route path="department-events/:deptName" element={<IndividualDeptEvents departmentsData={DepartmentsData} />} />
+
 
         {/* Register Event (receives state from CentralEvents/DepartmentEvents) */}
         <Route path="register-events" element={<RegisterEvents />} />
