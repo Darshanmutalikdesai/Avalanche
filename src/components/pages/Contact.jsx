@@ -118,15 +118,18 @@ const Contact = () => {
         </div>
         <section
             id="about"
-            className="relative z-20 py-10 pt-40 px-6 sm:px-12 md:px-24 lg:px-32 text-center">
+            className="z-20 py-10 pt-40 px-8 text-center">
             <h1 className="text-8xl pb-10 text-[#00eafa] font-nasal font-bold text-center">
                 About KLS GIT
             </h1>
-            <h2 className="text-gray-100 text-2xl max-w-6xl font-orbitron mx-auto">
+            <div className="flex flex-col md:flex-row px-16 items-center justify-center gap-5 text-left">
+            <h2 className="text-gray-100 text-2xl max-w-5xl font-orbitron mx-auto md:ml-10">
                 KLS Gogte Institute of Technology (KLS GIT), the flagship Institute of Karnataka Law Society, Belagavi was incepted in the year 1979. <br />
                 <br />
                 KLS GIT is approved by AICTE and UGC and is an Autonomous Institution under Visvesvarya Technological University, Belagavi. The Institute also carries the distinction of getting A+ Accreditation from NAAC in the first and second cycle and conferred with NBA accreditation in 2004, 2008, 2015, 2021 and 2023
             </h2>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/K8g1peDIR04?si=jk_XqfPmLeOHNT4E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen className="rounded-xl shadow-lg"></iframe>
+            </div>
         </section>
         <div className="relative z-20 max-w-7xl mx-auto px-4 py-4">
         <h2 className="text-5xl text-center font-nasal text-[#00eafa] font-bold mt-16 mb-8">
