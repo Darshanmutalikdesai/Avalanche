@@ -17,7 +17,7 @@ export default function CosmicProfile() {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("/api/users/profile", {
+      const res = await fetch("http/127.0.0.1:5000/api/users/profile", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -67,7 +67,7 @@ export default function CosmicProfile() {
         billing_email: profile.email || "",
       };
 
-      const res = await fetch("http://localhost:3001/ccavRequestHandler", {
+      const res = await fetch("http://127.0.0.1:3001/ccavRequestHandler", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
