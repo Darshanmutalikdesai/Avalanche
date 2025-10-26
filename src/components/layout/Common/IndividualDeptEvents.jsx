@@ -1,6 +1,6 @@
 // src/layout/Common/IndividualDeptEvents.jsx
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import NavigationBar from "./Navbar";
 import eventsData from "../../data/event_details.json";
 import EventCard from "../Events/EventCard";
