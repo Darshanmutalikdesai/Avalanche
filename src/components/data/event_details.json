@@ -271,5 +271,15 @@
     "Round 1": "60 min",
     "Round 2": "60 min"
   }
+},
+
+{
+  "Eventname": "The Unknown Frame",
+  "Dept": "ARCH",
+  "MaxReg": 20,
+  "MinTeam": "Solo (Single member)",
+  "MaxTeam": "Solo (Single member)",
+  "Description": "'The Unknown frame' that celebrates mystery and discovery — inviting photographers to capture unseen beauty and hidden perspectives beyond the familiar."
+  
 }
 ]
