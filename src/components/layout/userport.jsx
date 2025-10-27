@@ -17,7 +17,7 @@ export default function CosmicProfile() {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://127.0.0.1:5000/api/users/profile", {
+      const res = await fetch("https://avalanche.git.edu/api/users/profile", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -51,20 +51,20 @@ export default function CosmicProfile() {
     try {
       const payload = {
         merchant_id: "4138253",
-        order_id: profile._id, // Avalanche ID as order_id
+        order_id: profile.user._id, // Avalanche ID as order_id
         currency: "INR",
         amount: 1, // Fixed ₹1
         redirect_url: "https://avalanche.git.edu/ccavResponseHandler",
         cancel_url: "https://avalanche.git.edu/ccavResponseHandler",
         language: "EN",
-        billing_name: profile.name || "",
+        billing_name: profile.user.name || "",
         billing_address: "",
         billing_city: "",
         billing_state: "",
         billing_zip: "",
         billing_country: "India",
         billing_tel: "",
-        billing_email: profile.email || "",
+        billing_email: profile.user.email || "",
       };
 
       const res = await fetch("http://127.0.0.1:3001/ccavRequestHandler", {
@@ -162,7 +162,7 @@ export default function CosmicProfile() {
 
             <div className="flex-1 text-center md:text-left">
               <h1 className="text-4xl md:text-5xl font-bold text-cyan-400 mb-2 tracking-wider">
-                {profile.name || "Participant"}
+                {profile.user.name || "Participant"}
               </h1>
             </div>
 
@@ -179,9 +179,9 @@ export default function CosmicProfile() {
 
           {/* Info grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <InfoCard icon={<Building2 className="w-5 h-5 text-cyan-400" />} label="INSTITUTE" value={profile.institute || "—"} />
-            <InfoCard icon={<Hash className="w-5 h-5 text-cyan-400" />} label="AVALANCHE ID" value={profile._id || "—"} />
-            <InfoCard icon={<GraduationCap className="w-5 h-5 text-cyan-400" />} label="ROLL NUMBER" value={profile.rollNumber || "—"} />
+            <InfoCard icon={<Building2 className="w-5 h-5 text-cyan-400" />} label="INSTITUTE" value={profile.user.institute || "—"} />
+            <InfoCard icon={<Hash className="w-5 h-5 text-cyan-400" />} label="AVALANCHE ID" value={profile.user._id || "—"} />
+            <InfoCard icon={<GraduationCap className="w-5 h-5 text-cyan-400" />} label="ROLL NUMBER" value={profile.user.rollNumber || "—"} />
           </div>
 
           {/* Registered events */}
