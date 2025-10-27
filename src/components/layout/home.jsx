@@ -198,7 +198,7 @@ export default function HomePage() {
   <motion.button
     whileHover={{ scale: 1.08 }}
     whileTap={{ scale: 0.95 }}
-    onClick={() => setShowModal(true)}
+    onClick={() => setShowModal(false)}
     className="relative overflow-hidden
       px-14 py-3 rounded-full
       text-white font-extrabold text-2xl tracking-widest uppercase
@@ -207,7 +207,7 @@ export default function HomePage() {
       shadow-[0_0_40px_rgba(255,120,0,0.9)]
       transition-all duration-300"
   >
-    <span className="relative z-20">🏁 Register Now</span>
+    <span className="relative z-20">🏁 Coming Soon... </span>
 
     {/* 🔥 Neon Blue Flames */}
     <span className="absolute inset-x-0 bottom-0 h-[160%] opacity-80 blur-[10px]
