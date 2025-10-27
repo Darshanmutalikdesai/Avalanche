@@ -64,7 +64,7 @@ const DepartmentEvents = () => {
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-nasal text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
             Departmental Events
           </h1>
-          <p className="text-base sm:text-lg font-orbitron lg:text-xl text-[#b0f7ff] opacity-80">
+          <p className="text-base sm:text-lg font-orbitron lg:text-xl text-gray-100 opacity-100">
             Discover the main highlights of AVALANCHE
           </p>
         </div>
