@@ -19,7 +19,7 @@ export default function CosmicProfile() {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("https://avalanche.git.edu/api/users/profile", {
+      const res = await fetch("http://localhost:5000/api/users/profile", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
