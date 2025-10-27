@@ -1,18 +1,23 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom"; // ✅ Removed BrowserRouter
-import CosmicProfile from "../layout/userport"; // check path
+import { Routes, Route } from "react-router-dom";
+import CosmicProfile from "../layout/userport"; // ✅ Profile page
+import NavigationBar from "../layout/Common/Navbar"; // ✅ Import your Navbar component (adjust path if needed)
 
 const User = () => {
   return (
-    <> {/* ✅ No BrowserRouter here - it's already in App.jsx */}
+    <>
+      {/* ✅ Navbar visible on all user portal pages */}
+      <NavigationBar />
+
+      {/* ✅ Route configuration */}
       <Routes>
         {/* Default route for /user-portal/ */}
         <Route index element={<CosmicProfile />} />
-        
-        {/* Alternative: /user-portal/profile */}
+
+        {/* /user-portal/profile */}
         <Route path="profile" element={<CosmicProfile />} />
-        
-        {/* You can add more nested routes here */}
+
+        {/* Future routes */}
         {/* <Route path="settings" element={<UserSettings />} /> */}
         {/* <Route path="dashboard" element={<UserDashboard />} /> */}
       </Routes>

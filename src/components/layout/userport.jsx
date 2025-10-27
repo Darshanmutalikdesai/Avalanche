@@ -6,35 +6,22 @@ import {
   Hash,
   Building2,
   GraduationCap,
+  LogOut,
 } from "lucide-react";
-import NavigationBar from "./Common/Navbar";
-import Footer from "../../components/layout/Common/footer";
+import { useNavigate } from "react-router-dom";
 
 export default function CosmicProfile() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isPaying, setIsPaying] = useState(false);
-  useEffect(() => {
-      const numStars = 140;
-      const container = document.getElementById("star-container");
-      if (!container) return;
-      container.innerHTML = "";
-      for (let i = 0; i < numStars; i++) {
-        const star = document.createElement("div");
-        star.className = "star";
-        star.style.top = Math.random() * 100 + "%";
-        star.style.left = Math.random() * 100 + "%";
-        star.style.animationDelay = Math.random() * 5 + "s";
-        const size = Math.random() * 4 + 1;
-        star.style.width = size + "px";
-        star.style.height = size + "px";
-        container.appendChild(star);
-      }
-    }, []);
+  const navigate = useNavigate();
 
+  // 🔗 Fetch user profile
   const fetchProfile = async () => {
+    setLoading(true);
     try {
       const token = localStorage.getItem("token");
+      if (!token) throw new Error("No token found. Please login.");
+
       const res = await fetch("http://localhost:5000/api/users/profile", {
         method: "GET",
         headers: {
@@ -42,75 +29,53 @@ export default function CosmicProfile() {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (!res.ok) throw new Error("Unauthorized");
+
+      if (!res.ok) {
+        if (res.status === 401) throw new Error("Unauthorized. Please login.");
+        throw new Error("Failed to fetch profile");
+      }
+
       const data = await res.json();
-      setProfile(data);
-    } catch (error) {
-      console.error("Failed to fetch profile:", error.message);
+      const user = data.user;
+
+      setProfile({
+        _id: user._id || user.id,
+        name: user.name,
+        email: user.email,
+        institute: user.institute || "—",
+        rollNumber: user.rollNumber || "—",
+        registeredEvents: user.registeredEvents || [],
+        hasPaid: user.hasPaid || false,
+      });
+    } catch (err) {
+      console.error("Profile fetch error:", err.message);
+      alert(err.message);
     } finally {
       setLoading(false);
     }
   };
 
-  function InfoCard({ icon, label, value }) {
-    return (
-      <div className="bg-slate-800/60 border border-cyan-500/30 rounded-xl p-5 shadow-md hover:border-cyan-400/50 transition-all">
-        <div className="flex items-start gap-3">
-          {icon}
-          <div>
-            <div className="text-cyan-400/60 text-xs font-mono mb-1">
-              {label}
-            </div>
-            <div className="text-white text-lg break-words">{value}</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   useEffect(() => {
     fetchProfile();
   }, []);
 
-  const handlePayment = async () => {
+  // 🔗 Redirect to backend payment page
+  const handlePaymentRedirect = () => {
     if (!profile?._id) {
-      alert("Avalanche ID not found!");
+      alert("User ID not found!");
       return;
     }
+    window.location.href = `https://backendavalanche.git.edu`;
+  };
 
-    setIsPaying(true);
-
-    try {
-      const payload = {
-        merchant_id: "4138253",
-        order_id: profile.user._id,
-        currency: "INR",
-        amount: 1,
-        redirect_url: "https://avalanche.git.edu/ccavResponseHandler",
-        cancel_url: "https://avalanche.git.edu/ccavResponseHandler",
-        language: "EN",
-        billing_name: profile.user.name || "",
-        billing_country: "India",
-        billing_email: profile.user.email || "",
-      };
-
-      const res = await fetch("http://127.0.0.1:3001/ccavRequestHandler", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const htmlResponse = await res.text();
-      const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = htmlResponse;
-      document.body.appendChild(tempDiv);
-      const form = tempDiv.querySelector("form");
-      if (form) form.submit();
-    } catch (error) {
-      console.error("Payment submission error:", error);
-      alert("Error initiating payment. Try again.");
-    } finally {
-      setIsPaying(false);
+  // 🚪 Logout handler
+  const handleLogout = () => {
+    if (window.confirm("Are you sure you want to logout?")) {
+      // Clear token from localStorage
+      localStorage.removeItem("token");
+      
+      // Navigate to login page
+      navigate("/auth");
     }
   };
 
@@ -129,172 +94,180 @@ export default function CosmicProfile() {
     );
 
   return (
-    <div cclassName="relative min-h-screen w-screen overflow-x-hidden overflow-y-auto font-['Nasalization'] scroll-smooth"
-      style={{
-        background:
-          "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
-      }}>
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden">
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: "50px 50px",
+        }}
+      />
 
-        <div id="star-container" className="stars absolute w-full h-full"></div>
+      <div className="absolute inset-0">
+        {[...Array(30)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full bg-cyan-400"
+            style={{
+              width: "2px",
+              height: "2px",
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              animation: `twinkle ${Math.random() * 3 + 2}s infinite ${Math.random() * 3}s`,
+              boxShadow: "0 0 4px rgba(34, 211, 238, 0.8)",
+            }}
+          />
+        ))}
+      </div>
 
+      <style>{`
+        @keyframes twinkle {0%,100% {opacity:0.2;} 50% {opacity:1;}}
+        @keyframes glow-pulse {0%,100% {opacity:0.5;} 50% {opacity:1;}}
+      `}</style>
 
-        <div className="relative z-[60]">
-            <NavigationBar />
-        </div>
-      {/* Content container */}
-      <main className="flex-grow flex justify-center px-4 py-16 md:py-20">
-        <div className="w-full backdrop-blur-lg max-w-4xl">
-          <div className="p-6 sm:p-10 md:p-12 rounded-2xl border border-cyan-500/30">
-            {/* Header */}
-            <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10 mb-8">
-              <div className="w-28 h-28 md:w-32 md:h-32 flex items-center justify-center bg-slate-800 border-2 border-cyan-500 rounded-full">
-                <User className="w-14 h-14 text-cyan-400" />
-              </div>
-              <div className="flex-1 text-center md:text-left">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-cyan-400 mb-1">
-                  {profile.user.name || "Participant"}
-                </h1>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <div
-                  className="w-3 h-3 bg-green-400 rounded-full"
-                  style={{
-                    boxShadow: "0 0 10px rgba(74, 222, 128, 0.8)",
-                    animation: "glow-pulse 2s infinite",
-                  }}
-                />
-                <span className="text-green-400 text-xs font-mono">ACTIVE</span>
-              </div>
+      <div className="relative max-w-4xl w-full z-10">
+        <div
+          className="relative bg-slate-900/90 backdrop-blur-sm p-8 md:p-12"
+          style={{
+            clipPath:
+              "polygon(0 20px, 20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px))",
+          }}
+        >
+          {/* Header */}
+          <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
+            <div className="relative flex-shrink-0 w-32 h-32 bg-slate-800 border-2 border-cyan-500 flex items-center justify-center">
+              <User className="w-16 h-16 text-cyan-400" />
             </div>
 
-            {/* Divider */}
-            <div className="h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent mb-8" />
-
-            {/* Info cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-10">
-              <InfoCard
-                icon={<Building2 className="w-5 h-5 text-cyan-400" />}
-                label="INSTITUTE"
-                value={profile.user.institute || "—"}
-              />
-              <InfoCard
-                icon={<Hash className="w-5 h-5 text-cyan-400" />}
-                label="AVALANCHE ID"
-                value={profile.user._id || "—"}
-              />
-              <InfoCard
-                icon={<GraduationCap className="w-5 h-5 text-cyan-400" />}
-                label="ROLL NUMBER"
-                value={profile.user.rollNumber || "—"}
-              />
+            <div className="flex-1 text-center md:text-left">
+              <h1 className="text-4xl md:text-5xl font-bold text-cyan-400 mb-2 tracking-wider">
+                {profile.name || "Participant"}
+              </h1>
             </div>
 
-            {/* Registered Events */}
-            <div className="bg-slate-800/40 border border-cyan-500/40 rounded-xl p-6 mb-8">
-              <div className="flex items-center gap-3 mb-5">
-                <Calendar className="w-6 h-6 text-cyan-400" />
-                <h2 className="text-2xl font-bold text-cyan-400">
-                  REGISTERED EVENTS
-                </h2>
-              </div>
-              <div className="space-y-4">
-                {(profile.registeredEvents || []).length > 0 ? (
-                  profile.registeredEvents.map((event, index) => (
-                    <div
-                      key={index}
-                      className="bg-slate-900/60 border border-cyan-500/30 rounded-lg p-4 hover:border-cyan-400/50 transition-all"
-                    >
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-                        <div className="flex items-center gap-3 flex-1">
-                          <Award className="w-5 h-5 text-cyan-400" />
-                          <span className="text-white text-base break-words">
-                            {event}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                          <span className="text-green-400 text-xs font-mono">
-                            CONFIRMED
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-cyan-300/60 text-sm font-mono">
-                    No events registered yet.
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {/* Payment */}
-            <div className="flex justify-center">
-              <button
-                onClick={handlePayment}
-                disabled={isPaying}
-                className="bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-3 rounded-lg font-bold transition-all disabled:opacity-60"
-              >
-                {isPaying ? "Processing..." : "Pay ₹1"}
-              </button>
+            <div className="flex flex-col items-center gap-2">
+              <div
+                className="w-3 h-3 bg-green-400 rounded-full"
+                style={{
+                  boxShadow: "0 0 10px rgba(74, 222, 128, 0.8)",
+                  animation: "glow-pulse 2s infinite",
+                }}
+              />
+              <span className="text-green-400 text-xs font-mono">ACTIVE</span>
             </div>
           </div>
-        </div>
-      </main>
 
-      {/* ✅ Fixed footer at bottom, always visible but not overlapping */}
-      <Footer />
-      <style>{`
-        html, body {
-          overflow-x: hidden !important;
-          width: 100%;
-          max-width: 100vw;
-        }
-        .stars .star {
-          position: absolute;
-          background: white;
-          border-radius: 50%;
-          opacity: 1;
-          animation: twinkle 3s infinite alternate, drift 20s linear infinite;
-        }
-        @keyframes twinkle {
-          from { opacity: 0.3; transform: scale(0.8); }
-          to { opacity: 1; transform: scale(1.2); }
-        }
-        @keyframes drift {
-          from { transform: translate(0, 0); }
-          to { transform: translate(20px, 20px); }
-        }
-        @keyframes slide {
-          0% { transform: translateX(-200px); }
-          100% { transform: translateX(calc(100vw + 200px)); }
-        }
-        .animate-slide {
-          animation: slide 30s linear infinite;
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-12px); }
-        }
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
-        @keyframes wiggle {
-          0%, 100% { transform: rotate(0deg); }
-          25% { transform: rotate(2deg); }
-          75% { transform: rotate(-2deg); }
-        }
-        .animate-wiggle {
-          animation: wiggle 4s ease-in-out infinite;
-        }
-        @keyframes glow {
-          0%, 100% { filter: drop-shadow(0 0 6px #3b82f6); }
-          50% { filter: drop-shadow(0 0 16px #2563eb); }
-        }
-        .animate-glow {
-          animation: glow 2.5s ease-in-out infinite;
-        }
-      `}</style>
+          <div className="relative h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent mb-8" />
+
+          {/* Info grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <InfoCard
+              icon={<Building2 className="w-5 h-5 text-cyan-400" />}
+              label="INSTITUTE"
+              value={profile.institute}
+            />
+            <InfoCard
+              icon={<Hash className="w-5 h-5 text-cyan-400" />}
+              label="AVALANCHE ID"
+              value={profile._id || "Not found"}
+            />
+            <InfoCard
+              icon={<GraduationCap className="w-5 h-5 text-cyan-400" />}
+              label="ROLL NUMBER"
+              value={profile.rollNumber}
+            />
+          </div>
+
+          {/* Registered events */}
+          <div className="relative bg-slate-800/30 border border-cyan-500/40 p-6 mb-6">
+            <div className="flex items-center gap-3 mb-6">
+              <Calendar className="w-6 h-6 text-cyan-400" />
+              <h2 className="text-2xl font-bold text-cyan-400 tracking-wider">
+                REGISTERED EVENTS
+              </h2>
+            </div>
+            <div className="space-y-4">
+              {profile.registeredEvents.length > 0 ? (
+                profile.registeredEvents.map((event, index) => (
+                  <div
+                    key={index}
+                    className="relative bg-slate-900/50 border border-cyan-500/30 p-4 hover:bg-slate-900/70 hover:border-cyan-400/50 transition-all"
+                  >
+                    <div className="flex items-center gap-4">
+                      <Award className="w-5 h-5 text-cyan-400 flex-shrink-0" />
+                      <span className="text-white text-lg flex-1">
+                        {event}
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                        <span className="text-green-400 text-xs font-mono">
+                          CONFIRMED
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-cyan-300/60 text-sm font-mono">
+                  No events registered yet.
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Payment Section */}
+          {profile.hasPaid ? (
+            <div className="relative bg-green-900/30 border border-green-500/40 p-6">
+              <div className="flex items-center justify-center gap-3">
+                <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
+                  <Award className="w-6 h-6 text-green-400" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-green-400 tracking-wider">
+                    PAYMENT SUCCESSFUL
+                  </h3>
+                  <p className="text-green-300/80 text-sm font-mono mt-1">
+                    Your registration is complete!
+                  </p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="mt-4 flex justify-center gap-4">
+              <button
+                className="bg-cyan-500 text-white px-8 py-3 rounded-lg font-bold hover:bg-cyan-600 transition-all"
+                onClick={handlePaymentRedirect}
+              >
+                Pay ₹1
+              </button>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 hover:border-red-400 text-red-400 hover:text-red-300 px-6 py-3 rounded-lg transition-all duration-300"
+              >
+                <LogOut className="w-4 h-4" />
+                <span className="font-mono text-sm font-bold">LOGOUT</span>
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function InfoCard({ icon, label, value }) {
+  return (
+    <div className="relative bg-slate-800/50 border border-cyan-500/30 p-5">
+      <div className="flex items-start gap-3">
+        {icon}
+        <div>
+          <div className="text-cyan-400/60 text-xs font-mono mb-1">{label}</div>
+          <div className="text-white text-lg">{value}</div>
+        </div>
+      </div>
     </div>
   );
 }

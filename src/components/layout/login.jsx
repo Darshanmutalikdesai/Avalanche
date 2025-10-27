@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Footer from "./Common/footer";
-
 
 const RegisterPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -46,68 +44,141 @@ const RegisterPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // ✅ FIXED Register API - Matches backend exactly!
   const registerUser = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/users/register", {
+      // Validate inputs
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        alert("⚠️ Please enter a valid email address!");
+        setLoading(false);
+        return;
+      }
+
+      const phoneRegex = /^[0-9]{10}$/;
+      if (!phoneRegex.test(formData.phone)) {
+        alert("⚠️ Please enter a valid 10-digit phone number!");
+        setLoading(false);
+        return;
+      }
+
+      if (formData.password.length < 6) {
+        alert("⚠️ Password must be at least 6 characters long!");
+        setLoading(false);
+        return;
+      }
+
+      // ✅ CORRECTED PAYLOAD - Matches your backend schema
+      const payload = {
+        name: formData.name.trim(),
+        email: formData.email.trim().toLowerCase(),
+        password: formData.password,
+        pNumber: formData.phone.trim(),                    // ✅ Backend expects 'pNumber'
+        institute: formData.clgName,                       // ✅ Backend expects 'institute'
+        rollNumber: formData.usn.trim().toUpperCase(),     // ✅ Backend expects 'rollNumber'
+      };
+
+      console.log("📤 Sending registration data:", payload);
+
+      const response = await fetch(`http://localhost:5000/api/users/register`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          pNumber: formData.phone,
-          rollNumber: formData.usn,
-          institute: formData.clgName,
-          password: formData.password,
-        }),
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(payload),
       });
+
       const data = await response.json();
+      console.log("📥 Backend response:", data);
+      
       if (response.ok) {
-        alert(data.message);
+        alert("✅ Registration successful! Please check your email for OTP.");
         navigate("/otp", { state: { email: formData.email } });
       } else {
-        alert(data.message || "Registration failed.");
+        alert(`❌ ${data.message || "Registration failed"}`);
+        console.error("Registration error:", data);
       }
     } catch (error) {
-      alert("Server error: " + error.message);
+      console.error("🔴 Network Error:", error);
+      alert("⚠️ Cannot connect to server. Make sure backend is running on port 5000.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
+  // ✅ Login API
   const loginUser = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/users/login", {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        alert("⚠️ Please enter a valid email address!");
+        setLoading(false);
+        return;
+      }
+
+      if (!formData.password) {
+        alert("⚠️ Please enter your password!");
+        setLoading(false);
+        return;
+      }
+
+      const response = await fetch(`http://localhost:5000/api/users/login`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
         body: JSON.stringify({
-          email: formData.email,
+          email: formData.email.trim().toLowerCase(),
           password: formData.password,
         }),
       });
+
       const data = await response.json();
+      
       if (response.ok) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("payment", data.payment);
-        alert("Login successful!");
+        alert("✅ Login successful!");
         navigate("/home");
       } else {
-        alert(data.message || "Login failed.");
+        alert(`❌ ${data.message || "Login failed"}`);
+        console.error("Login error:", data);
       }
     } catch (error) {
-      alert("Server error: " + error.message);
+      console.error("Login error:", error);
+      alert("⚠️ Cannot connect to server");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const handleSubmit = () => {
     if (isSignUp) {
+      if (
+        !formData.name?.trim() ||
+        !formData.email?.trim() ||
+        !formData.password ||
+        !formData.usn?.trim() ||
+        !formData.clgName ||
+        !formData.phone?.trim()
+      ) {
+        alert("⚠️ Please fill all required fields!");
+        return;
+      }
       if (formData.password !== formData.confirmPassword) {
-        alert("Passwords do not match!");
+        alert("⚠️ Passwords do not match!");
         return;
       }
       registerUser();
     } else {
+      if (!formData.email?.trim() || !formData.password) {
+        alert("⚠️ Please enter both email and password!");
+        return;
+      }
       loginUser();
     }
   };
@@ -136,7 +207,6 @@ const RegisterPage = () => {
           }`}
         >
           <div className="group relative text-center bg-[rgba(0,15,30,0.85)] border border-[#00f7ff] rounded-xl shadow-[0_0_15px_rgba(0,247,255,0.3)] transition-all duration-300 ease-in-out hover:shadow-[0_0_20px_#00f7ff,0_0_30px_#00f7ff] px-4 pt-16 pb-6 overflow-visible">
-            {/* Glow Rocket */}
             <div
               className={`absolute -top-12 left-1/2 -translate-x-1/2 transition-all duration-700 ease-in-out ${
                 animateGlow ? "scale-110" : "scale-100"
@@ -149,10 +219,10 @@ const RegisterPage = () => {
 
             <div className="mt-6 mb-6">
               <h1 className="text-xl md:text-2xl font-semibold text-[#ffcc00] mb-1 drop-shadow-[0_0_6px_#ffcc00] uppercase tracking-wide">
-                AVALANCHE AUTH
+                {isSignUp ? "REGISTER" : "LOGIN"}
               </h1>
-              <p className="text-xs text-[#cfcfcf] mb-3 min-h-[18px] tracking-widest">
-                {isSignUp ? "Create your account" : "Access your account"}
+              <p className="text-xs text-[#cfcfcf] mb-3 tracking-widest">
+                {isSignUp ? "Create your Avalanche account" : "Access your account"}
               </p>
             </div>
 
@@ -161,20 +231,22 @@ const RegisterPage = () => {
                 <input
                   type="text"
                   name="name"
-                  placeholder="Full Name"
+                  placeholder="Full Name *"
                   value={formData.name}
                   onChange={handleInputChange}
                   className="input-box"
+                  required
                 />
               )}
 
               <input
                 type="email"
                 name="email"
-                placeholder="Email Address"
+                placeholder="Email Address *"
                 value={formData.email}
                 onChange={handleInputChange}
                 className="input-box"
+                required
               />
 
               {isSignUp && (
@@ -182,18 +254,22 @@ const RegisterPage = () => {
                   <input
                     type="tel"
                     name="phone"
-                    placeholder="Phone Number"
+                    placeholder="Phone Number (10 digits) *"
                     value={formData.phone}
                     onChange={handleInputChange}
+                    maxLength="10"
+                    pattern="[0-9]{10}"
                     className="input-box"
+                    required
                   />
                   <select
                     name="clgName"
                     value={formData.clgName}
                     onChange={handleInputChange}
                     className="input-box"
+                    required
                   >
-                    <option value="">Select College</option>
+                    <option value="">Select College *</option>
                     {colleges.map((college, idx) => (
                       <option key={idx} value={college}>
                         {college}
@@ -203,10 +279,11 @@ const RegisterPage = () => {
                   <input
                     type="text"
                     name="usn"
-                    placeholder="USN"
+                    placeholder="USN (Roll Number) *"
                     value={formData.usn}
                     onChange={handleInputChange}
                     className="input-box"
+                    required
                   />
                 </>
               )}
@@ -214,34 +291,42 @@ const RegisterPage = () => {
               <input
                 type="password"
                 name="password"
-                placeholder="Password"
+                placeholder={`Password ${isSignUp ? '(min 6 chars) *' : '*'}`}
                 value={formData.password}
                 onChange={handleInputChange}
+                minLength={isSignUp ? "6" : undefined}
                 className="input-box"
+                required
               />
 
               {isSignUp && (
                 <input
                   type="password"
                   name="confirmPassword"
-                  placeholder="Confirm Password"
+                  placeholder="Confirm Password *"
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                   className="input-box"
+                  required
                 />
               )}
 
               <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className="w-full p-3 mt-4 bg-[#ffcc00] text-black font-semibold rounded-lg"
+                className={`w-full p-3 mt-4 font-semibold rounded-lg transition-all duration-300 ${
+                  loading 
+                    ? "bg-gray-500 cursor-not-allowed" 
+                    : "bg-[#ffcc00] hover:bg-[#ffd700] text-black"
+                }`}
               >
                 {loading ? "Processing..." : isSignUp ? "Register" : "Login"}
               </button>
 
               <button
                 onClick={toggleMode}
-                className="mt-2 text-xs text-[#00f7ff] hover:text-[#ffcc00] underline"
+                disabled={loading}
+                className="mt-2 text-xs text-[#00f7ff] hover:text-[#ffcc00] underline transition-colors"
               >
                 {isSignUp
                   ? "Already have an account? Sign In"
@@ -270,10 +355,6 @@ const RegisterPage = () => {
         </div>
       </div>
 
-
-                <Footer/>
-
-
       <style>{`
         @font-face {
           font-family: 'Nasalization';
@@ -281,15 +362,22 @@ const RegisterPage = () => {
         }
         .input-box {
           width: 100%;
-          padding: 0.6rem;
+          padding: 0.75rem;
           margin-bottom: 0.5rem;
           border: 1px solid #00f7ff;
-          border-radius: 0.4rem;
+          border-radius: 0.5rem;
           background: rgba(0,15,30,0.9);
           color: #cfcfcf;
           outline: none;
+          transition: all 0.3s ease;
         }
-        .input-box::placeholder { color: rgba(0,247,255,0.5); }
+        .input-box:focus {
+          border-color: #ffcc00;
+          box-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+        }
+        .input-box::placeholder { 
+          color: rgba(0,247,255,0.5);
+        }
       `}</style>
     </div>
   );
