@@ -7,10 +7,10 @@ import EventCard from "../Events/EventCard";
 import { DepartmentsData } from "../DepartmentEvents";
 import Footer from "../Common/footer";
 
-
 export default function IndividualDeptEvents() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const { deptName } = useParams();
+
   useEffect(() => {
     const numStars = 79;
     const container = document.getElementById("star-container");
@@ -29,32 +29,26 @@ export default function IndividualDeptEvents() {
     }
   }, []);
 
-  // Convert slug to normal readable form
-  const readableName = DepartmentsData.find(
-    (dept) => dept.id === deptName)?.title || deptName;
+  const readableName =
+    DepartmentsData.find((dept) => dept.id === deptName)?.title || deptName;
 
-  // Filter events belonging to this department
-  const departmentEvents = eventsData.filter(
-    (event) =>
-      event.Dept === deptName
-  );
+  const departmentEvents = eventsData.filter((event) => event.Dept === deptName);
 
   return (
     <div
-      className="relative min-h-screen w-screen overflow-x-hidden overflow-y-auto font-['Nasalization'] scroll-smooth"
+      className="relative min-h-screen w-screen overflow-x-hidden overflow-y-auto font-['Nasalization'] scroll-smooth flex flex-col"
       style={{
-        background:
-          "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
-      }}>
+        background: "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
+      }}
+    >
+      <div id="star-container" className="stars absolute w-full h-full"></div>
 
-        <div id="star-container" className="stars absolute w-full h-full"></div>
+      <div className="relative z-[60]">
+        <NavigationBar />
+      </div>
 
-
-        <div className="relative z-[60]">
-            <NavigationBar />
-        </div>
-      <div className="pt-32 px-6 text-center">
-
+      {/* Page Content */}
+      <div className="flex-grow pt-32 px-6 text-center relative z-[70]">
         <h1 className="text-5xl font-bold text-[#00eaff] mt-8 mb-12 drop-shadow-[0_0_15px_rgba(0,234,255,0.7)]">
           {readableName} Department Events
         </h1>
@@ -69,18 +63,17 @@ export default function IndividualDeptEvents() {
                 onClick={() => setSelectedEvent(event)}
                 className="cursor-pointer transition-transform duration-300 hover:scale-105"
               >
-                <EventCard
-                  title={event.Eventname}
-                  image={event.image}
-                />
+                <EventCard title={event.Eventname} image={event.image} />
               </div>
             ))}
           </div>
         )}
       </div>
 
-        <Footer/>
+      {/* Footer (Always at bottom) */}
+      <Footer />
 
+      {/* Styles */}
       <style>{`
         html, body {
           overflow-x: hidden !important;
@@ -132,7 +125,9 @@ export default function IndividualDeptEvents() {
           animation: glow 2.5s ease-in-out infinite;
         }
       `}</style>
-    {selectedEvent && (
+
+      {/* Modal */}
+      {selectedEvent && (
         <div
           className="fixed inset-0 bg-black/70 z-[100] flex items-center justify-center p-4"
           onClick={() => setSelectedEvent(null)}
