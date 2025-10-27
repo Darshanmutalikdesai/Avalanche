@@ -4,6 +4,8 @@ import EventCard from "../layout/Events/EventCard";
 import image1 from "../../assets/central_image.jpg";
 import image2 from "../../assets/dept_image.jpg";
 import image3 from "../../assets/puc_image.jpg";
+import Footer from "../../components/layout/Common/footer";
+
 
 const EventsPage = () => {
   useEffect(() => {
@@ -99,6 +101,9 @@ const EventsPage = () => {
           ))}
         </div>
       </div>
+
+          <Footer/>
+
       <style>{`
         html, body {
           overflow-x: hidden !important;

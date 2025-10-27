@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
 
 
+
+
 const RulebookComponent = () => {
   const bookRef = useRef(null);
 
@@ -279,6 +281,8 @@ const RulebookComponent = () => {
           <div className="book-spine">KLS GIT AVALANCHE 2025</div>
         </div>
       </div>
+
+      
     </>
   );
 };

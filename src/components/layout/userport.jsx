@@ -7,6 +7,8 @@ import {
   Building2,
   GraduationCap,
 } from "lucide-react";
+import Footer from "../../components/layout/Common/footer";
+
 
 export default function CosmicProfile() {
   const [profile, setProfile] = useState(null);
@@ -222,6 +224,7 @@ export default function CosmicProfile() {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }

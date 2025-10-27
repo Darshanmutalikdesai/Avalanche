@@ -7,6 +7,8 @@ import shraddha from "../../assets/shraddha.png";
 import srushti from "../../assets/srushti.png";
 import shreya from "../../assets/shreya.png";
 import nishanth from "../../assets/nishanth.png";
+import Footer from "../../components/layout/Common/footer";
+
 
 const Contact = () => {
   
@@ -191,6 +193,9 @@ const Contact = () => {
             />
           ))}
         </div>
+
+          <Footer/>
+
       <style>{`
         html, body {
           overflow-x: hidden !important;

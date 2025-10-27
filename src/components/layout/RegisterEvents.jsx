@@ -11,6 +11,8 @@ import {
   Calendar,
   Users,
 } from "lucide-react";
+import Footer from "../../components/layout/Common/footer";
+
 
 // ---------------- Reusable UI Components ----------------
 
@@ -248,6 +250,9 @@ const RegisterEvents = () => {
           </p>
         )}
       </div>
+
+        <Footer/>
+
       <style>{`
         html, body {
           overflow-x: hidden !important;

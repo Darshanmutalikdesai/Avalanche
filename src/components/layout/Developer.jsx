@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import NavigationBar from './Common/Navbar';
 import amogh from "../../assets/Amogh.png";
+import Footer from "../../components/layout/Common/footer";
+
 
 const DeveloperCard = ({ name, designation, developerType, linkedin, phone, image }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -228,6 +230,8 @@ const DevelopersPage = () => {
           ))}
         </div>
       </div>
+
+      <Footer/>
       <style>{`
         html, body {
           overflow-x: hidden !important;

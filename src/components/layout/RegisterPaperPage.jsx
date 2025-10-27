@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import NavigationBar from "../layout/Common/Navbar";
+import Footer from "../../components/layout/Common/footer";
+
 
 const RegisterPaperPage = () => {
   const location = useLocation();
@@ -105,6 +107,7 @@ const [formData, setFormData] = useState({
           </button>
         </form>
       </div>
+      <Footer/>
     </div>
   );
 };

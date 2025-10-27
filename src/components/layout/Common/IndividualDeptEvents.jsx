@@ -5,6 +5,8 @@ import NavigationBar from "./Navbar";
 import eventsData from "../../data/event_details.json";
 import EventCard from "../Events/EventCard";
 import { DepartmentsData } from "../DepartmentEvents";
+import Footer from "../Common/footer";
+
 
 export default function IndividualDeptEvents() {
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -76,6 +78,9 @@ export default function IndividualDeptEvents() {
           </div>
         )}
       </div>
+
+        <Footer/>
+
       <style>{`
         html, body {
           overflow-x: hidden !important;

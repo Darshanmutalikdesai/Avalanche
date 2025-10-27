@@ -6,6 +6,8 @@ import NavigationBar from "../layout/Common/Navbar";
 import Logo from "../../assets/weblogo.svg";
 import R2D2Image from "../../assets/R2D2.png";
 import MegaEventVideo from "../../assets/megaevent_bg.mp4";
+import Footer from "../../components/layout/Common/footer";
+
 
 // Star Button Component
 const StarButton = ({ onClick }) => {
@@ -191,24 +193,122 @@ export default function HomePage() {
     </h2>
   </div>
 
-  {/* Bottom Button */}
-  <div className="relative z-10 mb-10 sm:mb-12 md:mb-16">
-    <motion.button
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-      className="
-        px-8 py-4 sm:px-10 sm:py-5
-        text-lg sm:text-xl font-semibold
-        bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500
-        rounded-full shadow-lg shadow-pink-500/50
-        text-white tracking-wide
-        transition-all duration-300 hover:shadow-pink-400/70 hover:shadow-2xl
-      "
-      onClick={() => setShowModal(true)}
-    >
-      Register Now
-    </motion.button>
-  </div>
+  {/* ⚡ F1 Turbo Flame Button with Sparks */}
+<div className="relative z-10 mb-10 sm:mb-12 md:mb-16 flex justify-center">
+  <motion.button
+    whileHover={{ scale: 1.08 }}
+    whileTap={{ scale: 0.95 }}
+    onClick={() => setShowModal(true)}
+    className="relative overflow-hidden
+      px-14 py-3 rounded-full
+      text-white font-extrabold text-2xl tracking-widest uppercase
+      bg-gradient-to-r from-[#f56729e4] via-[#925101] to-[#ffe600]
+      border-4  border-[#ffff00]
+      shadow-[0_0_40px_rgba(255,120,0,0.9)]
+      transition-all duration-300"
+  >
+    <span className="relative z-20">🏁 Register Now</span>
+
+    {/* 🔥 Neon Blue Flames */}
+    <span className="absolute inset-x-0 bottom-0 h-[160%] opacity-80 blur-[10px]
+                     bg-[radial-gradient(ellipse_at_bottom,_rgba(0,255,255,0.8),_transparent_70%)]
+                     animate-flameUp"></span>
+
+    <span className="absolute inset-x-0 bottom-0 h-[180%] opacity-60 blur-[12px]
+                     bg-[radial-gradient(ellipse_at_bottom,_rgba(0,180,255,0.7),_transparent_75%)]
+                     animate-flameFlicker"></span>
+
+    <span className="absolute inset-x-0 bottom-0 h-[200%] opacity-50 blur-[16px]
+                     bg-[radial-gradient(ellipse_at_bottom,_rgba(0,140,255,0.6),_transparent_80%)]
+                     animate-flameWave"></span>
+
+    {/* 💥 Sparks Layer */}
+    <span className="absolute bottom-0 left-1/2 w-full h-full pointer-events-none animate-sparks">
+      {[...Array(8)].map((_, i) => (
+        <span
+          key={i}
+          className="absolute w-[3px] h-[3px] rounded-full bg-cyan-400 opacity-80"
+          style={{
+            left: `${50 + (Math.random() * 80 - 40)}%`,
+            bottom: "0%",
+            animationDelay: `${i * 0.3}s`,
+          }}
+        ></span>
+      ))}
+    </span>
+
+    {/* 🔵 Outer Glow */}
+    <span className="absolute inset-0 rounded-full
+                     bg-[radial-gradient(circle,_rgba(0,255,255,0.15),_transparent_60%)]
+                     animate-turboPulse"></span>
+
+    {/* Internal Styles */}
+    <style jsx>{`
+      /* 🔥 Flame animations */
+      @keyframes flameUp {
+        0% { transform: translateY(10%) scaleY(0.8); opacity: 0.7; }
+        50% { transform: translateY(-5%) scaleY(1.1); opacity: 1; }
+        100% { transform: translateY(10%) scaleY(0.8); opacity: 0.7; }
+      }
+
+      @keyframes flameFlicker {
+        0%, 100% { opacity: 0.6; transform: translateY(0px); }
+        25% { opacity: 0.9; transform: translateY(-3px); }
+        50% { opacity: 0.7; transform: translateY(-1px); }
+        75% { opacity: 1; transform: translateY(-2px); }
+      }
+
+      @keyframes flameWave {
+        0% { transform: skewX(5deg) scaleY(1); opacity: 0.6; }
+        25% { transform: skewX(-5deg) scaleY(1.05); opacity: 0.8; }
+        50% { transform: skewX(4deg) scaleY(0.95); opacity: 0.7; }
+        75% { transform: skewX(-4deg) scaleY(1.1); opacity: 0.9; }
+        100% { transform: skewX(5deg) scaleY(1); opacity: 0.6; }
+      }
+
+      @keyframes turboPulse {
+        0%, 100% { opacity: 0.2; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(1.05); }
+      }
+
+      /* 💥 Spark animations */
+      @keyframes sparks {
+        0% {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+          filter: blur(0px);
+        }
+        80% {
+          transform: translateY(-120px) scale(0.5);
+          opacity: 0.8;
+          filter: blur(1px);
+        }
+        100% {
+          transform: translateY(-140px) scale(0);
+          opacity: 0;
+          filter: blur(2px);
+        }
+      }
+
+      .animate-flameUp { animation: flameUp 2.2s ease-in-out infinite; }
+      .animate-flameFlicker { animation: flameFlicker 1.1s ease-in-out infinite; }
+      .animate-flameWave { animation: flameWave 3s ease-in-out infinite; }
+      .animate-turboPulse { animation: turboPulse 2.5s ease-in-out infinite; }
+
+      /* 🔹 Spark movement — only visible on hover */
+      .animate-sparks span {
+        animation: sparks 1.8s ease-out infinite;
+        opacity: 0;
+      }
+
+      .group:hover .animate-sparks span {
+        opacity: 1;
+      }
+    `}</style>
+  </motion.button>
+</div>
+
+
 </section>
 
 
@@ -304,11 +404,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-black/70 border-t border-white/10 text-center py-6 text-gray-400 text-sm">
-        <p>
-          © {new Date().getFullYear()} Avalanche. All rights reserved | Tech team of KLS GIT
-        </p>
-      </footer>
+      <Footer />
 
       {/* CSS Animations */}
       <style>{`

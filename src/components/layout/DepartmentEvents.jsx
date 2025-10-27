@@ -5,6 +5,8 @@ import NavigationBar from "./Common/Navbar";
 import image1 from "../../assets/treasure_image.jpg";
 import image2 from "../../assets/hackathon_image.jpg";
 import image3 from "../../assets/debate_image.jpg";
+import Footer from "../../components/layout/Common/footer";
+
 
 export const DepartmentsData = [
     { id: "AERO", title: "Aeronautical", description: "About the Department", image: image1},
@@ -103,6 +105,7 @@ const DepartmentEvents = () => {
         </div>
       </div>
 
+        <Footer/>
       <style>{`
         html, body {
           overflow-x: hidden !important;

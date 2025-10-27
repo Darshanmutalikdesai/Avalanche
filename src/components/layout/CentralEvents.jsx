@@ -7,6 +7,7 @@ import image2 from "../../assets/hackathon_image.jpg";
 import image3 from "../../assets/debate_image.jpg";
 import image4 from "../../assets/logo5.jpeg";
 import image5 from "../../assets/hackathon_image.jpg";
+import Footer from "../../components/layout/Common/footer";
 
 const CentralEvents = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -215,6 +216,9 @@ const CentralEvents = () => {
           </div>
         </div>
       )}
+
+      {/* ✅ Footer always at bottom */}
+      <Footer />
     </div>
   );
 };

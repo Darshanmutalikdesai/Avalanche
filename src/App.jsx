@@ -42,9 +42,12 @@ function AppRoutes() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/payment-gateway" element={<PaymentGateway />} />
 
+
+
         {/* Fallback / 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      
     </Suspense>
   );
 }
