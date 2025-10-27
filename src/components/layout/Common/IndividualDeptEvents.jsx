@@ -153,7 +153,14 @@ export default function IndividualDeptEvents() {
                 Close
               </button>
 
-              <Link
+              <button
+                className="px-6 py-3 bg-[#00f7ff] border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
+                onClick={() => setSelectedEvent(null)}
+              >
+                Coming Soon...
+              </button>
+
+              {/*<Link
                 to={
                   selectedEvent.special
                     ? "/events/register-paper"
@@ -163,7 +170,7 @@ export default function IndividualDeptEvents() {
                 className="px-6 py-3 bg-[#00f7ff] border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
               >
                 Register
-              </Link>
+              </Link>*/}
             </div>
           </div>
         </div>

@@ -50,27 +50,7 @@ const StarButton = ({ onClick }) => {
 export default function HomePage() {
   const overlayRef = useRef(null);
   const navigate = useNavigate();
-  const [launch, setLaunch] = useState(false);
-  const [chatOpen, setChatOpen] = useState(false);
-  const [messages, setMessages] = useState([]);
-  const [inputMessage, setInputMessage] = useState("");
   const [showModal, setShowModal] = useState(false); // Modal state
-
-  const handleSendMessage = () => {
-    if (!inputMessage.trim()) return;
-    setMessages([...messages, { sender: "user", text: inputMessage }]);
-    setInputMessage("");
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { sender: "bot", text: "Beep boop! R2-D2 at your service 🤖" },
-      ]);
-    }, 600);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") handleSendMessage();
-  };
 
   useEffect(() => {
     const numStars = 120;
@@ -154,20 +134,6 @@ export default function HomePage() {
         >
           <StarButton onClick={handleLaunch} />
         </motion.div>
-
-        {/* R2-D2 */}
-        <div className="absolute inset-x-0 bottom-[15%] flex justify-center z-20">
-          <div className="animate-slide">
-            <img
-              src={R2D2Image}
-              alt="R2-D2"
-              className="h-32 sm:h-40 w-auto drop-shadow-lg cursor-pointer 
-                         hover:scale-110 transition-transform 
-                         animate-float animate-wiggle animate-glow"
-              onClick={() => setChatOpen(true)}
-            />
-          </div>
-        </div>
       </div>
 
       {/* Mega Event Section */}
