@@ -38,7 +38,7 @@ const EventCard = ({ title, description, image, path }) => {
         {/* === POSTER === */}
         <div
           className={`
-            absolute top-0 left-0 w-full h-1/2 overflow-hidden
+            absolute top-0 left-0 w-full h-2/3 overflow-hidden
             transition-all duration-700
             ${isHovered ? "opacity-100 scale-105" : "opacity-90 scale-100"}
           `}
@@ -51,7 +51,7 @@ const EventCard = ({ title, description, image, path }) => {
         </div>
 
         {/* === CONTENT === */}
-        <div className="absolute bottom-0 w-full h-1/2 p-4 sm:p-5 text-center flex flex-col justify-center items-center">
+        <div className="absolute bottom-0 w-full h-1/3 p-4 sm:p-5 text-center flex flex-col justify-center items-center">
           <h2
             className="
               text-lg sm:text-xl md:text-2xl font-nasal font-bold text-cyan-300 tracking-wider uppercase

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Footer from "../../components/layout/Common/footer";
+import Footer from "./Common/footer";
 
 
 const RegisterPage = () => {

@@ -39,18 +39,18 @@ export default function IndividualDeptEvents() {
 
   return (
     <div
-      className="relative min-h-screen w-full overflow-x-hidden font-['Nasalization'] flex flex-col scroll-smooth"
+      className="relative min-h-screen w-screen overflow-x-hidden overflow-y-auto font-['Nasalization'] scroll-smooth"
       style={{
-        background: "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
-      }}
-    >
-      {/* Background stars */}
-      <div id="star-container" className="stars absolute inset-0 z-0"></div>
+        background:
+          "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
+      }}>
 
-      {/* Navbar */}
-      <div className="relative z-[60]">
-        <NavigationBar />
-      </div>
+        <div id="star-container" className="stars absolute w-full h-full"></div>
+
+
+        <div className="relative z-[60]">
+            <NavigationBar />
+        </div>
 
       {/* Main content */}
       <main className="relative z-[70] flex-grow pt-32 px-4 sm:px-6 lg:px-10 pb-24 text-center">
