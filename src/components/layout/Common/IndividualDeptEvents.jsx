@@ -39,21 +39,21 @@ export default function IndividualDeptEvents() {
 
   return (
     <div
-      className="relative min-h-screen w-screen overflow-x-hidden overflow-y-auto font-['Nasalization'] scroll-smooth"
+      className="relative min-h-screen w-full overflow-x-hidden font-['Nasalization'] flex flex-col scroll-smooth"
       style={{
-        background:
-          "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
-      }}>
+        background: "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
+      }}
+    >
+      {/* Background stars */}
+      <div id="star-container" className="stars absolute inset-0 z-0"></div>
 
-        <div id="star-container" className="stars absolute w-full h-full"></div>
-
-
-        <div className="relative z-[60]">
-            <NavigationBar />
-        </div>
+      {/* Navbar */}
+      <div className="sticky top-0 z-[200]">
+        <NavigationBar />
+      </div>
 
       {/* Main content */}
-      <main className="relative z-[70] flex-grow pt-32 px-4 sm:px-6 lg:px-10 pb-24 text-center">
+      <main className="relative z-[70] flex-grow justify-items-center pt-32 px-4 sm:px-6 lg:px-10 pb-24 text-center">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#00eaff] mt-8 mb-10 sm:mb-12 drop-shadow-[0_0_15px_rgba(0,234,255,0.7)]">
           {readableName} Department Events
         </h1>
@@ -63,12 +63,16 @@ export default function IndividualDeptEvents() {
             No events found for this department.
           </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 sm:gap-x-10 gap-y-10 sm:gap-y-12 max-w-7xl mx-auto">
+          <div
+            className="flex flex-row justify-items-center
+                      gap-x-6 sm:gap-x-10 gap-y-10 sm:gap-y-12
+                      mx-auto max-w-fit"
+          >
             {departmentEvents.map((event) => (
               <div
                 key={event.id}
                 onClick={() => setSelectedEvent(event)}
-                className="cursor-pointer transition-transform duration-300 hover:scale-105"
+                className="cursor-pointer transition-transform duration-300 hover:scale-105 flex justify-center"
               >
                 <EventCard
                   title={event.Eventname}

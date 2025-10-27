@@ -3,7 +3,6 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import DepartmentsData from "../layout/DepartmentEvents";
 import IndividualDeptEvents from "../layout/Common/IndividualDeptEvents";
-import NavigationBar from "../layout/Common/Navbar";
 import EventsPage from "../layout/EventsPage";
 import CentralEvents from "../layout/CentralEvents";
 import DepartmentEvents from "../layout/DepartmentEvents";
@@ -14,11 +13,6 @@ import RegisterPaperPage from "../layout/RegisterPaperPage";
 // Layout wrapper
 const EventsLayout = ({ children }) => (
   <div className="relative min-h-screen w-full">
-    {/* Navbar always at top */}
-    <div className="w-full z-20 absolute top-0 left-0">
-      <NavigationBar />
-    </div>
-
     {/* Main content */}
     <div className="w-full">{children}</div>
   </div>

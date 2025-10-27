@@ -61,7 +61,7 @@ const DepartmentEvents = () => {
       </div>
 
       {/* === PAGE CONTENT === */}
-      <div className="relative z-[2] min-h-screen pt-32 sm:pt-28 px-4 sm:px-6 lg:px-8">
+      <div className="relative z-[2] min-h-screen pt-32 pb-20 sm:pt-28 px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <div className="text-center mb-12 sm:mb-20">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-nasal text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
@@ -75,17 +75,11 @@ const DepartmentEvents = () => {
         {/* === EVENT GRID === */}
         <div
           className="
-            grid
-            grid-cols-1
-            xs:grid-cols-2
-            sm:grid-cols-2
-            md:grid-cols-3
-            lg:grid-cols-4
-            gap-8 sm:gap-10 md:gap-12
-            justify-items-center
-            max-w-[1400px]
-            mx-auto
-            pb-24
+            grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 
+            gap-10 sm:gap-12 
+            flex-items-center
+            justify-items-center 
+            mx-auto max-w-[1200px]
           "
         >
           {DepartmentsData.map((dept) => {
@@ -94,7 +88,7 @@ const DepartmentEvents = () => {
               <div
                 key={dept.id}
                 onClick={() => navigate(`/events/department-events/${slug}`)}
-                className="cursor-pointer flex justify-center w-full"
+                className="cursor-pointer flex justify-center"
               >
                 <EventCard
                   title={dept.title}
