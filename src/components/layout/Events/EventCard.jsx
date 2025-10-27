@@ -6,18 +6,23 @@ const EventCard = ({ title, description, image, path }) => {
 
   return (
     <div
-      className="relative w-80 h-96 cursor-pointer select-none perspective-1000"
+      className="
+        relative w-[90%] sm:w-72 md:w-80 lg:w-96
+        max-w-sm aspect-[3/4] mx-auto
+        cursor-pointer select-none
+        perspective-1000
+      "
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* === CARD FRAME === */}
       <div
         className={`
-          relative w-full h-full rounded-xl overflow-hidden
-          transition-all duration-700 ease-out transform-gpu
-          ${isHovered ? "rotate-x-6 scale-[1.04] shadow-[0_0_50px_rgba(0,255,255,0.6)] border-cyan-400" : "rotate-x-0 scale-100 shadow-[0_0_25px_rgba(0,255,255,0.2)] border-cyan-400/30 "}
+          relative w-full h-full rounded-xl overflow-hidden border
           bg-gradient-to-br from-[#00111f] via-[#001a33] to-[#00070f]
-          border 
+          transition-all duration-700 ease-out transform-gpu
+          ${isHovered ? "rotate-x-6 scale-[1.04] shadow-[0_0_50px_rgba(0,255,255,0.6)] border-cyan-400" 
+                      : "rotate-x-0 scale-100 shadow-[0_0_25px_rgba(0,255,255,0.2)] border-cyan-400/30"}
         `}
       >
         {/* === HOLOGRAPHIC LINES === */}
@@ -33,46 +38,46 @@ const EventCard = ({ title, description, image, path }) => {
         {/* === POSTER === */}
         <div
           className={`
-            absolute top-0 left-0 w-full h-1/2
-            overflow-hidden transition-all duration-700
+            absolute top-0 left-0 w-full h-1/2 overflow-hidden
+            transition-all duration-700
             ${isHovered ? "opacity-100 scale-105" : "opacity-90 scale-100"}
           `}
         >
           <img
             src={image}
             alt={title}
-            className="object-cover w-full h-full opacity-90 rounded-t-xl"
+            className="object-cover w-full h-full rounded-t-xl"
           />
         </div>
 
         {/* === CONTENT === */}
-        <div className="absolute bottom-0 w-full h-1/2 p-5 text-center flex flex-col justify-center items-center">
+        <div className="absolute bottom-0 w-full h-1/2 p-4 sm:p-5 text-center flex flex-col justify-center items-center">
           <h2
-            className={`
-              text-2xl font-nasal font-bold text-cyan-300 tracking-wider uppercase
+            className="
+              text-lg sm:text-xl md:text-2xl font-nasal font-bold text-cyan-300 tracking-wider uppercase
               transition-all duration-700
-            `}
+            "
           >
             {title}
           </h2>
           <p
-            className={`
-              text-sm text-gray-200 font-orbitron mt-3 px-3 leading-snug
+            className="
+              text-xs sm:text-sm text-gray-200 font-orbitron mt-2 sm:mt-3 px-2 sm:px-3 leading-snug
               transition-all duration-500
-            `}
+            "
           >
             {description}
           </p>
 
-          <div className="mt-5">
+          <div className="mt-4 sm:mt-5">
             <Link
               to={path}
-              className={`
-                relative inline-block px-5 py-2 rounded-md border border-cyan-300/60
-                font-orbitron text-cyan-200 tracking-wide text-sm uppercase
+              className="
+                inline-block px-4 py-2 rounded-md border border-cyan-300/60
+                font-orbitron text-cyan-200 tracking-wide text-xs sm:text-sm uppercase
                 transition-all duration-500
                 hover:bg-cyan-300 hover:text-black
-              `}
+              "
             >
               Explore
             </Link>
@@ -85,7 +90,9 @@ const EventCard = ({ title, description, image, path }) => {
             <div
               key={i}
               className={`absolute ${pos} w-2 h-2 bg-[#00f7ff] rounded-full shadow-[0_0_10px_#00f7ff] transition-all duration-700 ${
-                isHovered ? "scale-150 bg-yellow-500 shadow-[0_0_20px_#ffe680]" : ""
+                isHovered
+                  ? "scale-125 bg-yellow-400 shadow-[0_0_18px_#ffe680]"
+                  : ""
               }`}
             />
           )
@@ -97,6 +104,12 @@ const EventCard = ({ title, description, image, path }) => {
           @keyframes moveLines {
             from { background-position: 0 0; }
             to { background-position: 100% 0; }
+          }
+
+          @media (max-width: 640px) {
+            /* Disable heavy hover animations on mobile */
+            .rotate-x-6 { transform: none !important; }
+            .scale-[1.04] { transform: none !important; }
           }
         `}
       </style>

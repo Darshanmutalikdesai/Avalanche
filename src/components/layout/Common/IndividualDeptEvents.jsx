@@ -1,6 +1,6 @@
 // src/layout/Common/IndividualDeptEvents.jsx
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import NavigationBar from "./Navbar";
 import eventsData from "../../data/event_details.json";
 import EventCard from "../Events/EventCard";
@@ -11,6 +11,7 @@ export default function IndividualDeptEvents() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const { deptName } = useParams();
 
+  // Star background effect
   useEffect(() => {
     const numStars = 79;
     const container = document.getElementById("star-container");
@@ -32,48 +33,60 @@ export default function IndividualDeptEvents() {
   const readableName =
     DepartmentsData.find((dept) => dept.id === deptName)?.title || deptName;
 
-  const departmentEvents = eventsData.filter((event) => event.Dept === deptName);
+  const departmentEvents = eventsData.filter(
+    (event) => event.Dept === deptName
+  );
 
   return (
     <div
-      className="relative min-h-screen w-screen overflow-x-hidden overflow-y-auto font-['Nasalization'] scroll-smooth flex flex-col"
+      className="relative min-h-screen w-full overflow-x-hidden font-['Nasalization'] flex flex-col scroll-smooth"
       style={{
         background: "radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%)",
       }}
     >
-      <div id="star-container" className="stars absolute w-full h-full"></div>
+      {/* Background stars */}
+      <div id="star-container" className="stars absolute inset-0 z-0"></div>
 
+      {/* Navbar */}
       <div className="relative z-[60]">
         <NavigationBar />
       </div>
 
-      {/* Page Content */}
-      <div className="flex-grow pt-32 px-6 text-center relative z-[70]">
-        <h1 className="text-5xl font-bold text-[#00eaff] mt-8 mb-12 drop-shadow-[0_0_15px_rgba(0,234,255,0.7)]">
+      {/* Main content */}
+      <main className="relative z-[70] flex-grow pt-32 px-4 sm:px-6 lg:px-10 pb-24 text-center">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#00eaff] mt-8 mb-10 sm:mb-12 drop-shadow-[0_0_15px_rgba(0,234,255,0.7)]">
           {readableName} Department Events
         </h1>
 
         {departmentEvents.length === 0 ? (
-          <p className="text-gray-400">No events found for this department.</p>
+          <p className="text-gray-400 text-base sm:text-lg">
+            No events found for this department.
+          </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 sm:gap-x-10 gap-y-10 sm:gap-y-12 max-w-7xl mx-auto">
             {departmentEvents.map((event) => (
               <div
                 key={event.id}
                 onClick={() => setSelectedEvent(event)}
                 className="cursor-pointer transition-transform duration-300 hover:scale-105"
               >
-                <EventCard title={event.Eventname} image={event.image} />
+                <EventCard
+                  title={event.Eventname}
+                  image={event.image}
+                  className="h-full"
+                />
               </div>
             ))}
           </div>
         )}
-      </div>
+      </main>
 
-      {/* Footer (Always at bottom) */}
-      <Footer />
+      {/* Footer */}
+      <footer className="relative z-[70] mt-auto w-full">
+        <Footer />
+      </footer>
 
-      {/* Styles */}
+      {/* Background animations */}
       <style>{`
         html, body {
           overflow-x: hidden !important;
@@ -95,82 +108,47 @@ export default function IndividualDeptEvents() {
           from { transform: translate(0, 0); }
           to { transform: translate(20px, 20px); }
         }
-        @keyframes slide {
-          0% { transform: translateX(-200px); }
-          100% { transform: translateX(calc(100vw + 200px)); }
-        }
-        .animate-slide {
-          animation: slide 30s linear infinite;
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-12px); }
-        }
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
-        @keyframes wiggle {
-          0%, 100% { transform: rotate(0deg); }
-          25% { transform: rotate(2deg); }
-          75% { transform: rotate(-2deg); }
-        }
-        .animate-wiggle {
-          animation: wiggle 4s ease-in-out infinite;
-        }
         @keyframes glow {
           0%, 100% { filter: drop-shadow(0 0 6px #3b82f6); }
           50% { filter: drop-shadow(0 0 16px #2563eb); }
-        }
-        .animate-glow {
-          animation: glow 2.5s ease-in-out infinite;
         }
       `}</style>
 
       {/* Modal */}
       {selectedEvent && (
         <div
-          className="fixed inset-0 bg-black/70 z-[100] flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/70 z-[100] flex items-center justify-center p-3 sm:p-6"
           onClick={() => setSelectedEvent(null)}
-          role="dialog"
-          aria-modal="true"
         >
           <div
-            className="bg-[rgba(0,15,30,0.95)] border-2 border-[#00f7ff] rounded-xl shadow-[0_0_30px_rgba(0,247,255,0.6)] max-w-2xl w-full p-6 sm:p-8 relative animate-[fadeIn_0.3s_ease-in-out] max-h-[80vh] overflow-y-auto"
+            className="bg-[rgba(0,15,30,0.95)] border-2 border-[#00f7ff] rounded-xl shadow-[0_0_30px_rgba(0,247,255,0.6)] w-full max-w-lg sm:max-w-2xl p-5 sm:p-8 relative animate-[fadeIn_0.3s_ease-in-out] max-h-[85vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Title */}
             <h2 className="text-2xl sm:text-3xl font-bold font-nasal text-[#ffcc00] mb-4 drop-shadow-[0_0_10px_#ffcc00]">
               {selectedEvent.Eventname}
             </h2>
-            <p className="text-base sm:text-lg text-gray-300 font-orbitron whitespace-pre-line leading-relaxed mb-6">
+
+            {/* Description */}
+            <p className="text-sm sm:text-base md:text-lg text-gray-300 font-orbitron whitespace-pre-line leading-relaxed mb-6">
               {selectedEvent.Description}
             </p>
 
-            <div className="flex flex-wrap gap-4 justify-end">
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-end">
               <button
-                className="px-6 py-3 bg-transparent border-2 border-[#00f7ff] rounded-lg text-[#00f7ff] font-bold transition-all duration-300 ease-in-out hover:bg-[#00f7ff] hover:text-black hover:shadow-[0_0_15px_#00f7ff]"
+                className="px-5 py-2.5 sm:px-6 sm:py-3 bg-transparent border-2 border-[#00f7ff] rounded-lg text-[#00f7ff] font-bold transition-all duration-300 hover:bg-[#00f7ff] hover:text-black hover:shadow-[0_0_15px_#00f7ff]"
                 onClick={() => setSelectedEvent(null)}
               >
                 Close
               </button>
 
               <button
-                className="px-6 py-3 bg-[#00f7ff] border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
+                className="px-5 py-2.5 sm:px-6 sm:py-3 bg-[#00f7ff] border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
                 onClick={() => setSelectedEvent(null)}
               >
                 Coming Soon...
               </button>
-
-              {/*<Link
-                to={
-                  selectedEvent.special
-                    ? "/events/register-paper"
-                    : "/events/register-events"
-                }
-                state={{ event: selectedEvent }}
-                className="px-6 py-3 bg-[#00f7ff] border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
-              >
-                Register
-              </Link>*/}
             </div>
           </div>
         </div>
