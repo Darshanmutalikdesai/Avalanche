@@ -266,7 +266,7 @@ const RulebookComponent = () => {
             <p>For queries and support, reach out to the organizing committee.</p>
             <p>Email: avalanche@klsgit.edu<br/>Phone: +91 1234567890</p>
             <a 
-              href="https://drive.google.com/file/d/1GUH-qzU-dZKmMdTWaK7i5mRaZ62UQQNA/view?usp=sharing" 
+              href="https://drive.google.com/file/d/19wUnm6BUTmJVlSYQz5rFvnqDGF7rehAo/view?usp=sharing" 
               target="_blank" 
               rel="noopener noreferrer"
               className="download-btn"
