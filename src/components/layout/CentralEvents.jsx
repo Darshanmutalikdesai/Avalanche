@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import NavigationBar from "./Common/Navbar";
 import EventCard from "../layout/Events/EventCard";
 import image1 from "../../assets/TechQuiz.jpeg";
-import image2 from "../../assets/hackathon_image.jpg";
 import image3 from "../../assets/QuizMania.jpeg";
 import image4 from "../../assets/TechDebate.jpeg";
 import image5 from "../../assets/pp.jpeg";
@@ -35,26 +33,26 @@ const CentralEvents = () => {
   const centralEventsData = [
     {
       id: 1,
-      title: "Technical Quiz",
-      description: "Test your technical knowledge.",
+      title: "Technical Quiz(Circuit)",
+      description: "Dive into a world where logic meets innovation! From trending technologies to mind-bending problem statements, this quiz is your chance to prove your technical instincts and outsmart your peers.",
       image: image1,
-      instructions: "Technical quiz details...",
+      instructions: "Technical Quiz General Rules\n 1.The Quizmaster is God and their decision is final.\n 2. Use of mobile phones or electronic devices is strictly prohibited.\n 3. The quiz will consist of 25 questions in the preliminary round.\n 4. ‘*’ (Star mark) questions will act as tie-breakers.\n 5. No negative marking in the first round.\n 6. No prompting of answers is allowed.\n 7. If there are more than three blockers, no further hints will be given.\n 8. Any form of misconduct or discussion during the quiz will lead to disqualification.\n\n\nTechnical Quiz Guidelines 1. Each team can have a maximum of two participants.\n 2. The quiz will consist of two rounds – Preliminary Round and Final Round.\n 3. Round 1 (Preliminary) will be a written pen-and-paper round.\n 4. Use of mobile phones or electronic devices is strictly prohibited.\n 5. Top teams from the preliminary round will qualify for the final round.\n 6. Any form of misconduct or unfair means will lead to disqualification.\n 7. Decisions of the judges and organizers will be final and binding.\n 8. Questions will test technical knowledge, logic, and awareness.\n",
     },
     {
       id: 3,
       title: "Paper Presentation",
-      description: "Showcase your research and innovation.",
+      description: "Turn your ideas into impact!Our Event lets you share your innovations, discoveries, and creative solutions with the world.",
       image: image5,
       instructions:
-        "1. Individual or team of 2.\n2. PPT compulsory.\n3. 10 mins presentation + 5 mins Q&A.\n4. Bring your laptop and ID card.",
+        "Mode of Presentation: \n\n The paper presentation will be conducted in hybrid mode, allowing participants to either present online or offline.\n\n By participating in the Paper Presentation event of Avalanche'25, all registrants must adhere to the following rules and guidelines to ensure a smooth and productive event.\n\n1. Teams interested in participating in the Paper Presentation must choose a track provided by their respective departments.\n2. Teams must send an email with the subject format 'trackname_departmentname' and attach their completed paper.\n3. The mail must be sent to the given email IDs (to be published shortly).\n4. The mail should include: a) Title and Track of the paper, b) Names of the authors, c) Phone numbers of the authors, d) Email IDs of the authors.\n5. The paper must include the following sections: Abstract, Index, List of Figures, List of Tables, Introduction, Literature Survey, Methodology, Materials and Results, Conclusion, and References.\n6. All participants should bring their PowerPoint presentations on a pen drive.\n7. Papers must follow the IEEE format as provided on the official IEEE website.\n8. Font size should be 12.\n9. Font style should be Times New Roman.\n10. Use a double-column layout.\n11. The event encourages original and authentic research work free from plagiarism. A similarity index of up to 40% is acceptable depending on context and references.\n12. The decision of the judges will be final and binding; no appeals or arguments will be entertained.\n13. Dress Code: Formals. Participants must wear their college ID cards.\n14. Be prepared for technical issues — keep a backup of all materials on portable media such as a pen drive.\n15. The final format and details will be shared in the official WhatsApp group after registration.\n\n Round Details: Each team will have 12 minutes total — 10 minutes for presentation followed by 2 minutes for Q&A. Participants must strictly adhere to the allotted time, as exceeding it may disrupt the schedule.",
       special: true,
     },
     {
       id: 4,
-      title: "Quiz Mania",
-      description: "Test your knowledge and win exciting prizes.",
+      title: "Technical Quiz(Non Circuit)",
+      description: "A fusion of creativity, knowledge, and quick thinking! Explore fascinating concepts from science, engineering, and everyday innovation in this fast-paced challenge designed to test not just what you know, but how you think.",
       image: image3,
-      instructions: "Quiz details...",
+      instructions: "Technical Quiz General Rules\n 1.The Quizmaster is God and their decision is final.\n 2. Use of mobile phones or electronic devices is strictly prohibited.\n 3. The quiz will consist of 25 questions in the preliminary round.\n 4. ‘*’ (Star mark) questions will act as tie-breakers.\n 5. No negative marking in the first round.\n 6. No prompting of answers is allowed.\n 7. If there are more than three blockers, no further hints will be given.\n 8. Any form of misconduct or discussion during the quiz will lead to disqualification.\n\n\nTechnical Quiz Guidelines 1. Each team can have a maximum of two participants.\n 2. The quiz will consist of two rounds – Preliminary Round and Final Round.\n 3. Round 1 (Preliminary) will be a written pen-and-paper round.\n 4. Use of mobile phones or electronic devices is strictly prohibited.\n 5. Top teams from the preliminary round will qualify for the final round.\n 6. Any form of misconduct or unfair means will lead to disqualification.\n 7. Decisions of the judges and organizers will be final and binding.\n 8. Questions will test technical knowledge, logic, and awareness.\n",
     },
     {
       id: 5,
