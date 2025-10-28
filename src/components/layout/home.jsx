@@ -7,13 +7,17 @@ import NavigationBar from "../layout/Common/Navbar";
 import Logo from "../../assets/weblogo.svg";
 import MegaEventVideo from "../../assets/megaevent_bg.mp4";
 import Footer from "../layout/Common/footer";
+import NotifyPopup from "./Common/NotifyPopup";
+
 
 // ⭐ Star Button Component
-const StarButton = ({ onClick }) => {
+const StarButton = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   return (
+    <>
     <button
-      onClick={onClick}
+      onClick={() => setShowPopup(true)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={`relative px-4 sm:px-6 py-2 sm:py-3 
@@ -39,9 +43,12 @@ const StarButton = ({ onClick }) => {
           }`}
           size={18}
         />
-        <span>Explore</span>
+        <span>Notify Me</span>
       </div>
     </button>
+
+    <NotifyPopup show={showPopup} onClose={() => setShowPopup(false)} />
+    </>
   );
 };
 
