@@ -155,9 +155,6 @@ const eventsData = [{
 
 {
   "Eventname": "Urban Pulse",
-  "MaxReg": 60,
-  "MinTeam": "Duo (Team of 2)",
-  "MaxTeam": "Squad (Team of 4)",
   "Dept": "ISE",
   "MaxReg": 50,
   "MinTeam": "Duo (Team of 2)",
