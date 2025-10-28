@@ -401,12 +401,12 @@ export default function HomePage() {
         id="glances"
         className="relative z-20 py-24 px-6 sm:px-12 md:px-24 lg:px-32 text-center bg-gradient-to-b from-gray-900 to-black border-t border-white/10"
       >
-        <h2 className="text-4xl md:text-5xl text-white font-bold mb-10">
+        <h2 className="text-5xl md:text-5xl text-white font-bold mb-10">
           Avalanche '24 Glances
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
-            ["Hackathon", hackathon],
+            ["Tech Panel", hackathon],
             ["Robowars Showdown", robowars],
             ["Chemical Showdown", chemshow],
           ].map((item, i) => (
@@ -422,7 +422,7 @@ export default function HomePage() {
                 alt={item[0]}
                 className="w-full h-48 object-cover rounded-lg mb-4"
               />
-              <h3 className="text-xl font-semibold font-orbitron mb-2">
+              <h3 className="text-2xl font-semibold font-orbitron mb-2">
                 {item[0]}
               </h3>
             </motion.div>
