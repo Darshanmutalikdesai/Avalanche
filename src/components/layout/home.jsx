@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import NavigationBar from "../layout/Common/Navbar";
 import Logo from "../../assets/weblogo.svg";
-import MegaEventVideo from "../../assets/megaevent_tempvideo.mp4";
+import MegaEventVideo from "../../assets/megaevent_bg.mp4";
 import Footer from "../layout/Common/footer";
 import NotifyPopup from "./Common/NotifyPopup";
 
