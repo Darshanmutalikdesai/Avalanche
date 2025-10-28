@@ -22,7 +22,7 @@ export default function CosmicProfile() {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found. Please login.");
 
-      const res = await fetch("http://localhost:5000/api/users/profile", {
+      const res = await fetch("https://avalanche.git.edu/api/users/profile", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

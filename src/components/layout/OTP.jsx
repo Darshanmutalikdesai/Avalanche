@@ -76,7 +76,7 @@ const OTPVerification = () => {
     console.log("📤 Sending payload:", JSON.stringify({ email: normalizedEmail, otp: otpValue }));
 
     try {
-      const response = await fetch("http://localhost:5000/api/users/verify-otp", {
+      const response = await fetch("https://avalanche.git.edu/api/users/verify-otp", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -141,7 +141,7 @@ const OTPVerification = () => {
     console.log("📤 Resending OTP to:", normalizedEmail);
 
     try {
-      const response = await fetch("http://localhost:5000/api/users/resend-otp", {
+      const response = await fetch("https://avalanche.git.edu/api/users/resend-otp", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

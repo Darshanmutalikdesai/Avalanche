@@ -81,7 +81,7 @@ const RegisterPage = () => {
 
       console.log("📤 Sending registration data:", payload);
 
-      const response = await fetch(`http://localhost:5000/api/users/register`, {
+      const response = await fetch(`https://avalanche.git.edu/api/users/register`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -125,7 +125,7 @@ const RegisterPage = () => {
         return;
       }
 
-      const response = await fetch(`http://localhost:5000/api/users/login`, {
+      const response = await fetch(`https://avalanche.git.edu/api/users/login`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

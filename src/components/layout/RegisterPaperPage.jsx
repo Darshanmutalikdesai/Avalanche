@@ -63,7 +63,7 @@ const RegisterPaperPage = () => {
       });
 
       const response = await fetch(
-        "http://localhost:5000/api/paper-presentation/register",
+        "https://avalanche.git.edu/api/paper-presentation/register",
         {
           method: "POST",
           headers: {
