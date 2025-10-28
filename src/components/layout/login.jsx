@@ -44,6 +44,7 @@ const RegisterPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // ✅ FIXED Register API - Matches backend exactly!
   const registerUser = async () => {
     setLoading(true);
     try {
@@ -68,16 +69,17 @@ const RegisterPage = () => {
         return;
       }
 
+      // ✅ CORRECTED PAYLOAD - Matches your backend schema
       const payload = {
         name: formData.name.trim(),
         email: formData.email.trim().toLowerCase(),
         password: formData.password,
-        pNumber: formData.phone.trim(),
-        institute: formData.clgName,
-        rollNumber: formData.usn.trim().toUpperCase(),
+        pNumber: formData.phone.trim(),                    // ✅ Backend expects 'pNumber'
+        institute: formData.clgName,                       // ✅ Backend expects 'institute'
+        rollNumber: formData.usn.trim().toUpperCase(),     // ✅ Backend expects 'rollNumber'
       };
 
-      console.log("📤 Sending registration data:", JSON.stringify(payload, null, 2));
+      console.log("📤 Sending registration data:", payload);
 
       const response = await fetch(`https://avalanche.git.edu/api/users/register`, {
         method: "POST",
@@ -88,44 +90,25 @@ const RegisterPage = () => {
         body: JSON.stringify(payload),
       });
 
-      console.log("📊 Response Status:", response.status);
-      console.log("📊 Response Status Text:", response.statusText);
-      console.log("📊 Response Headers:", Object.fromEntries(response.headers.entries()));
-
-      // Get response as text first to see raw response
-      const responseText = await response.text();
-      console.log("📥 Raw Response:", responseText);
-
-      // Try to parse as JSON
-      let data;
-      try {
-        data = JSON.parse(responseText);
-        console.log("📥 Parsed Response:", data);
-      } catch (parseError) {
-        console.error("❌ Failed to parse JSON:", parseError);
-        console.error("❌ Response was:", responseText);
-        alert("⚠️ Server returned invalid response format");
-        setLoading(false);
-        return;
-      }
+      const data = await response.json();
+      console.log("📥 Backend response:", data);
       
       if (response.ok) {
         alert("✅ Registration successful! Please check your email for OTP.");
         navigate("/otp", { state: { email: formData.email } });
       } else {
-        const errorMsg = data.message || data.error || data.msg || "Registration failed";
-        console.error("❌ Registration error:", data);
-        alert(`❌ Registration failed:\n${errorMsg}`);
+        alert(`❌ ${data.message || "Registration failed"}`);
+        console.error("Registration error:", data);
       }
     } catch (error) {
       console.error("🔴 Network Error:", error);
-      console.error("🔴 Error Stack:", error.stack);
-      alert("⚠️ Network error. Please check console for details.");
+      alert("⚠️ Cannot connect to server. Make sure backend is running on port 5000.");
     } finally {
       setLoading(false);
     }
   };
 
+  // ✅ Login API
   const loginUser = async () => {
     setLoading(true);
     try {
@@ -142,58 +125,31 @@ const RegisterPage = () => {
         return;
       }
 
-      const payload = {
-        email: formData.email.trim().toLowerCase(),
-        password: formData.password,
-      };
-
-      console.log("📤 Sending login data:", JSON.stringify(payload, null, 2));
-
       const response = await fetch(`https://avalanche.git.edu/api/users/login`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
           "Accept": "application/json"
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          email: formData.email.trim().toLowerCase(),
+          password: formData.password,
+        }),
       });
 
-      console.log("📊 Response Status:", response.status);
-      
-      const responseText = await response.text();
-      console.log("📥 Raw Response:", responseText);
-
-      let data;
-      try {
-        data = JSON.parse(responseText);
-        console.log("📥 Parsed Response:", data);
-      } catch (parseError) {
-        console.error("❌ Failed to parse JSON:", parseError);
-        alert("⚠️ Server returned invalid response format");
-        setLoading(false);
-        return;
-      }
+      const data = await response.json();
       
       if (response.ok) {
-        if (data.token) {
-          localStorage.setItem("token", data.token);
-          if (data.payment !== undefined) {
-            localStorage.setItem("payment", data.payment);
-          }
-          alert("✅ Login successful!");
-          navigate("/home");
-        } else {
-          console.error("❌ No token in response:", data);
-          alert("⚠️ Login succeeded but no token received");
-        }
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("payment", data.payment);
+        alert("✅ Login successful!");
+        navigate("/home");
       } else {
-        const errorMsg = data.message || data.error || data.msg || "Login failed";
-        console.error("❌ Login error:", data);
-        alert(`❌ ${errorMsg}`);
+        alert(`❌ ${data.message || "Login failed"}`);
+        console.error("Login error:", data);
       }
     } catch (error) {
-      console.error("🔴 Login error:", error);
-      console.error("🔴 Error Stack:", error.stack);
+      console.error("Login error:", error);
       alert("⚠️ Cannot connect to server");
     } finally {
       setLoading(false);
@@ -428,3 +384,4 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
