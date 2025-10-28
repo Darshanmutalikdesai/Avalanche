@@ -113,10 +113,15 @@ const CentralEvents = () => {
           </p>
         </div>
 
-        {/* Pyramid Layout */}
-        <div className="flex flex-col items-center space-y-20 sm:space-y-28 lg:space-y-32">
-          {/* Top Row */}
-          <div className="flex flex-wrap justify-center gap-8 sm:gap-12 lg:gap-16">
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
+            gap-8 sm:gap-10 lg:gap-12
+            sm:gap-x-10 sm:gap-y-36
+            lg:gap-x-12 lg:gap-y-40
+            max-w-8xl
+            mx-auto
+            px-4
+            pb-20">
             {centralEventsData.map((event) => (
               <div
                 key={event.id}
@@ -132,7 +137,6 @@ const CentralEvents = () => {
             ))}
           </div>
         </div>
-      </div>
 
       {/* Popup Modal */}
       {selectedEvent && (
