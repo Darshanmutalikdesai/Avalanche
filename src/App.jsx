@@ -31,16 +31,16 @@ function AppRoutes() {
         <Route path="/home" element={<Home />} />
 
         {/* Auth Pages */}
-        <Route path="/auth" element={<LoginPage />} />
-        <Route path="/otp" element={<OTPPage />} />
+        {/*<Route path="/auth" element={<LoginPage />} />
+        <Route path="/otp" element={<OTPPage />} />*/}
 
         {/* Other Pages */}
         <Route path="/events/*" element={<Events />} />
         <Route path="/developer" element={<Developer />} />
-        <Route path="/user-portal/*" element={<User />} />
+        {/*<Route path="/user-portal/*" element={<User />} />*/}
         <Route path="/rulebook/*" element={<Rule />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/payment-gateway" element={<PaymentGateway />} />
+        {/*<Route path="/payment-gateway" element={<PaymentGateway />} />*/}
 
 
 
