@@ -7,28 +7,27 @@ import NavigationBar from "../layout/Common/Navbar";
 import Logo from "../../assets/weblogo.svg";
 import MegaEventVideo from "../../assets/megaevent_bg.mp4";
 import Footer from "../layout/Common/footer";
-import NotifyPopup from "./Common/NotifyPopup";
 import chemshow from "../../assets/ChemicalShowdown.PNG";
 import hackathon from "../../assets/Hackathon.PNG";
 import robowars from "../../assets/RoboWars.PNG";
 
 
 // ⭐ Star Button Component
-const StarButton = () => {
+const StarButton = (onClick) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
+  
   return (
     <>
     <button
-      onClick={() => setShowPopup(true)}
+      onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={`relative px-4 sm:px-6 py-2 sm:py-3 
         text-sm sm:text-base text-white font-semibold
-        bg-gradient-to-r from-purple-600 to-pink-600
+        bg-gradient-to-r from-[#36266d] via-[#36266d] to-[#36266d] border-2 border-[#0080ff]
         rounded-lg shadow-lg
         transition-all duration-300 font-['Nasalization']
-        ${isHovered ? "shadow-pink-800/60 shadow-2xl" : ""}`}
+        ${isHovered ? "shadow-blue-800/60 shadow-2xl" : ""}`}
     >
       <div
         className={`absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-transparent opacity-0 transition-opacity duration-700 ${
@@ -46,11 +45,9 @@ const StarButton = () => {
           }`}
           size={18}
         />
-        <span>Notify Me</span>
+        <span>Explore</span>
       </div>
     </button>
-
-    <NotifyPopup show={showPopup} onClose={() => setShowPopup(false)} />
     </>
   );
 };

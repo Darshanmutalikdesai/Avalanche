@@ -13,42 +13,88 @@ import { useNavigate } from "react-router-dom";
 export default function CosmicProfile() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  // 🔗 Fetch current user details using the new API
+  const getCurrentUser = async (userId) => {
+    try {
+      const response = await fetch(
+        `https://avalanche.git.edu/api/user/current/${userId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      
+      if (!response.ok) {
+        throw new Error("Failed to fetch user");
+      }
+      
+      const data = await response.json();
+      return data; // Returns { avalancheId, email, name, schlclgName, rollno }
+    } catch (error) {
+      console.error("Error:", error);
+      throw error;
+    }
+  };
 
   // 🔗 Fetch user profile
   const fetchProfile = async () => {
     setLoading(true);
+    setError(null);
+    
     try {
-      const token = localStorage.getItem("token");
-      if (!token) throw new Error("No token found. Please login.");
-
-      const res = await fetch("https://avalanche.git.edu/api/users/profile", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!res.ok) {
-        if (res.status === 401) throw new Error("Unauthorized. Please login.");
-        throw new Error("Failed to fetch profile");
+      const userId = localStorage.getItem("userId");
+      
+      if (!userId) {
+        throw new Error("No user ID found. Please login.");
       }
 
-      const data = await res.json();
-      const user = data.user;
+      // Fetch user details using the new API
+      const userDetails = await getCurrentUser(userId);
+      
+      // Also fetch the original profile for registered events and payment status
+      const token = localStorage.getItem("token");
+      let registeredEvents = [];
+      let hasPaid = false;
+      
+      if (token) {
+        try {
+          const res = await fetch("https://avalanche.git.edu/api/users/profile", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          
+          if (res.ok) {
+            const data = await res.json();
+            registeredEvents = data.user?.registeredEvents || [];
+            hasPaid = data.user?.hasPaid || false;
+          }
+        } catch (err) {
+          console.warn("Could not fetch additional profile data:", err);
+        }
+      }
 
+      // Set profile with data from getCurrentUser API
       setProfile({
-        _id: user._id || user.id,
-        name: user.name,
-        email: user.email,
-        institute: user.institute || "—",
-        rollNumber: user.rollNumber || "—",
-        registeredEvents: user.registeredEvents || [],
-        hasPaid: user.hasPaid || false,
+        _id: userDetails.avalancheId || userId,
+        name: userDetails.name || "Participant",
+        email: userDetails.email || "—",
+        institute: userDetails.schlclgName || "—",
+        rollNumber: userDetails.rollno || "—",
+        registeredEvents: registeredEvents,
+        hasPaid: hasPaid,
       });
     } catch (err) {
       console.error("Profile fetch error:", err.message);
+      setError(err.message);
       alert(err.message);
     } finally {
       setLoading(false);
@@ -59,20 +105,12 @@ export default function CosmicProfile() {
     fetchProfile();
   }, []);
 
-  // 🔗 Redirect to backend payment page
-  // const handlePaymentRedirect = () => {
-  //   if (!profile?._id) {
-  //     alert("User ID not found!");
-  //     return;
-  //   }
-  //   window.location.href = `https://backendavalanche.git.edu`;
-  // };
-
   // 🚪 Logout handler
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
-      // Clear token from localStorage
+      // Clear storage
       localStorage.removeItem("token");
+      localStorage.removeItem("userId");
       
       // Navigate to login page
       navigate("/auth");
@@ -86,10 +124,19 @@ export default function CosmicProfile() {
       </div>
     );
 
-  if (!profile)
+  if (error || !profile)
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-950 text-red-400 text-xl">
-        Unable to fetch profile.
+        <div className="text-center">
+          <p className="mb-4">Unable to fetch profile.</p>
+          {error && <p className="text-sm text-red-300">{error}</p>}
+          <button
+            onClick={() => navigate("/auth")}
+            className="mt-4 px-6 py-2 bg-red-500/20 border border-red-500/50 rounded-lg hover:bg-red-500/30 transition-all"
+          >
+            Return to Login
+          </button>
+        </div>
       </div>
     );
 
@@ -144,8 +191,9 @@ export default function CosmicProfile() {
 
             <div className="flex-1 text-center md:text-left">
               <h1 className="text-4xl md:text-5xl font-bold text-cyan-400 mb-2 tracking-wider">
-                {profile.name || "Participant"}
+                {profile.name}
               </h1>
+              <p className="text-cyan-300/60 text-sm font-mono">{profile.email}</p>
             </div>
 
             <div className="flex flex-col items-center gap-2">
@@ -172,7 +220,7 @@ export default function CosmicProfile() {
             <InfoCard
               icon={<Hash className="w-5 h-5 text-cyan-400" />}
               label="AVALANCHE ID"
-              value={profile._id || "Not found"}
+              value={profile._id}
             />
             <InfoCard
               icon={<GraduationCap className="w-5 h-5 text-cyan-400" />}
@@ -235,23 +283,18 @@ export default function CosmicProfile() {
                 </div>
               </div>
             </div>
-          ) : (
-            <div className="mt-4 flex justify-center gap-4">
-              {/* <button
-                className="bg-cyan-500 text-white px-8 py-3 rounded-lg font-bold hover:bg-cyan-600 transition-all"
-                onClick={handlePaymentRedirect}
-              >
-                Pay ₹1
-              </button> */}
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 hover:border-red-400 text-red-400 hover:text-red-300 px-6 py-3 rounded-lg transition-all duration-300"
-              >
-                <LogOut className="w-4 h-4" />
-                <span className="font-mono text-sm font-bold">LOGOUT</span>
-              </button>
-            </div>
-          )}
+          ) : null}
+
+          {/* Logout Button */}
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 hover:border-red-400 text-red-400 hover:text-red-300 px-6 py-3 rounded-lg transition-all duration-300"
+            >
+              <LogOut className="w-4 h-4" />
+              <span className="font-mono text-sm font-bold">LOGOUT</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
