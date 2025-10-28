@@ -31,8 +31,8 @@ function AppRoutes() {
         <Route path="/home" element={<Home />} />
 
         {/* Auth Pages */}
-        {/*<Route path="/auth" element={<LoginPage />} />
-        <Route path="/otp" element={<OTPPage />} />*/}
+        <Route path="/auth" element={<LoginPage />} />
+        <Route path="/otp" element={<OTPPage />} />
 
         {/* Other Pages */}
         <Route path="/events/*" element={<Events />} />

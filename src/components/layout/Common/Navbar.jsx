@@ -44,9 +44,9 @@ const NavigationBar = () => {
     { name: "Schedules", href: "/schedules", icon: CalendarDays },
     { name: "Developer", href: "/developer", icon: Code2 },
     { name: "Contact", href: "/contact", icon: Phone },
-    /*isLoggedIn
+    isLoggedIn
       ? { name: "User Portal", href: "/user-portal", icon: User }
-      : { name: "Login", href: "/auth", icon: LogIn },*/
+      : { name: "Login", href: "/auth", icon: LogIn },
   ];
 
   return (

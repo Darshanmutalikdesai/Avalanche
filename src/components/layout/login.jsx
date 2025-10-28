@@ -1,387 +1,593 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+
+const GOOGLE_CLIENT_ID = "333524285370-93g4b8ruu24q4q0l3jm3no14h9a8h9la.apps.googleusercontent.com";
+const API_URL = "https://avalanche.git.edu"; // Change to your backend URL
 
 const RegisterPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [animateGlow, setAnimateGlow] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [stars, setStars] = useState([]);
+  const [shootingStars, setShootingStars] = useState([]);
+  const [isOtherSelected, setIsOtherSelected] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [showRegistrationForm, setShowRegistrationForm] = useState(false);
+  const [googleToken, setGoogleToken] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState('');
   const navigate = useNavigate();
+  const inputRef = useRef(null);
 
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
     phone: "",
     clgName: "",
     usn: "",
-    password: "",
-    confirmPassword: "",
   });
 
   const colleges = [
-    "KLS Gogte Institute of Technology, Belagavi",
-    "KLE Dr. M.S. Sheshgiri College of Engineering and Technology, Belagavi",
-    "Jain College of Engineering (JCE), Belagavi",
-    "S.G. Balekundri Institute of Technology (SGBIT), Belagavi",
-    "Hirasugar Institute of Technology (HSIT), Belagavi",
+    "Alva's Pre-University College",
     "Angadi Institute of Technology and Management (AITM), Belagavi",
-    "Bharatesh Institute of Technology, Belagavi",
-    "V.S.M. Institute of Technology, Nipani Tal - Chikodi",
-    "Maratha Mandal Engineering College, Belagavi",
-    "Shaikh College of Engineering and Technology (SCET), Belagavi",
     "Visvesvaraya Technological University, Belagavi",
+    "Others"
   ];
 
+  const spaceObjects = [
+    { type: "planet", emoji: "🪐", size: 80, x: 15, y: 10 },
+    { type: "planet", emoji: "🌍", size: 60, x: 85, y: 20 },
+    { type: "moon", emoji: "🌙", size: 40, x: 10, y: 80 },
+    { type: "satellite", emoji: "🛸", size: 50, x: 90, y: 70 },
+    { type: "comet", emoji: "☄", size: 35, x: 50, y: 5 },
+    { type: "asteroid", emoji: "🌑", size: 30, x: 20, y: 50 },
+    { type: "star", emoji: "⭐", size: 25, x: 80, y: 85 },
+    { type: "rocket", emoji: "🚀", size: 45, x: 60, y: 90 },
+  ];
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    const avalancheId = localStorage.getItem('avalancheId');
+    if (userId && avalancheId) {
+      navigate("/home");
+    }
+  }, [navigate]);
+
+  // 🌌 Animations Setup
   useEffect(() => {
     setTimeout(() => setIsLoaded(true), 100);
-    const glowInterval = setInterval(() => {
-      setAnimateGlow((prev) => !prev);
-    }, 2000);
-    return () => clearInterval(glowInterval);
+
+    const newStars = Array.from({ length: 200 }, () => ({
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      size: Math.random() * 3 + 0.5,
+      delay: Math.random() * 3,
+      duration: Math.random() * 2 + 1,
+    }));
+    setStars(newStars);
+
+    const shootingStarInterval = setInterval(() => {
+      setShootingStars((prev) => [
+        ...prev,
+        {
+          id: Date.now(),
+          left: Math.random() * 100,
+          top: Math.random() * 50,
+        },
+      ]);
+      setTimeout(() => {
+        setShootingStars((prev) => prev.slice(1));
+      }, 2000);
+    }, 3000);
+
+    return () => clearInterval(shootingStarInterval);
   }, []);
 
+  // 🌠 Floating parallax
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const floatingElements = document.querySelectorAll(".floating-object");
+      const mouseX = e.clientX / window.innerWidth;
+      const mouseY = e.clientY / window.innerHeight;
+
+      floatingElements.forEach((el, index) => {
+        const speed = (index + 1) * 0.5;
+        const x = (mouseX - 0.5) * speed * 20;
+        const y = (mouseY - 0.5) * speed * 20;
+        el.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    if (isOtherSelected && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isOtherSelected]);
+
+  useEffect(() => {
+    const handleClickOutside = () => setIsDropdownOpen(false);
+    window.addEventListener("click", handleClickOutside);
+    return () => window.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  // 🧠 Input Handlers
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // ✅ FIXED Register API - Matches backend exactly!
-  const registerUser = async () => {
+  const handleManualInput = (e) => {
+    const value = e.target.value;
+    setFormData((prev) => ({ ...prev, clgName: value }));
+  };
+
+  const handleSelect = (college) => {
+    if (college === "Others") {
+      setIsOtherSelected(true);
+      setFormData({ ...formData, clgName: "" });
+    } else {
+      setIsOtherSelected(false);
+      setFormData({ ...formData, clgName: college });
+    }
+    setIsDropdownOpen(false);
+  };
+
+  // 🔐 Handle Google OAuth Success
+  const handleGoogleSuccess = async (credentialResponse) => {
+    console.log('Google Sign-In Success');
     setLoading(true);
+    const token = credentialResponse.credential;
+    
     try {
-      // Validate inputs
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(formData.email)) {
-        alert("⚠️ Please enter a valid email address!");
-        setLoading(false);
-        return;
-      }
-
-      const phoneRegex = /^[0-9]{10}$/;
-      if (!phoneRegex.test(formData.phone)) {
-        alert("⚠️ Please enter a valid 10-digit phone number!");
-        setLoading(false);
-        return;
-      }
-
-      if (formData.password.length < 6) {
-        alert("⚠️ Password must be at least 6 characters long!");
-        setLoading(false);
-        return;
-      }
-
-      // ✅ CORRECTED PAYLOAD - Matches your backend schema
-      const payload = {
-        name: formData.name.trim(),
-        email: formData.email.trim().toLowerCase(),
-        password: formData.password,
-        pNumber: formData.phone.trim(),                    // ✅ Backend expects 'pNumber'
-        institute: formData.clgName,                       // ✅ Backend expects 'institute'
-        rollNumber: formData.usn.trim().toUpperCase(),     // ✅ Backend expects 'rollNumber'
-      };
-
-      console.log("📤 Sending registration data:", payload);
-
-      const response = await fetch(`https://avalanche.git.edu/api/users/register`, {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(payload),
+      const response = await fetch(`${API_URL}/api/auth/google`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token })
       });
 
       const data = await response.json();
-      console.log("📥 Backend response:", data);
-      
-      if (response.ok) {
-        alert("✅ Registration successful! Please check your email for OTP.");
-        navigate("/otp", { state: { email: formData.email } });
+
+      if (data.isNewUser) {
+        // New user - show registration form
+        setShowRegistrationForm(true);
+        setUserEmail(data.email);
+        setUserName(data.name);
+        setGoogleToken(token);
       } else {
-        alert(`❌ ${data.message || "Registration failed"}`);
-        console.error("Registration error:", data);
+        // Existing user - login successful
+        localStorage.setItem('userId', data.userId);
+        localStorage.setItem('avalancheId', data.avalancheId);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('payment', data.user.payment);
+        
+        alert(`✅ Welcome back! Your Avalanche ID: ${data.avalancheId}`);
+        navigate("/home");
       }
     } catch (error) {
-      console.error("🔴 Network Error:", error);
-      alert("⚠️ Cannot connect to server. Make sure backend is running on port 5000.");
+      console.error('Authentication error:', error);
+      alert('⚠ Authentication failed. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  // ✅ Login API
-  const loginUser = async () => {
+  // 🚀 Complete Registration
+  const completeRegistration = async () => {
     setLoading(true);
     try {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(formData.email)) {
-        alert("⚠️ Please enter a valid email address!");
+      const phoneRegex = /^[0-9]{10}$/;
+
+      if (!phoneRegex.test(formData.phone)) {
+        alert("⚠ Please enter a valid 10-digit phone number!");
         setLoading(false);
         return;
       }
 
-      if (!formData.password) {
-        alert("⚠️ Please enter your password!");
+      if (!formData.clgName.trim()) {
+        alert("⚠ Please select or enter your college/school name!");
         setLoading(false);
         return;
       }
 
-      const response = await fetch(`https://avalanche.git.edu/api/users/login`, {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
+      if (!formData.usn.trim()) {
+        alert("⚠ Please enter your roll number!");
+        setLoading(false);
+        return;
+      }
+
+      const response = await fetch(`${API_URL}/api/auth/register/complete`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: formData.email.trim().toLowerCase(),
-          password: formData.password,
-        }),
+          token: googleToken,
+          phone: formData.phone.trim(),
+          schlclgName: formData.clgName.trim(),
+          rollno: formData.usn.trim().toUpperCase()
+        })
       });
 
       const data = await response.json();
-      
+
       if (response.ok) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("payment", data.payment);
-        alert("✅ Login successful!");
+        localStorage.setItem('userId', data.userId);
+        localStorage.setItem('avalancheId', data.avalancheId);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('payment', data.user.payment);
+        
+        alert(`✅ Registration successful! Your Avalanche ID: ${data.avalancheId}`);
         navigate("/home");
       } else {
-        alert(`❌ ${data.message || "Login failed"}`);
-        console.error("Login error:", data);
+        alert(`❌ ${data.error || "Registration failed"}`);
       }
     } catch (error) {
-      console.error("Login error:", error);
-      alert("⚠️ Cannot connect to server");
+      console.error('Registration error:', error);
+      alert("⚠ Cannot connect to server. Check backend connection.");
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleSubmit = () => {
-    if (isSignUp) {
-      if (
-        !formData.name?.trim() ||
-        !formData.email?.trim() ||
-        !formData.password ||
-        !formData.usn?.trim() ||
-        !formData.clgName ||
-        !formData.phone?.trim()
-      ) {
-        alert("⚠️ Please fill all required fields!");
-        return;
-      }
-      if (formData.password !== formData.confirmPassword) {
-        alert("⚠️ Passwords do not match!");
-        return;
-      }
-      registerUser();
-    } else {
-      if (!formData.email?.trim() || !formData.password) {
-        alert("⚠️ Please enter both email and password!");
-        return;
-      }
-      loginUser();
-    }
-  };
-
-  const toggleMode = () => {
-    setIsSignUp(!isSignUp);
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      clgName: "",
-      usn: "",
-      password: "",
-      confirmPassword: "",
-    });
   };
 
   return (
-    <div className="fixed inset-0 overflow-auto flex flex-col font-['Nasalization'] text-white">
-      <div className="absolute inset-0 bg-black/70 z-0"></div>
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-black via-slate-900 to-blue-950">
+        <style>{`
+          @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+          }
+          
+          @keyframes shootingStar {
+            0% { transform: translateX(0) translateY(0); opacity: 1; }
+            100% { transform: translateX(300px) translateY(300px); opacity: 0; }
+          }
+          
+          @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+            50% { transform: translate(-50%, -50%) translateY(-20px); }
+          }
+          
+          @keyframes rotate360 {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+          }
+          
+          @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+          
+          @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+          }
+          
+          @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.5)); }
+            50% { filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.8)); }
+          }
+          
+          .animate-shimmer {
+            animation: shimmer 3s infinite;
+          }
+          
+          .animate-spin-slow {
+            animation: spin-slow 20s linear infinite;
+          }
 
-      <div className="min-h-screen flex items-center justify-center relative z-10 px-4">
-        <div
-          className={`max-w-sm w-full transform transition-all duration-1000 ease-out ${
-            isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-          }`}
-        >
-          <div className="group relative text-center bg-[rgba(0,15,30,0.85)] border border-[#00f7ff] rounded-xl shadow-[0_0_15px_rgba(0,247,255,0.3)] transition-all duration-300 ease-in-out hover:shadow-[0_0_20px_#00f7ff,0_0_30px_#00f7ff] px-4 pt-16 pb-6 overflow-visible">
+          @font-face {
+            font-family: 'Nasalization';
+            src: url('/src/assets/fonts/NASALIZA.TTF') format('truetype');
+          }
+          .input-box {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #00f7ff;
+            border-radius: 0.5rem;
+            background: rgba(0,15,30,0.9);
+            color: #cfcfcf;
+            outline: none;
+            transition: all 0.3s ease;
+          }
+          .input-box:focus {
+            border-color: #ffcc00;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+          }
+          .input-box::placeholder { 
+            color: rgba(0,247,255,0.5);
+          }
+        `}</style>
+
+        {/* Enhanced star field */}
+        <div className="absolute inset-0 overflow-hidden">
+          {stars.map((star, i) => (
             <div
-              className={`absolute -top-12 left-1/2 -translate-x-1/2 transition-all duration-700 ease-in-out ${
-                animateGlow ? "scale-110" : "scale-100"
-              }`}
+              key={i}
+              className="absolute rounded-full bg-white"
+              style={{
+                left: `${star.left}%`,
+                top: `${star.top}%`,
+                width: `${star.size}px`,
+                height: `${star.size}px`,
+                animation: `twinkle ${star.duration}s ease-in-out infinite`,
+                animationDelay: `${star.delay}s`,
+                boxShadow: `0 0 ${star.size * 2}px rgba(255, 255, 255, 0.8)`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Shooting stars */}
+        {shootingStars.map((star) => (
+          <div
+            key={star.id}
+            className="absolute w-1 h-1 bg-white rounded-full"
+            style={{
+              left: `${star.left}%`,
+              top: `${star.top}%`,
+              animation: 'shootingStar 2s ease-out forwards',
+              boxShadow: '0 0 10px 2px rgba(255, 255, 255, 0.8)',
+            }}
+          />
+        ))}
+
+        {/* Nebula clouds */}
+        <div className="absolute top-0 left-0 w-full h-full opacity-30">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-purple-600 rounded-full mix-blend-screen filter blur-3xl animate-pulse" style={{animationDuration: '8s'}} />
+          <div className="absolute top-40 right-20 w-80 h-80 bg-blue-600 rounded-full mix-blend-screen filter blur-3xl animate-pulse" style={{animationDuration: '10s', animationDelay: '2s'}} />
+          <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-pink-600 rounded-full mix-blend-screen filter blur-3xl animate-pulse" style={{animationDuration: '12s', animationDelay: '4s'}} />
+          <div className="absolute bottom-40 right-1/4 w-64 h-64 bg-cyan-600 rounded-full mix-blend-screen filter blur-3xl animate-pulse" style={{animationDuration: '9s', animationDelay: '1s'}} />
+        </div>
+
+        {/* Floating space objects */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {spaceObjects.map((obj, idx) => (
+            <div
+              key={idx}
+              className="floating-object absolute transition-transform duration-200 ease-out"
+              style={{
+                left: `${obj.x}%`,
+                top: `${obj.y}%`,
+                fontSize: `${obj.size}px`,
+                animation: `float ${15 + idx * 3}s ease-in-out infinite, rotate360 ${20 + idx * 5}s linear infinite`,
+                animationDelay: `${idx * 0.5}s`,
+                filter: 'drop-shadow(0 0 20px rgba(139, 92, 246, 0.6))',
+              }}
             >
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-[#00f7ff] to-[#0066cc] shadow-[0_0_20px_rgba(0,247,255,0.6)] border-2 border-[#00f7ff40] flex items-center justify-center">
-                <span className="text-2xl md:text-3xl">🚀</span>
-              </div>
+              {obj.emoji}
             </div>
+          ))}
+        </div>
 
-            <div className="mt-6 mb-6">
-              <h1 className="text-xl md:text-2xl font-semibold text-[#ffcc00] mb-1 drop-shadow-[0_0_6px_#ffcc00] uppercase tracking-wide">
-                {isSignUp ? "REGISTER" : "LOGIN"}
-              </h1>
-              <p className="text-xs text-[#cfcfcf] mb-3 tracking-widest">
-                {isSignUp ? "Create your Avalanche account" : "Access your account"}
-              </p>
-            </div>
+        {/* Orbiting rings */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+          <div className="absolute w-[800px] h-[800px] border border-cyan-500/10 rounded-full animate-spin-slow" style={{animationDuration: '60s'}} />
+          <div className="absolute w-[1000px] h-[1000px] border border-purple-500/10 rounded-full animate-spin-slow" style={{animationDuration: '80s', animationDirection: 'reverse'}} />
+          <div className="absolute w-[1200px] h-[1200px] border border-pink-500/10 rounded-full animate-spin-slow" style={{animationDuration: '100s'}} />
+        </div>
 
-            <div className="space-y-3">
-              {isSignUp && (
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Full Name *"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className="input-box"
-                  required
-                />
-              )}
+        {/* Glowing planets */}
+        <div className="absolute top-10 left-10 w-32 h-32 rounded-full bg-gradient-to-br from-[#f56729e4] via-[#015f92] to-[#ffe600] opacity-30 blur-2xl animate-pulse" style={{animationDuration: '6s'}} />
+        <div className="absolute bottom-20 right-10 w-40 h-40 rounded-full bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-500 opacity-30 blur-2xl animate-pulse" style={{animationDuration: '8s', animationDelay: '1s'}} />
+        <div className="absolute top-1/3 right-20 w-28 h-28 rounded-full bg-gradient-to-br from-yellow-500 via-orange-500 to-red-500 opacity-20 blur-2xl animate-pulse" style={{animationDuration: '7s', animationDelay: '2s'}} />
 
-              <input
-                type="email"
-                name="email"
-                placeholder="Email Address *"
-                value={formData.email}
-                onChange={handleInputChange}
-                className="input-box"
-                required
-              />
+        {/* Main container */}
+        <div className="relative z-10 min-h-screen flex items-center justify-center px-4 py-8">
+          <div
+            className={`w-full max-w-md transform transition-all duration-1000 ${
+              isLoaded ? "translate-y-0 opacity-100 scale-100" : "translate-y-12 opacity-0 scale-95"
+            }`}
+          >
+            <div className="relative">
+              {/* Animated glow */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#29aaf5c9] via-[#015f92] to-[#00e5ffb4] rounded-2xl blur-lg opacity-40 animate-pulse" />
+              
+              {/* Main card */}
+              <div className="relative bg-gradient-to-br from-slate-900/98 via-blue-950/98 to-slate-900/98 backdrop-blur-2xl border border-cyan-500/40 rounded-2xl shadow-2xl overflow-hidden">
+                
+                {/* Top accent */}
+                <div className="h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent animate-shimmer" />
+                </div>
+                
+                {/* Header */}
+                <div className="relative px-6 py-8 md:px-8 md:py-10">
+                  {/* Rocket icon */}
+                  <div className="flex justify-center mb-6 relative">
+                    <div className="absolute w-32 h-32 border-2 border-cyan-500/20 rounded-full animate-spin-slow" style={{animationDuration: '10s'}} />
+                    <div className="absolute w-40 h-40 border border-purple-500/20 rounded-full animate-spin-slow" style={{animationDuration: '15s', animationDirection: 'reverse'}} />
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#f56729e4] via-[#015f92] to-[#ffe600] border-4 border-[#ffff00] rounded-full blur-2xl opacity-60 animate-pulse" />
+                      <div className="relative w-20 h-20 bg-gradient-to-br from-[#f56729e4] via-[#015f92] to-[#ffe600] border-[#ffff00] rounded-full flex items-center justify-center border-2 border-cyan-300/50 shadow-2xl animate-bounce" style={{animationDuration: '3s'}}>
+                        <span className="text-4xl">🚀</span>
+                      </div>
+                    </div>
+                  </div>
 
-              {isSignUp && (
-                <>
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="Phone Number (10 digits) *"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    maxLength="10"
-                    pattern="[0-9]{10}"
-                    className="input-box"
-                    required
-                  />
-                  <select
-                    name="clgName"
-                    value={formData.clgName}
-                    onChange={handleInputChange}
-                    className="input-box"
-                    required
-                  >
-                    <option value="">Select College *</option>
-                    {colleges.map((college, idx) => (
-                      <option key={idx} value={college}>
-                        {college}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    type="text"
-                    name="usn"
-                    placeholder="USN (Roll Number) *"
-                    value={formData.usn}
-                    onChange={handleInputChange}
-                    className="input-box"
-                    required
-                  />
-                </>
-              )}
+                  {/* Title */}
+                  <div className="text-center mb-8 font-['Nasalization']">
+                    <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#29e4f5] via-[#05d5d9] to-[#006aff] bg-clip-text text-transparent mb-2 tracking-wider">
+                      {showRegistrationForm ? "COMPLETE PROFILE" : "AVALANCHE 2025"}
+                    </h1>
+                    <p className="text-cyan-300/80 text-sm tracking-widest font-light">
+                      {showRegistrationForm ? "FINALIZE REGISTRATION" : "MISSION CONTROL CENTER"}
+                    </p>
+                    <div className="mt-4 flex justify-center gap-2">
+                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50" />
+                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50" style={{animationDelay: '0.2s'}} />
+                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50" style={{animationDelay: '0.4s'}} />
+                    </div>
+                    
+                    {/* Decorative lines */}
+                    <div className="mt-4 flex items-center justify-center gap-3">
+                      <div className="h-px w-12 bg-gradient-to-r from-transparent to-cyan-500" />
+                      <div className="text-cyan-500">✦</div>
+                      <div className="h-px w-12 bg-gradient-to-l from-transparent to-cyan-500" />
+                    </div>
+                  </div>
 
-              <input
-                type="password"
-                name="password"
-                placeholder={`Password ${isSignUp ? '(min 6 chars) *' : '*'}`}
-                value={formData.password}
-                onChange={handleInputChange}
-                minLength={isSignUp ? "6" : undefined}
-                className="input-box"
-                required
-              />
+                  {/* Content */}
+                  {!showRegistrationForm ? (
+                    // Google Sign In
+                    <div className="space-y-6">
+                      <p className="text-center text-cyan-300/70 text-sm tracking-wide">
+                        Sign in with Google to access Avalanche 2025
+                      </p>
+                      
+                      <div className="flex justify-center">
+                        <GoogleLogin
+                          onSuccess={handleGoogleSuccess}
+                          onError={() => {
+                            console.log('Login Failed');
+                            alert('⚠ Google Sign-In failed. Please try again.');
+                          }}
+                          theme="filled_blue"
+                          size="large"
+                          text="signin_with"
+                          shape="rectangular"
+                          width="300"
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    // Registration Form
+                    <div className="space-y-4">
+                      {/* User Info Display */}
+                      <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 mb-6">
+                        <p className="text-cyan-300 text-sm mb-1">
+                          <span className="text-cyan-500">Name:</span> {userName}
+                        </p>
+                        <p className="text-cyan-300 text-sm">
+                          <span className="text-cyan-500">Email:</span> {userEmail}
+                        </p>
+                      </div>
 
-              {isSignUp && (
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  placeholder="Confirm Password *"
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
-                  className="input-box"
-                  required
-                />
-              )}
+                      {/* Phone Number */}
+                      <div className="relative group">
+                        <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg opacity-0 group-focus-within:opacity-40 blur transition duration-300" />
+                        <input
+                          type="tel"
+                          name="phone"
+                          placeholder="◉ PHONE NUMBER"
+                          value={formData.phone}
+                          onChange={handleInputChange}
+                          maxLength="10"
+                          className="input-box relative w-full px-4 py-3.5 bg-slate-950/90 border border-cyan-500/30 rounded-lg text-cyan-100 placeholder-cyan-500/50 focus:outline-none focus:border-cyan-400 focus:bg-slate-950 transition-all duration-300 text-sm tracking-wide"
+                        />
+                      </div>
 
-              <button
-                onClick={handleSubmit}
-                disabled={loading}
-                className={`w-full p-3 mt-4 font-semibold rounded-lg transition-all duration-300 ${
-                  loading 
-                    ? "bg-gray-500 cursor-not-allowed" 
-                    : "bg-[#ffcc00] hover:bg-[#ffd700] text-black"
-                }`}
-              >
-                {loading ? "Processing..." : isSignUp ? "Register" : "Login"}
-              </button>
+                      {/* College Dropdown */}
+                      <div className="relative group">
+                        <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg opacity-0 group-focus-within:opacity-40 blur transition duration-300" />
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setIsDropdownOpen(!isDropdownOpen);
+                          }}
+                          className="relative w-full px-4 py-3.5 bg-slate-950/90 border border-cyan-500/30 rounded-lg text-cyan-100 text-sm tracking-wide focus:outline-none focus:border-cyan-400 focus:bg-slate-950 transition-all duration-300 flex justify-between items-center"
+                        >
+                          {formData.clgName ? formData.clgName : "◉ SELECT COLLEGE/SCHOOL"}
+                          <span className="text-cyan-400 text-xs">▼</span>
+                        </button>
 
-              <button
-                onClick={toggleMode}
-                disabled={loading}
-                className="mt-2 text-xs text-[#00f7ff] hover:text-[#ffcc00] underline transition-colors"
-              >
-                {isSignUp
-                  ? "Already have an account? Sign In"
-                  : "Don't have an account? Sign Up"}
-              </button>
-            </div>
+                        {isDropdownOpen && (
+                          <div className="absolute z-10 w-full mt-1 bg-slate-950 border border-cyan-500/30 rounded-lg shadow-lg max-h-80 overflow-y-auto text-sm">
+                            {colleges.map((college, idx) => (
+                              <div
+                                key={idx}
+                                onClick={() => handleSelect(college)}
+                                className="px-4 py-2 text-cyan-100 hover:bg-cyan-500/20 cursor-pointer"
+                              >
+                                {college}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
 
-            <div className="mt-4 text-center">
-              <p className="text-[#00f7ff] text-[10px] font-bold mb-2 tracking-widest">
-                SECURE CONNECTION ACTIVE
-              </p>
-              <div className="flex justify-center space-x-1">
-                {[...Array(3)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="w-1.5 h-1.5 bg-[#00ff00] rounded-full animate-pulse"
-                    style={{
-                      animationDelay: `${i * 300}ms`,
-                      boxShadow: "0 0 6px rgba(0,255,0,0.8)",
-                    }}
-                  />
-                ))}
+                      {/* Manual input when Others selected */}
+                      {isOtherSelected && (
+                        <div className="relative group mt-2">
+                          <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg opacity-0 group-focus-within:opacity-40 blur transition duration-300" />
+                          <input
+                            ref={inputRef}
+                            type="text"
+                            placeholder="◉ ENTER YOUR COLLEGE/SCHOOL NAME"
+                            value={formData.clgName}
+                            onChange={handleManualInput}
+                            className="input-box relative w-full px-4 py-3.5 bg-slate-950/90 border border-cyan-500/30 rounded-lg text-cyan-100 placeholder-cyan-500/50 focus:outline-none focus:border-cyan-400 focus:bg-slate-950 transition-all duration-300 text-sm tracking-wide"
+                          />
+                        </div>
+                      )}
+
+                      {/* Roll Number */}
+                      <div className="relative group">
+                        <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg opacity-0 group-focus-within:opacity-40 blur transition duration-300" />
+                        <input
+                          type="text"
+                          name="usn"
+                          placeholder="◉ ROLL NO"
+                          value={formData.usn}
+                          onChange={handleInputChange}
+                          className="input-box relative w-full px-4 py-3.5 bg-slate-950/90 border border-cyan-500/30 rounded-lg text-cyan-100 placeholder-cyan-500/50 focus:outline-none focus:border-cyan-400 focus:bg-slate-950 transition-all duration-300 text-sm tracking-wide"
+                        />
+                      </div>
+
+                      {/* Submit button */}
+                      <button
+                        onClick={completeRegistration}
+                        disabled={loading}
+                        className={`relative w-full mt-6 py-4 rounded-lg font-bold text-sm tracking-widest overflow-hidden group font-['Nasalization'] ${
+                          loading ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#f56729e4] via-[#015f92] to-[#ffe600] border-4 border-[#ffff00] transition-transform duration-300 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#f56729e4] via-[#015f92] to-[#ffe600] border-4 border-[#ffff00] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-transparent to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                        <span className="relative text-white drop-shadow-lg flex items-center justify-center gap-2">
+                          {loading ? (
+                            <>
+                              <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                              PROCESSING...
+                            </>
+                          ) : (
+                            <>
+                              <span>🚀</span>
+                              COMPLETE REGISTRATION
+                            </>
+                          )}
+                        </span>
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Status */}
+                  <div className="mt-6 text-center">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-full backdrop-blur-sm">
+                      <div className="relative">
+                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50" />
+                        <div className="absolute inset-0 w-2 h-2 bg-green-400 rounded-full animate-ping" />
+                      </div>
+                      <span className="text-green-400 text-xs tracking-widest font-semibold">SECURE CONNECTION</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom accent */}
+                <div className="h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent animate-shimmer" />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <style>{`
-        @font-face {
-          font-family: 'Nasalization';
-          src: url('/src/assets/fonts/NASALIZA.TTF') format('truetype');
-        }
-        .input-box {
-          width: 100%;
-          padding: 0.75rem;
-          margin-bottom: 0.5rem;
-          border: 1px solid #00f7ff;
-          border-radius: 0.5rem;
-          background: rgba(0,15,30,0.9);
-          color: #cfcfcf;
-          outline: none;
-          transition: all 0.3s ease;
-        }
-        .input-box:focus {
-          border-color: #ffcc00;
-          box-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
-        }
-        .input-box::placeholder { 
-          color: rgba(0,247,255,0.5);
-        }
-      `}</style>
-    </div>
+    </GoogleOAuthProvider>
   );
 };
 
 export default RegisterPage;
-
