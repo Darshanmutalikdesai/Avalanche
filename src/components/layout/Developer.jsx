@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import NavigationBar from './Common/Navbar';
-import amogh from "../../assets/Amogh.png";
+import amogh from "../../assets/Amogh.jpeg";
+import darshan from "../../assets/Darshan.jpeg";
 import Footer from "../../components/layout/Common/footer";
 
 
@@ -144,18 +145,19 @@ const DevelopersPage = () => {
     },
       {
       id: 2,
-      name: "Darshan Mutalikdesai",      designation: "STUDENT ",
+      name: "Darshan Mutalikdesai",
+      designation: "Loudspeaker",
       developerType: "Full Stack Developer",
       linkedin: "https://www.linkedin.com/in/darshan-mutalikdesai-b4a4832a0/",
       phone: "7204092064",
-      image: "https://media.licdn.com/dms/image/v2/D4D03AQGY3l8bfEjMCA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1719248728280?e=1762992000&v=beta&t=3wyfgKAS7Kp_oknX1s38MbKorBItcLGP3H4dorp0zCw"
+      image: darshan
     },
     
     {
       id: 3,
       name: "PRATIK SADEKAR ",
-      designation: "Ipsum",
-      developerType: "Frontend Dev`",
+      designation: "DOMinator",
+      developerType: "Frontend Developer",
       linkedin: "https://www.linkedin.com/in/pratik-sadekar-3a9394271/",
       phone: "+919380313099",
       image: "https://media.licdn.com/dms/image/v2/D5603AQGFVOv9mUCJLQ/profile-displayphoto-shrink_200_200/B56ZP2Qt8zG8AY-/0/1735003399375?e=1762992000&v=beta&t=ykc13YneslZ2iODxA99QKc2ud-Y_d5V1EsDdRoXIYHA"
@@ -188,7 +190,15 @@ const DevelopersPage = () => {
       phone: "+916361234618",
       image: amogh
     },
-   
+    {
+      id: 7,
+      name: "Shreya Ammanagi",
+      designation: "UI Alchemist",
+      developerType: "Frontend Designer",
+      linkedin: "https://www.linkedin.com/in/shreya-ammanagi-25670a2bb/",
+      phone: "+919449685752",
+      image: "https://media.licdn.com/dms/image/v2/D4D03AQHoQL_W47Qqaw/profile-displayphoto-scale_200_200/B4DZhIM.jPGkAY-/0/1753558020380?e=1762992000&v=beta&t=iGxeDhFfb6W1XFOg7UQrVKRQbYsKNPZisRtu_rXcUIc"
+    }
     
   ];
 
@@ -216,7 +226,7 @@ const DevelopersPage = () => {
           </p>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-x-8 gap-y-32 sm:gap-x-10 sm:gap-y-36 lg:gap-x-12 lg:gap-y-40 max-w-7xl mx-auto px-4 pb-20">
+        <div className="flex flex-wrap justify-center gap-x-8 gap-y-32 sm:gap-x-10 sm:gap-y-36 lg:gap-x-12 lg:gap-y-40 max-w-[1600px] mx-auto px-4 pb-20">
           {developersData.map((developer) => (
             <DeveloperCard
               key={developer.id}

@@ -29,7 +29,7 @@ const SchoolEvents = () => {
 
     const SchoolEventsData = [
         {
-            "id": 4,
+            "id": 1,
             "title": "Science Expo",
             "description": "An engaging exhibition where young innovators present science and technology projects that inspire curiosity, creativity, and problem-solving.",
             "image": scienceexpo,
