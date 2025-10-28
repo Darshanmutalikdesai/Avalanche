@@ -2,26 +2,37 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import EventCard from "../layout/Events/EventCard";
 import NavigationBar from "./Common/Navbar";
-import image1 from "../../assets/treasure_image.jpg";
-import image2 from "../../assets/hackathon_image.jpg";
-import image3 from "../../assets/debate_image.jpg";
+import image1 from "../../assets/Aero.jpeg";
+import image2 from "../../assets/Architecture.jpeg";
+import image3 from "../../assets/Physics.jpeg";
+import Mechanical from "../../assets/Mechanical.jpeg";
 import Footer from "../../components/layout/Common/footer";
+import chem from "../../assets/chem.jpeg";
+import ai from "../../assets/AI.jpeg";
+import Maths from "../../assets/Maths.jpeg";
+import bsc from "../../assets/BSc.jpeg";
+import cse from "../../assets/CSE.jpeg";
+import civil from "../../assets/Civil.jpeg";
+import eee from "../../assets/EE.jpeg";
+import ece from "../../assets/EC.jpeg";
+import ise from "../../assets/IS.jpeg";
+import mba from "../../assets/MBA.jpeg";
 
 export const DepartmentsData = [
   { id: "AERO", title: "Aeronautical", description: "About the Department", image: image1 },
   { id: "ARCH", title: "Architecture", description: "About the Department", image: image2 },
   { id: "Phy", title: "Physics", description: "About the Department", image: image3 },
-  { id: "MATH", title: "Maths", description: "About the Department", image: image3 },
-  { id: "Chem", title: "Chemistry", description: "About the Department", image: image3 },
-  { id: "Bsc", title: "BSc", description: "About the Department", image: image3 },
-  { id: "CSE", title: "Computer Science", description: "About the Department", image: image3 },
-  { id: "CIVIL", title: "Civil", description: "About the Department", image: image3 },
-  { id: "EEE", title: "Electrical and Electronics", description: "About the Department", image: image3 },
-  { id: "ECE", title: "Electronics and Communication", description: "About the Department", image: image3 },
-  { id: "ISE", title: "Information Science", description: "About the Department", image: image3 },
-  { id: "MBA", title: "MBA", description: "About the Department", image: image3 },
-  { id: "MECH", title: "Mechanical", description: "About the Department", image: image3 },
-  { id: "AIML", title: "AIML", description: "About the Department", image: image3 },
+  { id: "MATH", title: "Maths", description: "About the Department", image: Maths },
+  { id: "Chem", title: "Chemistry", description: "About the Department", image: chem },
+  { id: "Bsc", title: "BSc", description: "About the Department", image: bsc },
+  { id: "CSE", title: "Computer Science", description: "About the Department", image: cse },
+  { id: "CIVIL", title: "Civil", description: "About the Department", image: civil },
+  { id: "EEE", title: "Electrical and Electronics", description: "About the Department", image: eee },
+  { id: "ECE", title: "Electronics and Communication", description: "About the Department", image: ece },
+  { id: "ISE", title: "Information Science", description: "About the Department", image: ise },
+  { id: "MBA", title: "MBA", description: "About the Department", image: mba },
+  { id: "MECH", title: "Mechanical", description: "About the Department", image: Mechanical },
+  { id: "AIML", title: "AIML", description: "About the Department", image: ai },
 ];
 
 const DepartmentEvents = () => {
@@ -61,9 +72,17 @@ const DepartmentEvents = () => {
       </div>
 
       {/* === PAGE CONTENT === */}
-      <div className="relative z-[2] min-h-screen pt-32 pb-20 sm:pt-28 px-4 sm:px-6 lg:px-8">
+      <div
+        className="
+          relative z-[20]
+          w-full
+          pt-32 sm:pt-28 pb-20
+          px-4 sm:px-6 lg:px-8
+          flex flex-col items-center
+        "
+      >
         {/* Heading */}
-        <div className="text-center mb-12 sm:mb-20">
+        <div className="text-center mb-12 sm:mb-20 w-full">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-nasal text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
             Departmental Events
           </h1>
@@ -75,11 +94,15 @@ const DepartmentEvents = () => {
         {/* === EVENT GRID === */}
         <div
           className="
-            grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 
-            gap-10 sm:gap-12 
-            flex-items-center
-            justify-items-center 
-            mx-auto max-w-[1200px]
+            grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
+            gap-8 sm:gap-10 lg:gap-12
+            justify-center
+            items-center
+            place-items-center
+            mx-auto
+            w-full
+            max-w-[1200px]
+            z-[30]
           "
         >
           {DepartmentsData.map((dept) => {
@@ -88,7 +111,7 @@ const DepartmentEvents = () => {
               <div
                 key={dept.id}
                 onClick={() => navigate(`/events/department-events/${slug}`)}
-                className="cursor-pointer flex justify-center"
+                className="cursor-pointer flex justify-center w-full"
               >
                 <EventCard
                   title={dept.title}
@@ -100,6 +123,7 @@ const DepartmentEvents = () => {
           })}
         </div>
       </div>
+
 
       {/* === FOOTER === */}
       <Footer />

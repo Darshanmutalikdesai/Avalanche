@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import NavigationBar from "./Common/Navbar";
 import EventCard from "../layout/Events/EventCard";
-import image1 from "../../assets/treasure_image.jpg";
+import image1 from "../../assets/TechQuiz.jpeg";
 import image2 from "../../assets/hackathon_image.jpg";
-import image3 from "../../assets/debate_image.jpg";
-import image4 from "../../assets/logo5.jpeg";
-import image5 from "../../assets/hackathon_image.jpg";
+import image3 from "../../assets/QuizMania.jpeg";
+import image4 from "../../assets/TechDebate.jpeg";
+import image5 from "../../assets/pp.jpeg";
 import Footer from "../../components/layout/Common/footer";
 
 const CentralEvents = () => {
@@ -39,13 +39,6 @@ const CentralEvents = () => {
       description: "Test your technical knowledge.",
       image: image1,
       instructions: "Technical quiz details...",
-    },
-    {
-      id: 2,
-      title: "Hackathon",
-      description: "Show your coding skills in 24 hours.",
-      image: image2,
-      instructions: "Hackathon details...",
     },
     {
       id: 3,
@@ -126,38 +119,7 @@ const CentralEvents = () => {
         <div className="flex flex-col items-center space-y-20 sm:space-y-28 lg:space-y-32">
           {/* Top Row */}
           <div className="flex flex-wrap justify-center gap-8 sm:gap-12 lg:gap-16">
-            {centralEventsData.slice(0, 2).map((event) => (
-              <div
-                key={event.id}
-                onClick={() => setSelectedEvent(event)}
-                className="cursor-pointer transition-transform duration-300 hover:scale-105"
-              >
-                <EventCard
-                  title={event.title}
-                  description={event.description}
-                  image={event.image}
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Middle Row */}
-          <div className="flex justify-center">
-            <div
-              onClick={() => setSelectedEvent(centralEventsData[2])}
-              className="cursor-pointer transform scale-110 hover:scale-[1.12] transition-transform duration-300"
-            >
-              <EventCard
-                title={centralEventsData[2].title}
-                description={centralEventsData[2].description}
-                image={centralEventsData[2].image}
-              />
-            </div>
-          </div>
-
-          {/* Bottom Row */}
-          <div className="flex flex-wrap justify-center gap-8 sm:gap-12 lg:gap-16">
-            {centralEventsData.slice(3).map((event) => (
+            {centralEventsData.map((event) => (
               <div
                 key={event.id}
                 onClick={() => setSelectedEvent(event)}
