@@ -8,6 +8,9 @@ import Logo from "../../assets/weblogo.svg";
 import MegaEventVideo from "../../assets/megaevent_bg.mp4";
 import Footer from "../layout/Common/footer";
 import NotifyPopup from "./Common/NotifyPopup";
+import chemshow from "../../assets/ChemicalShowdown.PNG";
+import hackathon from "../../assets/Hackathon.PNG";
+import robowars from "../../assets/RoboWars.PNG";
 
 
 // ⭐ Star Button Component
@@ -351,12 +354,41 @@ export default function HomePage() {
       {/* ℹ️ About Section */}
       <section
         id="about"
-        className="relative z-20 py-24 px-6 sm:px-12 md:px-24 lg:px-32 text-center bg-black/60 backdrop-blur-md border-t border-white/10"
+        className="relative z-20 py-24 px-6 sm:px-12 md:px-24 lg:px-32 text-center bg-black/60 backdrop-blur-md border-t border-white/10 overflow-hidden"
       >
-        <h2 className="text-4xl md:text-5xl text-white font-bold mb-6">
+        {/* Snowfall Effect */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(50)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute top-0 text-white opacity-80"
+              style={{
+                left: `${Math.random() * 100}%`,
+                animation: `fall ${5 + Math.random() * 10}s linear infinite`,
+                animationDelay: `${Math.random() * 5}s`,
+                fontSize: `${10 + Math.random() * 10}px`,
+              }}
+            >
+              ❄
+            </div>
+          ))}
+        </div>
+
+        <style jsx>{`
+          @keyframes fall {
+            0% {
+              transform: translateY(-10vh) rotate(0deg);
+            }
+            100% {
+              transform: translateY(110vh) rotate(360deg);
+            }
+          }
+        `}</style>
+
+        <h2 className="text-5xl md:text-6xl text-white font-bold mb-6">
           About Avalanche
         </h2>
-        <p className="text-gray-300 text-lg max-w-3xl font-orbitron mx-auto leading-relaxed">
+        <p className="text-gray-300 text-xl max-w-8xl font-orbitron mx-auto leading-relaxed">
           Avalanche is a tech and cultural fest celebrating innovation,
           creativity, and collaboration. Each year, thousands of brilliant minds
           gather to showcase their ideas and ignite the spark of the future.
@@ -374,12 +406,9 @@ export default function HomePage() {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
-            "Hackathon Highlights",
-            "Robowars Showdown",
-            "Gaming Arena",
-            "Cultural Extravaganza",
-            "Tech Talks & Panels",
-            "Award Ceremony",
+            ["Hackathon", hackathon],
+            ["Robowars Showdown", robowars],
+            ["Chemical Showdown", chemshow],
           ].map((item, i) => (
             <motion.div
               key={i}
@@ -388,12 +417,14 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: i * 0.1 }}
               className="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-white shadow-lg hover:shadow-pink-500/40 transition-all"
             >
+              <img
+                src={item[1]}
+                alt={item[0]}
+                className="w-full h-48 object-cover rounded-lg mb-4"
+              />
               <h3 className="text-xl font-semibold font-orbitron mb-2">
-                {item}
+                {item[0]}
               </h3>
-              <p className="text-gray-300 text-sm">
-                A glimpse into one of the most exciting events of Avalanche ‘24.
-              </p>
             </motion.div>
           ))}
         </div>
