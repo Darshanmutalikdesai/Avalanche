@@ -8,6 +8,7 @@ import CentralEvents from "../layout/CentralEvents";
 import DepartmentEvents from "../layout/DepartmentEvents";
 import RegisterEvents from "../layout/RegisterEvents";
 import RegisterPaperPage from "../layout/RegisterPaperPage";
+import SchoolEvents from "../layout/SchoolEvents";
 
 
 // Layout wrapper
@@ -29,7 +30,7 @@ export default function Events() {
         <Route path="central-events" element={<CentralEvents />} />
         <Route path="department-events" element={<DepartmentEvents />} />
         <Route path="department-events/:deptName" element={<IndividualDeptEvents departmentsData={DepartmentsData} />} />
-
+        <Route path="puc-events" element={<SchoolEvents />} />
 
         {/* Register Event (receives state from CentralEvents/DepartmentEvents) */}
         <Route path="register-events" element={<RegisterEvents />} />

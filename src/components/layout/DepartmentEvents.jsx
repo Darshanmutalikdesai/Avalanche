@@ -115,7 +115,6 @@ const DepartmentEvents = () => {
               >
                 <EventCard
                   title={dept.title}
-                  description={dept.description}
                   image={dept.image}
                 />
               </div>

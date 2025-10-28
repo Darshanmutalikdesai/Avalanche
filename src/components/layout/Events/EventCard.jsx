@@ -38,20 +38,20 @@ const EventCard = ({ title, description, image, path }) => {
         {/* === POSTER === */}
         <div
           className={`
-            absolute top-0 left-0 w-full h-2/3 overflow-hidden
-            transition-all duration-700
+            absolute top-0 left-0 w-full h-1/2 overflow-hidden
+            transition-all duration-700 justify-items-center items-center flex flex-col pt-5
             ${isHovered ? "opacity-100 scale-105" : "opacity-90 scale-100"}
           `}
         >
           <img
             src={image}
             alt={title}
-            className="object-cover w-full h-full rounded-t-xl"
+            className="object-cover w-full/2 h-full rounded-t-xl"
           />
         </div>
 
         {/* === CONTENT === */}
-        <div className="absolute bottom-0 w-full h-1/3 p-4 sm:p-5 text-center flex flex-col justify-center items-center">
+        <div className="absolute bottom-0 w-full h-1/2 p-4 sm:p-5 text-center flex flex-col justify-center items-center">
           <h2
             className="
               text-lg sm:text-xl md:text-2xl font-nasal font-bold text-cyan-300 tracking-wider uppercase
@@ -62,7 +62,7 @@ const EventCard = ({ title, description, image, path }) => {
           </h2>
           <p
             className="
-              text-xs sm:text-sm text-gray-200 font-orbitron mt-2 sm:mt-3 px-2 sm:px-3 leading-snug
+              text-xs sm:text-sm text-gray-200 font-orbitron mt-2 sm:mt-3 leading-snug
               transition-all duration-500
             "
           >
