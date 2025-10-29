@@ -7,8 +7,8 @@ const EventCard = ({ title, description, image, path }) => {
   return (
     <div
       className="
-        relative w-[90%] sm:w-72 md:w-80 lg:w-96
-        max-w-sm aspect-[3/4] mx-auto
+        relative w-full
+        max-w-sm aspect-[6/7] mx-auto
         cursor-pointer select-none
         perspective-1000
       "
@@ -54,7 +54,7 @@ const EventCard = ({ title, description, image, path }) => {
         <div className="absolute bottom-0 w-full h-1/2 p-4 sm:p-5 text-center flex flex-col justify-center items-center">
           <h2
             className="
-              text-lg sm:text-xl md:text-2xl font-nasal font-bold text-cyan-300 tracking-wider uppercase
+              text-xl sm:text-xl md:text-xl lg:text-2xl font-nasal font-bold text-cyan-300 tracking-wider uppercase
               transition-all duration-700
             "
           >

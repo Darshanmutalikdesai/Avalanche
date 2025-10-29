@@ -376,25 +376,24 @@ export default function IndividualDeptEvents() {
             No events found for this department.
           </p>
         ) : (
-          <div
-            className="flex flex-row justify-items-center
-                      gap-x-6 sm:gap-x-10 gap-y-10 sm:gap-y-12
-                      mx-auto max-w-fit"
-          >
-            {departmentEvents.map((event) => (
-              <div
-                key={event.id}
-                onClick={() => setSelectedEvent(event)}
-                className="cursor-pointer transition-transform duration-300 hover:scale-105 flex justify-center"
-              >
-                <EventCard
-                  title={event.Eventname}
-                  image={event.image}
-                  className="h-full"
-                />
-              </div>
-            ))}
-          </div>
+          <div className="flex flex-wrap justify-center items-start gap-4 sm:gap-6 md:gap-8 lg:gap-10 w-full px-4 sm:px-6 md:px-8">
+  {departmentEvents.map((event) => (
+    <div
+      key={event.id}
+      onClick={() => setSelectedEvent(event)}
+      className="cursor-pointer transition-transform duration-300 hover:scale-105 
+                 w-full sm:w-[calc(50%-0.75rem)] md:w-[calc(33.333%-1.25rem)] 
+                 lg:w-[calc(25%-1.875rem)] xl:w-[calc(20%-2rem)]
+                 max-w-[320px] flex justify-center"
+    >
+      <EventCard
+        title={event.Eventname}
+        image={event.image}
+        className="h-full w-full"
+      />
+    </div>
+  ))}
+</div>
         )}
       </main>
 

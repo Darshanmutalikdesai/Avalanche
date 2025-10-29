@@ -94,14 +94,13 @@ const DepartmentEvents = () => {
         {/* === EVENT GRID === */}
         <div
           className="
-            grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
-            gap-8 sm:gap-10 lg:gap-12
+            flex flex-wrap
+            gap-6 sm:gap-8 lg:gap-10 xl:gap-12
             justify-center
-            items-center
-            place-items-center
             mx-auto
             w-full
-            max-w-[1200px]
+            max-w-[1400px]
+            px-4 sm:px-6 md:px-8
             z-[30]
           "
         >
@@ -111,7 +110,9 @@ const DepartmentEvents = () => {
               <div
                 key={dept.id}
                 onClick={() => navigate(`/events/department-events/${slug}`)}
-                className="cursor-pointer flex justify-center w-full"
+                className="cursor-pointer transition-transform duration-300 hover:scale-105 
+                          w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)]
+                          max-w-[350px]"
               >
                 <EventCard
                   title={dept.title}

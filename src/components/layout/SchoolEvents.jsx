@@ -86,15 +86,16 @@ const SchoolEvents = () => {
           </p>
         </div>
 
-        {/* Pyramid Layout */}
-        <div className="flex flex-col items-center space-y-20 sm:space-y-28 lg:space-y-32">
           {/* Top Row */}
-          <div className="flex flex-wrap justify-center gap-8 sm:gap-12 lg:gap-16">
+          <div className="flex flex-wrap justify-center items-start gap-4 sm:gap-6 md:gap-8 lg:gap-10 w-full px-4 sm:px-6 md:px-8">
             {SchoolEventsData.map((event) => (
               <div
                 key={event.id}
                 onClick={() => setSelectedEvent(event)}
-                className="cursor-pointer transition-transform duration-300 hover:scale-105"
+                className="cursor-pointer transition-transform duration-300 hover:scale-105 
+                          w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] 
+                          xl:w-[calc(25%-2.5rem)]
+                          min-w-[280px] max-w-[380px]"
               >
                 <EventCard
                   title={event.title}
@@ -104,7 +105,6 @@ const SchoolEvents = () => {
               </div>
             ))}
           </div>
-        </div>
       </div>
 
       {/* Popup Modal */}

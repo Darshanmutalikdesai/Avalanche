@@ -34,7 +34,7 @@ const CentralEvents = () => {
     {
       id: 1,
       title: "Technical Quiz(Circuit)",
-      description: "Dive into a world where logic meets innovation! From trending technologies to mind-bending problem statements, this quiz is your chance to prove your technical instincts and outsmart your peers.",
+      description: "Dive into a world where logic meets innovation! From trending technologies to mind-bending problem statements.",
       image: image1,
       instructions: "Technical Quiz General Rules\n 1.The Quizmaster is God and their decision is final.\n 2. Use of mobile phones or electronic devices is strictly prohibited.\n 3. The quiz will consist of 25 questions in the preliminary round.\n 4. ‘*’ (Star mark) questions will act as tie-breakers.\n 5. No negative marking in the first round.\n 6. No prompting of answers is allowed.\n 7. If there are more than three blockers, no further hints will be given.\n 8. Any form of misconduct or discussion during the quiz will lead to disqualification.\n\n\nTechnical Quiz Guidelines 1. Each team can have a maximum of two participants.\n 2. The quiz will consist of two rounds – Preliminary Round and Final Round.\n 3. Round 1 (Preliminary) will be a written pen-and-paper round.\n 4. Use of mobile phones or electronic devices is strictly prohibited.\n 5. Top teams from the preliminary round will qualify for the final round.\n 6. Any form of misconduct or unfair means will lead to disqualification.\n 7. Decisions of the judges and organizers will be final and binding.\n 8. Questions will test technical knowledge, logic, and awareness.\n",
     },
@@ -50,7 +50,7 @@ const CentralEvents = () => {
     {
       id: 4,
       title: "Technical Quiz(Non Circuit)",
-      description: "A fusion of creativity, knowledge, and quick thinking! Explore fascinating concepts from science, engineering, and everyday innovation in this fast-paced challenge designed to test not just what you know, but how you think.",
+      description: "A fusion of creativity, knowledge, and quick thinking! Explore fascinating concepts from science, engineering, and everyday innovation.",
       image: image3,
       instructions: "Technical Quiz General Rules\n 1.The Quizmaster is God and their decision is final.\n 2. Use of mobile phones or electronic devices is strictly prohibited.\n 3. The quiz will consist of 25 questions in the preliminary round.\n 4. ‘*’ (Star mark) questions will act as tie-breakers.\n 5. No negative marking in the first round.\n 6. No prompting of answers is allowed.\n 7. If there are more than three blockers, no further hints will be given.\n 8. Any form of misconduct or discussion during the quiz will lead to disqualification.\n\n\nTechnical Quiz Guidelines 1. Each team can have a maximum of two participants.\n 2. The quiz will consist of two rounds – Preliminary Round and Final Round.\n 3. Round 1 (Preliminary) will be a written pen-and-paper round.\n 4. Use of mobile phones or electronic devices is strictly prohibited.\n 5. Top teams from the preliminary round will qualify for the final round.\n 6. Any form of misconduct or unfair means will lead to disqualification.\n 7. Decisions of the judges and organizers will be final and binding.\n 8. Questions will test technical knowledge, logic, and awareness.\n",
     },
@@ -114,19 +114,13 @@ const CentralEvents = () => {
         </div>
 
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
-            gap-8 sm:gap-10 lg:gap-12
-            sm:gap-x-10 sm:gap-y-36
-            lg:gap-x-12 lg:gap-y-40
-            max-w-8xl
-            mx-auto
-            px-4
-            pb-20">
+          <div className="flex flex-wrap justify-center items-start gap-4 sm:gap-6 md:gap-8 lg:gap-10 w-full px-4 sm:px-6 md:px-8">
             {centralEventsData.map((event) => (
               <div
                 key={event.id}
                 onClick={() => setSelectedEvent(event)}
-                className="cursor-pointer transition-transform duration-300 hover:scale-105"
+                className="cursor-pointer transition-transform duration-300 hover:scale-105 
+                          w-[90%] sm:w-60 md:w-72 lg:w-80 xl:w-96"
               >
                 <EventCard
                   title={event.title}
@@ -136,7 +130,7 @@ const CentralEvents = () => {
               </div>
             ))}
           </div>
-        </div>
+          </div>
 
       {/* Popup Modal */}
       {selectedEvent && (
