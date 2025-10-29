@@ -32,9 +32,15 @@ const NavigationBar = () => {
 
   // 🔐 Detect if user is logged in
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, [location]);
+    const checkAuth = () => {
+      // Check for both token and userId to ensure user is logged in
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+      setIsLoggedIn(!!(token && userId));
+    };
+
+    checkAuth();
+  }, [location]); // Re-check when location changes
 
   // 🌐 Navigation items (dynamic last item)
   const navItems = [
@@ -163,7 +169,7 @@ const NavigationBar = () => {
                   }
                   setMenuOpen(false);
                 }}
-                className="flex items-center gap-3 text-white hover:text-cyan-300 text-lg font-semibold border border-white/20 hover:border-cyan-400/50 px-6 py-2 rounded-xl transition-all duration-300 w-[85%] justify-center shadow-md hover:shadow-cyan-400/40"
+                className="flex items-center gap-3 text-white hover:text-cyan-300 text-lg font-semibold border border-white/20 hover:border-cyan-400/50 px-6 py-2 rounded-xl transition-all duration-300 w-[85%] justify-center shadow-md hover:shadow-cyan-400/40 bg-transparent hover:bg-white/5"
               >
                 <item.icon size={22} />
                 {item.name}
