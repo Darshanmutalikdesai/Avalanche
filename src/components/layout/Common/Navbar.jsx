@@ -21,6 +21,7 @@ const NavigationBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  
 
   // Scroll blur
   useEffect(() => {
@@ -117,7 +118,7 @@ const NavigationBar = () => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="absolute top-full left-0 w-full bg-black/90 backdrop-blur-lg border-t border-cyan-500/30 md:hidden flex flex-col items-center space-y-4 py-6"
+            className="absolute top-full left-0 w-full bg-black backdrop-blur-lg border-t border-cyan-500/30 md:hidden flex flex-col items-center space-y-4 py-6"
           >
             {navItems.map((item) => (
               <NavLink

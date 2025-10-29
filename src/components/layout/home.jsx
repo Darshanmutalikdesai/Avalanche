@@ -13,13 +13,58 @@ import robowars from "../../assets/RoboWars.PNG";
 
 
 // ⭐ Star Button Component
-const StarButton = (onClick) => {
+const StarButton = () => {
   const [isHovered, setIsHovered] = useState(false);
-  
+  const navigate = useNavigate();
+
+  // ✅ Check current user from backend (optional: if you want extra validation)
+  const getCurrentUser = async (userId) => {
+    try {
+      const response = await fetch(`https://avalanche.git.edu/api/user/current/${userId}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch user");
+      }
+
+      const data = await response.json();
+      return data; // e.g. { avalancheId, email, name, schlclgName, rollno }
+    } catch (error) {
+      console.error("Error fetching current user:", error);
+      return null;
+    }
+  };
+
+  // ✅ Handle Explore click
+  const handleExploreClick = async () => {
+    const userId = localStorage.getItem("userId");
+
+    if (userId) {
+      // Optionally verify if the user still exists
+      const user = await getCurrentUser(userId);
+
+      if (user && user.email) {
+        // ✅ Valid user found
+        navigate("/events"); // redirect to events page
+      } else {
+        // ⚠️ User not valid anymore
+        localStorage.removeItem("userId");
+        localStorage.removeItem("token");
+        navigate("/auth"); // redirect to auth page
+      }
+    } else {
+      // 🚫 Not logged in
+      navigate("/auth"); // redirect to auth/login page
+    }
+  };
+
   return (
     <>
     <button
-      onClick={onClick}
+      onClick={handleExploreClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={`relative px-4 sm:px-6 py-2 sm:py-3 
