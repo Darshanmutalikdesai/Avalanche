@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import NavigationBar from "../layout/Common/Navbar";
+
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
 const GOOGLE_CLIENT_ID = "333524285370-93g4b8ruu24q4q0l3jm3no14h9a8h9la.apps.googleusercontent.com";
@@ -340,7 +342,13 @@ const RegisterPage = () => {
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+
+      
       <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-black via-slate-900 to-blue-950">
+
+        <div className="relative z-[60]">
+                <NavigationBar />
+              </div>
         <style>{`
           @keyframes twinkle {
             0%, 100% { opacity: 0.3; }
@@ -408,6 +416,8 @@ const RegisterPage = () => {
             color: rgba(0,247,255,0.5);
           }
         `}</style>
+
+        
 
         {/* Enhanced star field */}
         <div className="absolute inset-0 overflow-hidden">
@@ -603,7 +613,7 @@ const RegisterPage = () => {
                         </button>
 
                         {isDropdownOpen && (
-                          <div className="absolute z-10 w-full mt-1 bg-slate-950 border border-cyan-500/30 rounded-lg shadow-lg max-h-80 overflow-y-auto text-sm">
+                          <div className="absolute z-10 w-full mt-1 bg-slate-950 border border-cyan-500/30 rounded-lg shadow-lg max-h-40 overflow-y-auto text-sm">
                             {colleges.map((college, idx) => (
                               <div
                                 key={idx}

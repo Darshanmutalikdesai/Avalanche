@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Zap,
-  UserPlus,
   BookOpen,
   CalendarDays,
   Code2,
@@ -12,7 +11,7 @@ import {
   X,
   Menu,
 } from "lucide-react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "../../../assets/weblogo.svg";
 
@@ -21,23 +20,22 @@ const NavigationBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
-  
+  const navigate = useNavigate();
 
-  // Scroll blur
+  // 🌫 Scroll effect
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  
-
-  // Auth token
+  // 🔐 Detect if user is logged in
   useEffect(() => {
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
   }, [location]);
 
+  // 🌐 Navigation items (dynamic last item)
   const navItems = [
     { name: "Home", href: "/home", icon: Zap },
     { name: "Event Registration", href: "/events", icon: Rocket },
@@ -49,6 +47,15 @@ const NavigationBar = () => {
       ? { name: "User Portal", href: "/user-portal", icon: User }
       : { name: "Login", href: "/auth", icon: LogIn },
   ];
+
+  // 🧭 Handle click on Login/User Portal
+  const handleAuthClick = () => {
+    if (isLoggedIn) {
+      navigate("/user-portal");
+    } else {
+      navigate("/auth");
+    }
+  };
 
   return (
     <header
@@ -80,24 +87,48 @@ const NavigationBar = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
             >
-              <NavLink
-                to={item.href}
-                className={({ isActive }) =>
-                  `group relative flex items-center gap-2 text-[15px] xl:text-[17px] font-semibold transition-colors duration-200 ${
-                    isActive ? "text-cyan-300" : "text-white hover:text-cyan-300"
-                  }`
-                }
-              >
-                <item.icon size={20} />
-                {item.name}
-                <span
-                  className={`absolute bottom-[-4px] left-0 h-[2px] bg-cyan-300 transition-all duration-300 ${
+              {item.name === "Login" || item.name === "User Portal" ? (
+                // ✅ For Auth / Portal button
+                <button
+                  onClick={handleAuthClick}
+                  className={`group relative flex items-center gap-2 text-[15px] xl:text-[17px] font-semibold transition-colors duration-200 ${
                     location.pathname === item.href
-                      ? "w-full"
-                      : "w-0 group-hover:w-full"
+                      ? "text-cyan-300"
+                      : "text-white hover:text-cyan-300"
                   }`}
-                />
-              </NavLink>
+                >
+                  <item.icon size={20} />
+                  {item.name}
+                  <span
+                    className={`absolute bottom-[-4px] left-0 h-[2px] bg-cyan-300 transition-all duration-300 ${
+                      location.pathname === item.href
+                        ? "w-full"
+                        : "w-0 group-hover:w-full"
+                    }`}
+                  />
+                </button>
+              ) : (
+                <NavLink
+                  to={item.href}
+                  className={({ isActive }) =>
+                    `group relative flex items-center gap-2 text-[15px] xl:text-[17px] font-semibold transition-colors duration-200 ${
+                      isActive
+                        ? "text-cyan-300"
+                        : "text-white hover:text-cyan-300"
+                    }`
+                  }
+                >
+                  <item.icon size={20} />
+                  {item.name}
+                  <span
+                    className={`absolute bottom-[-4px] left-0 h-[2px] bg-cyan-300 transition-all duration-300 ${
+                      location.pathname === item.href
+                        ? "w-full"
+                        : "w-0 group-hover:w-full"
+                    }`}
+                  />
+                </NavLink>
+              )}
             </motion.div>
           ))}
         </nav>
@@ -111,7 +142,7 @@ const NavigationBar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu (original bordered glowing style) */}
+      {/* 📱 Mobile Menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -121,15 +152,21 @@ const NavigationBar = () => {
             className="absolute top-full left-0 w-full bg-black backdrop-blur-lg border-t border-cyan-500/30 md:hidden flex flex-col items-center space-y-4 py-6"
           >
             {navItems.map((item) => (
-              <NavLink
+              <button
                 key={item.name}
-                to={item.href}
-                onClick={() => setMenuOpen(false)}
+                onClick={() => {
+                  if (item.name === "Login" || item.name === "User Portal") {
+                    handleAuthClick();
+                  } else {
+                    navigate(item.href);
+                  }
+                  setMenuOpen(false);
+                }}
                 className="flex items-center gap-3 text-white hover:text-cyan-300 text-lg font-semibold border border-white/20 hover:border-cyan-400/50 px-6 py-2 rounded-xl transition-all duration-300 w-[85%] justify-center shadow-md hover:shadow-cyan-400/40"
               >
                 <item.icon size={22} />
                 {item.name}
-              </NavLink>
+              </button>
             ))}
           </motion.div>
         )}
