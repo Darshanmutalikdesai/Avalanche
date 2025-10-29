@@ -272,6 +272,8 @@ const RegisterPage = () => {
         localStorage.setItem('avalancheId', data.avalancheId);
         localStorage.setItem('user', JSON.stringify(data.user));
         localStorage.setItem('payment', data.user.payment);
+
+        window.dispatchEvent(new Event('authStateChanged'));
         
         alert(`✅ Welcome back! Your Avalanche ID: ${data.avalancheId}`);
         navigate("/home");
@@ -326,6 +328,8 @@ const RegisterPage = () => {
         localStorage.setItem('avalancheId', data.avalancheId);
         localStorage.setItem('user', JSON.stringify(data.user));
         localStorage.setItem('payment', data.user.payment);
+
+        window.dispatchEvent(new Event('authStateChanged'));
         
         alert(`✅ Registration successful! Your Avalanche ID: ${data.avalancheId}`);
         navigate("/home");

@@ -33,14 +33,28 @@ const NavigationBar = () => {
   // 🔐 Detect if user is logged in
   useEffect(() => {
     const checkAuth = () => {
-      // Check for both token and userId to ensure user is logged in
-      const token = localStorage.getItem("token");
+      // Check for userId and user data to ensure user is logged in
       const userId = localStorage.getItem("userId");
-      setIsLoggedIn(!!(token && userId));
+      const userData = localStorage.getItem("user");
+      const newLoginState = !!(userId && userData);
+      
+      if (newLoginState !== isLoggedIn) {
+        setIsLoggedIn(newLoginState);
+      }
     };
 
     checkAuth();
-  }, [location]); // Re-check when location changes
+
+    // Listen for custom auth event (for Google OAuth callback)
+    const handleAuthChange = () => checkAuth();
+    window.addEventListener("authStateChanged", handleAuthChange);
+    window.addEventListener("storage", handleAuthChange);
+    
+    return () => {
+      window.removeEventListener("authStateChanged", handleAuthChange);
+      window.removeEventListener("storage", handleAuthChange);
+    };
+  }, [location, isLoggedIn]); // Re-check when location changes
 
   // 🌐 Navigation items (dynamic last item)
   const navItems = [
