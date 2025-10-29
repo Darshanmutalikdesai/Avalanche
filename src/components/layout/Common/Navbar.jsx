@@ -14,6 +14,7 @@ import {
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "../../../assets/weblogo.svg";
+import { Button } from "@/components/ui/button";
 
 const NavigationBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -61,7 +62,7 @@ const NavigationBar = () => {
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 font-nasal ${
         isScrolled
-          ? "bg-black/40 backdrop-blur-lg shadow-md py-2"
+          ? "bg-black/60 backdrop-blur-lg shadow-md py-2"
           : "bg-transparent py-4"
       }`}
     >
@@ -152,7 +153,7 @@ const NavigationBar = () => {
             className="absolute top-full left-0 w-full bg-black backdrop-blur-lg border-t border-cyan-500/30 md:hidden flex flex-col items-center space-y-4 py-6"
           >
             {navItems.map((item) => (
-              <button
+              <Button
                 key={item.name}
                 onClick={() => {
                   if (item.name === "Login" || item.name === "User Portal") {
@@ -166,7 +167,7 @@ const NavigationBar = () => {
               >
                 <item.icon size={22} />
                 {item.name}
-              </button>
+              </Button>
             ))}
           </motion.div>
         )}
