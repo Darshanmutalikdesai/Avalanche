@@ -8,7 +8,6 @@ import QueryProvider from "./components/layout/Common/QueryProvider";
 
 import NotFound from "./components/pages/Pagenotfound";
 import RocketCursor from "./components/layout/Common/RocketCursor"; // 🚀 Cursor
-import ClickSoundProvider from "./components/layout/Common/ClickSoundProvider"; // 🔊 Click sound
 
 // Lazy load pages
 const LandingPage = lazy(() => import("./components/pages/landing"));
@@ -59,13 +58,11 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <QueryProvider>
         <Router>
-          <ClickSoundProvider>
             {/* 🚀 Global Rocket Cursor */}
-            <RocketCursor />
+          <RocketCursor />
 
             {/* Main App Routes */}
-            <AppRoutes />
-          </ClickSoundProvider>
+          <AppRoutes />
         </Router>
       </QueryProvider>
     </QueryClientProvider>
