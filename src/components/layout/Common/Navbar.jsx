@@ -59,9 +59,9 @@ const NavigationBar = () => {
   // 🌐 Navigation items (dynamic last item)
   const navItems = [
     { name: "Home", href: "/home", icon: Zap },
-    { name: "Event Registration", href: isLoggedIn ? "/events" : "/auth", icon: Rocket },
-    { name: "Rule Book", href: isLoggedIn ? "/rulebook" : "/auth", icon: BookOpen },
-    { name: "Schedules", href: isLoggedIn ? "/schedules" : "/auth", icon: CalendarDays },
+    { name: "Event Registration", href: "/events", icon: Rocket },
+    { name: "Rule Book", href: "/rulebook", icon: BookOpen },
+    { name: "Schedules", href: "/schedules", icon: CalendarDays },
     { name: "Developer", href: "/developer", icon: Code2 },
     { name: "Contact", href: "/contact", icon: Phone },
     isLoggedIn

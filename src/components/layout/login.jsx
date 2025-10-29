@@ -20,6 +20,7 @@ const RegisterPage = () => {
   const [userName, setUserName] = useState('');
   const navigate = useNavigate();
   const inputRef = useRef(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [formData, setFormData] = useState({
     phone: "",
@@ -243,6 +244,7 @@ const RegisterPage = () => {
       setFormData({ ...formData, clgName: college });
     }
     setIsDropdownOpen(false);
+    setSearchQuery(""); // Clear search when selection is made
   };
 
   // 🔐 Handle Google OAuth Success
@@ -601,37 +603,66 @@ const RegisterPage = () => {
                         />
                       </div>
 
-                      {/* College Dropdown */}
+                      {/* College Dropdown with Search */}
                       <div className="relative group">
                         <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg opacity-0 group-focus-within:opacity-40 blur transition duration-300" />
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setIsDropdownOpen(!isDropdownOpen);
-                          }}
-                          className="relative w-full px-4 py-3.5 bg-slate-950/90 border border-cyan-500/30 rounded-lg text-cyan-100 text-sm tracking-wide focus:outline-none focus:border-cyan-400 focus:bg-slate-950 transition-all duration-300 flex justify-between items-center"
-                        >
-                          {formData.clgName ? formData.clgName : "◉ SELECT COLLEGE/SCHOOL"}
-                          <span className="text-cyan-400 text-xs">▼</span>
-                        </button>
+                        
+                        {/* Display selected college or search input */}
+                        {!isDropdownOpen ? (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setIsDropdownOpen(true);
+                              setSearchQuery("");
+                            }}
+                            className="relative w-full px-4 py-3.5 bg-slate-950/90 border border-cyan-500/30 rounded-lg text-cyan-100 text-sm tracking-wide focus:outline-none focus:border-cyan-400 focus:bg-slate-950 transition-all duration-300 flex justify-between items-center"
+                          >
+                            {formData.clgName && !isOtherSelected ? formData.clgName : "◉ SELECT COLLEGE/SCHOOL"}
+                            <span className="text-cyan-400 text-xs">▼</span>
+                          </button>
+                        ) : (
+                          <input
+                            type="text"
+                            placeholder="🔍 Search college/school..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onClick={(e) => e.stopPropagation()}
+                            autoFocus
+                            className="relative w-full px-4 py-3.5 bg-slate-950/90 border border-cyan-500/30 rounded-lg text-cyan-100 placeholder-cyan-500/50 focus:outline-none focus:border-cyan-400 focus:bg-slate-950 transition-all duration-300 text-sm tracking-wide"
+                          />
+                        )}
 
+                        {/* Dropdown list with filtered results */}
                         {isDropdownOpen && (
-                          <div className="absolute z-10 w-full mt-1 bg-slate-950 border border-cyan-500/30 rounded-lg shadow-lg max-h-40 overflow-y-auto text-sm">
-                            {colleges.map((college, idx) => (
-                              <div
-                                key={idx}
-                                onClick={() => handleSelect(college)}
-                                className="px-4 py-2 text-cyan-100 hover:bg-cyan-500/20 cursor-pointer"
-                              >
-                                {college}
+                          <div className="absolute z-10 w-full mt-1 bg-slate-950 border border-cyan-500/30 rounded-lg shadow-lg max-h-60 overflow-y-auto text-sm">
+                            {colleges
+                              .filter(college => 
+                                college.toLowerCase().includes(searchQuery.toLowerCase())
+                              )
+                              .map((college, idx) => (
+                                <div
+                                  key={idx}
+                                  onClick={() => handleSelect(college)}
+                                  className="px-4 py-2 text-cyan-100 hover:bg-cyan-500/20 cursor-pointer transition-colors"
+                                >
+                                  {college}
+                                </div>
+                              ))}
+                            
+                            {/* Show "No results" message if search returns nothing */}
+                            {colleges.filter(college => 
+                              college.toLowerCase().includes(searchQuery.toLowerCase())
+                            ).length === 0 && (
+                              <div className="px-4 py-3 text-cyan-300/50 text-center">
+                                No colleges found. Select "Others" to enter manually.
                               </div>
-                            ))}
+                            )}
                           </div>
                         )}
                       </div>
 
-                      {/* Manual input when Others selected */}
+                      {/* Manual input - ONLY when Others is selected */}
                       {isOtherSelected && (
                         <div className="relative group mt-2">
                           <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg opacity-0 group-focus-within:opacity-40 blur transition duration-300" />
@@ -641,7 +672,7 @@ const RegisterPage = () => {
                             placeholder="◉ ENTER YOUR COLLEGE/SCHOOL NAME"
                             value={formData.clgName}
                             onChange={handleManualInput}
-                            className="input-box relative w-full px-4 py-3.5 bg-slate-950/90 border border-cyan-500/30 rounded-lg text-cyan-100 placeholder-cyan-500/50 focus:outline-none focus:border-cyan-400 focus:bg-slate-950 transition-all duration-300 text-sm tracking-wide"
+                            className="relative w-full px-4 py-3.5 bg-slate-950/90 border border-cyan-500/30 rounded-lg text-cyan-100 placeholder-cyan-500/50 focus:outline-none focus:border-cyan-400 focus:bg-slate-950 transition-all duration-300 text-sm tracking-wide"
                           />
                         </div>
                       )}
