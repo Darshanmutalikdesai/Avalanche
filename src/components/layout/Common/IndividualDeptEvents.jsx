@@ -9,7 +9,7 @@ import mobile from "../../../assets/mobile.jpeg";
 import lazer from "../../../assets/lazer.jpeg";
 import brain from "../../../assets/brain.jpeg";
 import cad from "../../../assets/cad.jpeg";
-import AI from "../../../assets/AI.jpeg";
+import AI from "../../../assets/Invictus.png";
 import collage from "../../../assets/Collage.jpeg";
 import glider from "../../../assets/Glider.jpeg";
 import JunkGenie from "../../../assets/JunkGenie.jpeg";
@@ -18,7 +18,6 @@ import WSB from "../../../assets/WSB.jpeg";
 import Bplan from "../../../assets/Bplan.jpeg";
 import MachFrame from "../../../assets/MachFrame.jpeg";
 import UrbanPulse from "../../../assets/UrbanPuls.jpeg";
-import iot from "../../../assets/iot.jpeg";
 import lens from "../../../assets/lens.jpeg";
 import modelmaking from "../../../assets/modelmaking.jpeg";
 import signals from "../../../assets/signals.jpeg";
@@ -26,6 +25,8 @@ import stem from "../../../assets/stem.jpeg";
 import stickstructures from "../../../assets/stickstructures.jpeg";
 import troubleshooting from "../../../assets/troubleshooting.jpeg";
 import visionrace from "../../../assets/visionrace.jpeg";
+import BattleofBrains from "../../../assets/BattleOfBrains.jpeg";
+import DaD from "../../../assets/DaD.jpeg";
 
 const eventsData = [{
   "Eventname": "Invictus",
@@ -316,6 +317,24 @@ const eventsData = [{
   "MaxTeam": "Solo (Single member)",
   "Description": "'The Unknown frame' that celebrates mystery and discovery — inviting photographers to capture unseen beauty and hidden perspectives beyond the familiar.",
   "image": lens
+},
+{
+  "Eventname":"Battle of the Brains",
+  "Dept":"MCA",
+  "MaxReg": 20,
+  "MinTeam": "Solo (Single member)",
+  "MaxTeam":"Solo (Single member)",
+  "Description": "Rules of the Competition:\n• Participants must report to the venue 5 minutes before the start of the event.\n• Late entries (beyond 10 minutes after the start) will not be allowed.\n• Mobile phones, calculators, smartwatches, or any electronic gadgets are strictly prohibited.\n• Participants should bring their own pen/pencil.\n• Answers must be clearly marked on the provided answer sheet.\n• Write your name or college name on the answer sheet only in the designated area.\n• Rough work may be done only in the space provided in the question paper.\n• Any kind of malpractice or communication during the quiz will lead to immediate disqualification.\n• Multiple markings will be awarded zero marks.",
+  "image": BattleofBrains
+},
+{
+  "Eventname":"Decode and Discover",
+  "Dept":"MCA",
+  "MaxReg": 30,
+  "MinTeam": "Squad (Team of 4)",
+  "MaxTeam":"Squad (Team of 4)",
+  "Description": "All participants must carry a valid College ID Card for verification.\n· Teams must report to the venue 10 minutes before the start of the event.\n· Mobile phones may be allowed only for scanning QR codes or clue communication (as per organizer instructions).\n· Any form of malpractice, interference, or clue tampering will lead to immediate disqualification.\n· Teams must maintain discipline, teamwork, and fair play throughout the event.\n· In case of a tie, the completion time or a bonus tie-breaker question will determine the result.\n· The decision of the Organizing Committee will be final and binding.",
+  "image": DaD
 }
 ];
 

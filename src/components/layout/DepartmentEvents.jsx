@@ -17,6 +17,7 @@ import eee from "../../assets/EE.jpeg";
 import ece from "../../assets/EC.jpeg";
 import ise from "../../assets/IS.jpeg";
 import mba from "../../assets/MBA.jpeg";
+import mca from "../../assets/MCA.jpeg";
 
 export const DepartmentsData = [
   { id: "AERO", title: "Aeronautical", description: "About the Department", image: image1 },
@@ -30,6 +31,7 @@ export const DepartmentsData = [
   { id: "EEE", title: "Electrical and Electronics", description: "About the Department", image: eee },
   { id: "ECE", title: "Electronics and Communication", description: "About the Department", image: ece },
   { id: "ISE", title: "Information Science", description: "About the Department", image: ise },
+  { id: "MCA", title: "MCA", description: "About the Department", image: mca },
   { id: "MBA", title: "MBA", description: "About the Department", image: mba },
   { id: "MECH", title: "Mechanical", description: "About the Department", image: Mechanical },
   { id: "AIML", title: "AIML", description: "About the Department", image: ai },
