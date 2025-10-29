@@ -57,9 +57,9 @@ const CentralEvents = () => {
     {
       id: 5,
       title: "Technical Debate",
-      description: "Battle of Code Words!",
+      description: "Technical Debate 2025 challenges participants to think critically, argue persuasively, and adapt quickly across two intense rounds.",
       image: image4,
-      instructions: "Debate details...",
+      instructions: "Round 1 – Devil’s Advocate:\nParticipants debate individually, first arguing for and then against an assigned topic within 3 minutes.\nThis round tests analytical depth, smooth transitions, and convincing delivery.\nTen finalists advance based on their ability to defend opposing viewpoints logically and persuasively.\n\nRound 2 – Oxford-Style Debate:\nFinalists are grouped into Proposition and Opposition teams to debate a given motion.\nEach side presents opening statements, rebuttals, and closing arguments, followed by audience or judge questions.\n\nThroughout the event, participants are expected to uphold respect, professionalism, logical reasoning, and adherence to time limits—making Technical Debate 2025 a true test of intellect, communication, and composure.",
     },
   ];
 

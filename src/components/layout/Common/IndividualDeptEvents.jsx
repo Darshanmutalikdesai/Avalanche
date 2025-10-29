@@ -28,6 +28,7 @@ import troubleshooting from "../../../assets/troubleshooting.jpeg";
 import visionrace from "../../../assets/visionrace.jpeg";
 import BattleofBrains from "../../../assets/BattleOfBrains.jpeg";
 import DaD from "../../../assets/DaD.jpeg";
+import parachute from "../../../assets/Parachuting.png"
 
 const eventsData = [{
   "Eventname": "Invictus",
@@ -336,6 +337,15 @@ const eventsData = [{
   "MaxTeam":"Squad (Team of 4)",
   "Description": "All participants must carry a valid College ID Card for verification.\n· Teams must report to the venue 10 minutes before the start of the event.\n· Mobile phones may be allowed only for scanning QR codes or clue communication (as per organizer instructions).\n· Any form of malpractice, interference, or clue tampering will lead to immediate disqualification.\n· Teams must maintain discipline, teamwork, and fair play throughout the event.\n· In case of a tie, the completion time or a bonus tie-breaker question will determine the result.\n· The decision of the Organizing Committee will be final and binding.",
   "image": DaD
+},
+{
+  "Eventname": "Parachuting",
+  "Dept": "AERO",
+  "MaxReg": 50,
+  "MinTeam": "Duo (Team of 2)",
+  "MaxTeam": "Squad (Team of 4)",
+  "Description": "Objective\nTo design and fabricate a parachute system that ensures:\n• Safe descent of the payload,\n• Maximum stability and control, and\n• Optimum descent time (neither too fast nor too slow).\n\nEvent Structure\nRound 1 – Design & Drop Test\n• Teams will design and build a basic parachute using provided materials.\n• A test drop will be conducted from a fixed height (e.g., 2nd floor).\n• Performance will be evaluated based on descent time, stability, and payload safety.\n\nRound 2 – Final Challenge\n• Qualified teams will modify or improve their design based on Round 1 observations.\n• The final drop may include an added challenge such as:\n  • Increased height, or\n  • Wind effect using a fan.\n• The best-performing parachute in terms of performance, stability, and creativity will be declared the winner.\n\nTeam Details\n• Maximum Team Size: 4 members\n• Minimum Team Size: 2 members\n• Open to all departments\n\nMaterials Provided\n• Paper / Plastic sheets\n• Strings / Threads\n• Adhesive tape / Glue\n• Small payload object (e.g., ball, toy, or dummy package)\n\nNote:\nExternal materials or reinforcements are not allowed, unless specified by the organizers.\n\nRules & Regulations\n• Materials will be provided on the spot.\n• Time will be allotted for design, construction, and testing.\n• No external assistance or internet use during the event.\n• Teams must complete their parachute within the given time limit.\n• Only one official drop attempt per round is allowed.\n• Judges’ decisions will be final and binding.",
+  "image": parachute
 }
 ];
 
