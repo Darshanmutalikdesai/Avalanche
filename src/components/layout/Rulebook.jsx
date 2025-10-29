@@ -238,7 +238,7 @@ const RulebookComponent = () => {
 
           <section className="page" style={{ "--page-number": "1" }}>
             <h2>Introduction</h2>
-            <p>Welcome to AVALANCHE 2025, the premier technical and cultural fest organized by KLS GIT.</p>
+            <p>Welcome to AVALANCHE 2025, the premier technical and fest organized by KLS GIT.</p>
             <p>This rulebook contains all the guidelines and regulations for participating in various events throughout the fest.</p>
           </section>
 
@@ -256,12 +256,6 @@ const RulebookComponent = () => {
           </section>
 
           <section className="page" style={{ "--page-number": "4" }}>
-            <h2>Cultural Events</h2>
-            <p>Showcase your artistic talents in dance, music, drama, and more.</p>
-            <p>Registration for cultural events closes 24 hours before the performance.</p>
-          </section>
-
-          <section className="page" style={{ "--page-number": "5" }}>
             <h2>Contact Us</h2>
             <p>For queries and support, reach out to the organizing committee.</p>
             <p>Email: avalanche@klsgit.edu<br/>Phone: +91 1234567890</p>

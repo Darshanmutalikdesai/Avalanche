@@ -431,7 +431,7 @@ export default function HomePage() {
           About Avalanche
         </h2>
         <p className="text-gray-300 text-xl max-w-8xl font-orbitron mx-auto leading-relaxed">
-          Avalanche is a tech and cultural fest celebrating innovation,
+          Avalanche is a tech and fest celebrating innovation,
           creativity, and collaboration. Each year, thousands of brilliant minds
           gather to showcase their ideas and ignite the spark of the future.
           From robotics to art, from AI to design — Avalanche unites them all.

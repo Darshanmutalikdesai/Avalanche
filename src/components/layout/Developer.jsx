@@ -3,6 +3,7 @@ import NavigationBar from './Common/Navbar';
 import amogh from "../../assets/Amogh.jpeg";
 import darshan from "../../assets/Darshan.jpeg";
 import Footer from "../../components/layout/Common/footer";
+import BackButton from './Common/BackButton';
 
 
 const DeveloperCard = ({ name, designation, developerType, linkedin, phone, image }) => {
@@ -239,6 +240,19 @@ const DevelopersPage = () => {
             />
           ))}
         </div>
+      </div>
+            <div
+        className="
+          absolute 
+          right-6 bottom-6       /* mobile: closer to edges */
+          sm:right-10 sm:bottom-10 
+          md:right-16 md:bottom-12 
+          lg:right-24 lg:bottom-16 
+          xl:right-36 xl:bottom-16
+          pb-20
+        "
+      >
+        <BackButton />
       </div>
 
       <Footer/>

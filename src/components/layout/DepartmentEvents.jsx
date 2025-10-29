@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import EventCard from "../layout/Events/EventCard";
 import NavigationBar from "./Common/Navbar";
+import BackButton from "./Common/BackButton";
 import image1 from "../../assets/Aero.jpeg";
 import image2 from "../../assets/Architecture.jpeg";
 import image3 from "../../assets/Physics.jpeg";
@@ -84,6 +85,7 @@ const DepartmentEvents = () => {
         "
       >
         {/* Heading */}
+        <div>
         <div className="text-center mb-12 sm:mb-20 w-full">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-nasal text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
             Departmental Events
@@ -125,10 +127,24 @@ const DepartmentEvents = () => {
           })}
         </div>
       </div>
+      <div
+        className="
+          absolute 
+          right-6 bottom-6
+          sm:right-10 sm:bottom-10 
+          md:right-16 md:bottom-12 
+          lg:right-24 lg:bottom-16 
+          xl:right-36 xl:bottom-16
+        "
+      >
+        <BackButton />
+      </div>
+      </div>
 
-
+      <div>
       {/* === FOOTER === */}
       <Footer />
+      </div>
 
       {/* === STYLES === */}
       <style>{`

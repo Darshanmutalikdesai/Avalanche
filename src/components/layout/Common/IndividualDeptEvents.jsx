@@ -1,9 +1,10 @@
 // src/layout/Common/IndividualDeptEvents.jsx
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import NavigationBar from "./Navbar";
 import EventCard from "../Events/EventCard";
 import { DepartmentsData } from "../DepartmentEvents";
+import BackButton from "./BackButton";
 import Footer from "../Common/footer";
 import mobile from "../../../assets/mobile.jpeg";
 import lazer from "../../../assets/lazer.jpeg";
@@ -383,7 +384,7 @@ export default function IndividualDeptEvents() {
       <div className="sticky top-0 z-[200]">
         <NavigationBar />
       </div>
-
+      
       {/* Main content */}
       <main className="relative z-[70] flex-grow justify-items-center pt-32 px-4 sm:px-6 lg:px-10 pb-24 text-center">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#00eaff] mt-8 mb-10 sm:mb-12 drop-shadow-[0_0_15px_rgba(0,234,255,0.7)]">
@@ -396,25 +397,39 @@ export default function IndividualDeptEvents() {
           </p>
         ) : (
           <div className="flex flex-wrap justify-center items-start gap-4 sm:gap-6 md:gap-8 lg:gap-10 w-full px-4 sm:px-6 md:px-8">
-  {departmentEvents.map((event) => (
-    <div
-      key={event.id}
-      onClick={() => setSelectedEvent(event)}
-      className="cursor-pointer transition-transform duration-300 hover:scale-105 
-                 w-full sm:w-[calc(50%-0.75rem)] md:w-[calc(33.333%-1.25rem)] 
-                 lg:w-[calc(25%-1.875rem)] xl:w-[calc(20%-2rem)]
-                 max-w-[320px] flex justify-center"
-    >
-      <EventCard
-        title={event.Eventname}
-        image={event.image}
-        className="h-full w-full"
-      />
-    </div>
-  ))}
-</div>
-        )}
+            {departmentEvents.map((event) => (
+              <div
+                key={event.id}
+                onClick={() => setSelectedEvent(event)}
+                className="cursor-pointer transition-transform duration-300 hover:scale-105 
+                          w-full sm:w-[calc(50%-0.75rem)] md:w-[calc(33.333%-1.25rem)] 
+                          lg:w-[calc(25%-1.875rem)] xl:w-[calc(20%-2rem)]
+                          max-w-[320px] flex justify-center"
+              >
+              <EventCard
+                title={event.Eventname}
+                image={event.image}
+                className="h-full w-full"
+              />
+            </div>
+          ))}
+        </div>
+                )}
+
+        <div
+          className="
+            absolute 
+            right-6 bottom-6       /* mobile: closer to edges */
+            sm:right-10 sm:bottom-10 
+            md:right-16 md:bottom-12 
+            lg:right-24 lg:bottom-16 
+            xl:right-36 xl:bottom-16
+          "
+        >
+          <BackButton />
+        </div>
       </main>
+      
 
       {/* Footer */}
       <footer className="relative z-[70] mt-auto w-full">

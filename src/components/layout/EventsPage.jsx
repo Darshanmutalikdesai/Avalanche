@@ -5,6 +5,7 @@ import image1 from "../../assets/central_image.jpg";
 import image2 from "../../assets/dept_image.jpg";
 import image3 from "../../assets/puc_image.jpg";
 import Footer from "../../components/layout/Common/footer";
+import BackButton from "./Common/BackButton";
 
 
 const EventsPage = () => {
@@ -63,7 +64,7 @@ const EventsPage = () => {
         <div className="relative z-[60]">
             <NavigationBar />
         </div>
-
+      <div>
       {/* Content wrapper sits above video */}
       <div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8">
         {/* Header */}
@@ -100,6 +101,20 @@ const EventsPage = () => {
             />
           ))}
         </div>
+      </div>
+      <div
+        className="
+          absolute 
+          right-6 bottom-6       /* mobile: closer to edges */
+          sm:right-10 sm:bottom-10 
+          md:right-16 md:bottom-12 
+          lg:right-24 lg:bottom-16 
+          xl:right-36 xl:bottom-16
+          pb-20
+        "
+      >
+        <BackButton />
+      </div>
       </div>
 
           <Footer/>
