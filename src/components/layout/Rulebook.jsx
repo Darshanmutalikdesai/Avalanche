@@ -258,7 +258,7 @@ const RulebookComponent = () => {
           <section className="page" style={{ "--page-number": "4" }}>
             <h2>Contact Us</h2>
             <p>For queries and support, reach out to the organizing committee.</p>
-            <p>Email: avalanche@klsgit.edu<br/>Phone: +91 1234567890</p>
+            <p>Email: avalanche25@git.edu</p>
             <a 
               href="https://drive.google.com/file/d/19wUnm6BUTmJVlSYQz5rFvnqDGF7rehAo/view?usp=sharing" 
               target="_blank" 
