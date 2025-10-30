@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import NavigationBar from "../layout/Common/Navbar";
 
 const RegisterPaperPage = () => {
@@ -18,22 +18,7 @@ const RegisterPaperPage = () => {
   const [message, setMessage] = useState("");
 
   // Valid departments list
-  const validDepartments = [
-    "Aeronautical",
-    "Architecture",
-    "Physics",
-    "Chemistry",
-    "B. Sc. (PCM)",
-    "Mathematics",
-    "Civil Engineering",
-    "Computer Science",
-    "Electronics & Communications (EC)",
-    "Information Science (IS)",
-    "MBA",
-    "MCA",
-    "Mechanical Engineering",
-    "AI-ML",
-  ];
+  const validDepartments = ["AIML", "CS", "EC", "EE", "MECH", "CIVIL", "IS", "MBA", "AERO", "ARCH", "CHEM", "BSC", "PHY", "MATHS"];
 
   // Handle input changes
   const handleChange = (e) =>

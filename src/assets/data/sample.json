@@ -1,0 +1,8 @@
+{
+    "EventName": "Paper Presentation",
+    "Dept": ["AIML", "CS", "EC", "EE", "MECH", "CIVIL", "IS", "MBA", "AERO", "ARCH", "CHEM", "BSC", "PHY", "MATHS"],
+    "EventMaxReg": -1,
+    "EventTeamMinSize": 2,
+    "EventTeamMaxSize": 2,
+    "WhatsappLink": "https://chat.whatsapp.com/E4mUhq0vN8nKuchkB0YwxK?mode=wwt"
+}
