@@ -1,6 +1,8 @@
 import React, { useState, useEffect }  from "react";
 import NavigationBar from "../layout/Common/Navbar";
 import RulebookComponent from "../layout/Rulebook"; // check path
+import BackButton from "../layout/Common/BackButton";
+import Footer from "../layout/Common/footer";
 
 const RulebookPage = () => {
   useEffect(() => {
@@ -89,7 +91,10 @@ const RulebookPage = () => {
           animation: glow 2.5s ease-in-out infinite;
         }
       `}</style>
-
+        <div className="absolute bottom-[6rem] right-6 sm:right-10 z-[120]">
+          <BackButton />
+        </div>
+      <Footer/>
     </div>
   );
 };

@@ -61,7 +61,7 @@ const NavigationBar = () => {
     { name: "Home", href: "/home", icon: Zap },
     { name: "Event Registration", href: "/events", icon: Rocket },
     { name: "Rule Book", href: "/rulebook", icon: BookOpen },
-    { name: "Schedules", href: "/schedules", icon: CalendarDays },
+    { name: "Schedules", href: "/schedule", icon: CalendarDays },
     { name: "Developers", href: "/developer", icon: Code2 },
     { name: "Contact", href: "/contact", icon: Phone },
     isLoggedIn

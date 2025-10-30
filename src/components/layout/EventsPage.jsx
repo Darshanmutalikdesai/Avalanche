@@ -113,9 +113,11 @@ const EventsPage = () => {
           pb-20
         "
       >
-        <BackButton />
       </div>
       </div>
+        <div className="absolute bottom-[6rem] right-6 sm:right-10 z-[120]">
+          <BackButton />
+        </div>
 
           <Footer/>
 

@@ -426,21 +426,13 @@ export default function IndividualDeptEvents() {
         </div>
                 )}
 
-        <div
-          className="
-            absolute 
-            right-6 bottom-6       /* mobile: closer to edges */
-            sm:right-10 sm:bottom-10 
-            md:right-16 md:bottom-12 
-            lg:right-24 lg:bottom-16 
-            xl:right-36 xl:bottom-16
-          "
-        >
-          <BackButton />
-        </div>
+
       </main>
       
 
+        <div className="absolute bottom-[6rem] right-6 sm:right-10 z-[120]">
+          <BackButton />
+        </div>
       {/* Footer */}
       <footer className="relative z-[70] mt-auto w-full">
         <Footer />

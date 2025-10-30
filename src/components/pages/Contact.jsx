@@ -8,6 +8,7 @@ import srushti from "../../assets/srushti.png";
 import shreya from "../../assets/shreya.png";
 import nishanth from "../../assets/nishanth.png";
 import Footer from "../../components/layout/Common/footer";
+import BackButton from '../layout/Common/BackButton';
 
 const SectionHeader = ({ title, description }) => (
   <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 py-6">
@@ -221,6 +222,10 @@ const Contact = () => {
       />
     ))}
   </div>
+  <div className="absolute bottom-[6rem] right-6 sm:right-10 z-[120]">
+    <BackButton />
+  </div>
+
 
   <Footer />
 

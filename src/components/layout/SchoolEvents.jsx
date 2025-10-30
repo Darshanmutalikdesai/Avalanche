@@ -85,7 +85,7 @@ const SchoolEvents = () => {
       </div>
 
       {/* Content Section */}
-      <div className="relative z-[2] min-h-screen p-4 sm:p-6 lg:p-8 pt-36 sm:pt-32 lg:pt-28">
+      <div className="relative z-[2] min-h-screen pb-20 p-4 sm:p-6 lg:p-8 pt-36 sm:pt-32 lg:pt-28">
         <div className="text-center mb-16 sm:mb-20 lg:mb-24">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold font-nasal text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
             School Level Events
@@ -95,7 +95,6 @@ const SchoolEvents = () => {
           </p>
         </div>
 
-          {/* Top Row */}
           <div className="flex flex-wrap justify-center items-start gap-4 sm:gap-6 md:gap-8 lg:gap-10 w-full px-4 sm:px-6 md:px-8">
             {SchoolEventsData.map((event) => (
               <div
@@ -166,19 +165,10 @@ const SchoolEvents = () => {
         </div>
       )}
 
-            <div
-        className="
-          absolute 
-          right-6 bottom-6       /* mobile: closer to edges */
-          sm:right-10 sm:bottom-10 
-          md:right-16 md:bottom-12 
-          lg:right-24 lg:bottom-16 
-          xl:right-36 xl:bottom-16
-          pb-20
-        "
-      >
-        <BackButton />
-      </div>
+  <div className="absolute bottom-[6rem] right-6 sm:right-10 z-[120]">
+    <BackButton />
+  </div>
+
 
 
       {/* ✅ Footer always at bottom */}

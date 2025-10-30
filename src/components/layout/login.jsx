@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../layout/Common/Navbar";
+import Footer from "./Common/footer";
+import BackButton from "./Common/BackButton";
 
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
@@ -739,7 +741,13 @@ const RegisterPage = () => {
           </div>
         </div>
       </div>
+      <div className="absolute bottom-[1rem] right-6 sm:right-10 z-[120]">
+        <BackButton />
+      </div>
+      <Footer />
+
     </GoogleOAuthProvider>
+    
   );
 };
 
