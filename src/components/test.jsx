@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AlertCircle, CheckCircle, Users, Calendar, Info } from 'lucide-react';
+import { AlertCircle, CheckCircle, Users, Calendar, Info, Loader2, RefreshCw } from 'lucide-react';
 
 const EventRegistration = () => {
   const [events, setEvents] = useState([]);
@@ -7,10 +7,14 @@ const EventRegistration = () => {
   const [teamId, setTeamId] = useState('');
   const [userIds, setUserIds] = useState('');
   const [loading, setLoading] = useState(false);
+  const [fetchingEvents, setFetchingEvents] = useState(true);
   const [message, setMessage] = useState(null);
   const [eventStats, setEventStats] = useState(null);
+  const [loadingStats, setLoadingStats] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
 
   const API_BASE_URL = 'https://avalanche.git.edu/api';
+  const MAX_RETRIES = 3;
 
   // Fetch all events on component mount
   useEffect(() => {
@@ -24,43 +28,101 @@ const EventRegistration = () => {
     }
   }, [selectedEvent]);
 
+  const fetchWithRetry = async (url, options = {}, retries = MAX_RETRIES) => {
+    for (let i = 0; i < retries; i++) {
+      try {
+        const response = await fetch(url, {
+          ...options,
+          headers: {
+            'Content-Type': 'application/json',
+            ...options.headers,
+          },
+        });
+
+        // If 502/503, retry after delay
+        if ((response.status === 502 || response.status === 503) && i < retries - 1) {
+          console.log(`🔄 Retry ${i + 1}/${retries - 1} after ${response.status} error`);
+          await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+          continue;
+        }
+
+        return response;
+      } catch (error) {
+        if (i < retries - 1) {
+          console.log(`🔄 Retry ${i + 1}/${retries - 1} after network error`);
+          await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+          continue;
+        }
+        throw error;
+      }
+    }
+  };
+
   const fetchEvents = async () => {
     try {
-      setLoading(true);
-      const response = await fetch(`${API_BASE_URL}/events`, {
+      setFetchingEvents(true);
+      setMessage(null);
+      console.log('🔄 Fetching events from:', `${API_BASE_URL}/events`);
+      
+      const response = await fetchWithRetry(`${API_BASE_URL}/events`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
       });
 
-      if (!response.ok) throw new Error('Failed to fetch events');
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        
+        if (response.status === 502 || response.status === 503) {
+          throw new Error('Server is temporarily unavailable. Please try again in a moment.');
+        }
+        
+        throw new Error(errorData.error || `HTTP ${response.status}: Failed to fetch events`);
+      }
       
       const data = await response.json();
+      console.log('✅ Events fetched:', data.count || data.events?.length || 0);
       setEvents(data.events || []);
+      setRetryCount(0);
+      
+      if (!data.events || data.events.length === 0) {
+        setMessage({ 
+          type: 'error', 
+          text: 'No events available. Please contact the administrator.' 
+        });
+      }
     } catch (error) {
-      setMessage({ type: 'error', text: `Error fetching events: ${error.message}` });
+      console.error('❌ Error fetching events:', error);
+      setRetryCount(prev => prev + 1);
+      setMessage({ 
+        type: 'error', 
+        text: `Unable to load events: ${error.message}`,
+        details: retryCount < MAX_RETRIES ? 'Please try refreshing the page.' : 'The server may be down. Please contact support if this persists.'
+      });
     } finally {
-      setLoading(false);
+      setFetchingEvents(false);
     }
   };
 
   const fetchEventStats = async (eventId) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/events/${eventId}/stats`, {
+      setLoadingStats(true);
+      console.log('📊 Fetching stats for event:', eventId);
+      
+      const response = await fetchWithRetry(`${API_BASE_URL}/events/${eventId}/stats`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      }, 2); // Fewer retries for stats
 
-      if (!response.ok) throw new Error('Failed to fetch event stats');
+      if (!response.ok) {
+        throw new Error('Failed to fetch event stats');
+      }
       
       const data = await response.json();
+      console.log('✅ Stats fetched:', data);
       setEventStats(data);
     } catch (error) {
-      console.error('Error fetching event stats:', error);
+      console.error('❌ Error fetching event stats:', error);
       setEventStats(null);
+    } finally {
+      setLoadingStats(false);
     }
   };
 
@@ -70,21 +132,32 @@ const EventRegistration = () => {
     setSelectedEvent(event);
     setEventStats(null);
     setMessage(null);
+    console.log('📌 Event selected:', eventId, event);
   };
 
-  const handleRegister = async () => {
+  const validateInputs = () => {
     if (!selectedEvent) {
       setMessage({ type: 'error', text: 'Please select an event' });
-      return;
+      return false;
     }
 
     if (!teamId.trim()) {
       setMessage({ type: 'error', text: 'Please enter a team ID' });
-      return;
+      return false;
     }
 
     if (!userIds.trim()) {
       setMessage({ type: 'error', text: 'Please enter at least one user ID' });
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleRegister = async () => {
+    setMessage(null);
+
+    if (!validateInputs()) {
       return;
     }
 
@@ -98,62 +171,100 @@ const EventRegistration = () => {
       return;
     }
 
+    const invalidIds = userIdArray.filter(id => !id.match(/^AVA\d{8}$/));
+    if (invalidIds.length > 0) {
+      setMessage({ 
+        type: 'error', 
+        text: 'Invalid Avalanche ID format detected',
+        details: `Invalid IDs: ${invalidIds.join(', ')}. Format should be AVA20250040`
+      });
+      return;
+    }
+
     try {
       setLoading(true);
-      setMessage(null);
+      console.log('🎯 Registering team:', {
+        eventId: selectedEvent.id,
+        teamId: teamId.trim(),
+        userIds: userIdArray
+      });
 
-      const response = await fetch(`${API_BASE_URL}/events/register`, {
+      const requestBody = {
+        userIds: userIdArray,
+        eventId: selectedEvent.id,
+        teamId: teamId.trim(),
+      };
+
+      console.log('📤 Request payload:', JSON.stringify(requestBody, null, 2));
+
+      const response = await fetchWithRetry(`${API_BASE_URL}/events/register`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userIds: userIdArray,
-          eventId: selectedEvent.id,
-          teamId: teamId.trim(),
-        }),
+        body: JSON.stringify(requestBody),
       });
 
       const data = await response.json();
+      console.log('📥 Response:', data);
 
       if (!response.ok) {
-        // Handle specific error cases
-        if (data.unpaidUsers) {
+        if (data.unpaidUsers && data.unpaidUsers.length > 0) {
+          const unpaidList = data.unpaidUsers.map(u => 
+            `${u.name} (${u.avalancheId})`
+          ).join(', ');
+          
           setMessage({ 
             type: 'error', 
-            text: `Payment Required: ${data.unpaidUsers.map(u => u.name).join(', ')}`,
-            details: data.message
+            text: 'Payment Required',
+            details: `These users must complete payment: ${unpaidList}`
           });
-        } else if (data.alreadyRegistered) {
+        } else if (data.alreadyRegistered && data.alreadyRegistered.length > 0) {
           setMessage({ 
             type: 'error', 
-            text: `Already Registered: ${data.alreadyRegistered.join(', ')}`
+            text: 'Already Registered',
+            details: `These users are already registered: ${data.alreadyRegistered.join(', ')}`
           });
-        } else if (data.invalidUsers) {
+        } else if (data.invalidUsers && data.invalidUsers.length > 0) {
           setMessage({ 
             type: 'error', 
-            text: `Invalid Users: ${data.invalidUsers.join(', ')}`
+            text: 'Invalid Users',
+            details: `These user IDs were not found: ${data.invalidUsers.join(', ')}`
+          });
+        } else if (data.spotsAvailable !== undefined) {
+          setMessage({ 
+            type: 'error', 
+            text: data.error,
+            details: `Only ${data.spotsAvailable} spot(s) remaining`
           });
         } else {
-          setMessage({ type: 'error', text: data.error || 'Registration failed' });
+          setMessage({ 
+            type: 'error', 
+            text: data.error || 'Registration failed',
+            details: data.details || 'Please try again or contact support'
+          });
         }
         return;
       }
 
       setMessage({ 
         type: 'success', 
-        text: `Successfully registered ${data.count} user(s) for ${selectedEvent.EventName || selectedEvent.name}!`,
-        details: `Team: ${teamId}, Members: ${userIdArray.join(', ')}`
+        text: `✨ Successfully registered ${data.count} user(s)!`,
+        details: `Event: ${selectedEvent.EventName || selectedEvent.name} | Team: ${teamId}`
       });
       
-      // Clear form
       setUserIds('');
       setTeamId('');
       
-      // Refresh event stats
-      fetchEventStats(selectedEvent.id);
+      if (selectedEvent) {
+        fetchEventStats(selectedEvent.id);
+      }
+      
+      console.log('✅ Registration successful');
     } catch (error) {
-      setMessage({ type: 'error', text: `Registration error: ${error.message}` });
+      console.error('❌ Registration error:', error);
+      setMessage({ 
+        type: 'error', 
+        text: 'Registration failed',
+        details: error.message || 'Network error. Please check your connection.'
+      });
     } finally {
       setLoading(false);
     }
@@ -174,6 +285,19 @@ const EventRegistration = () => {
 
           {/* Content */}
           <div className="p-8">
+            {/* Loading Events State */}
+            {fetchingEvents && (
+              <div className="flex flex-col items-center justify-center py-12">
+                <Loader2 className="w-8 h-8 text-purple-600 animate-spin mb-3" />
+                <span className="text-gray-600">Loading events...</span>
+                {retryCount > 0 && (
+                  <span className="text-sm text-gray-500 mt-2">
+                    Retry attempt {retryCount}/{MAX_RETRIES}
+                  </span>
+                )}
+              </div>
+            )}
+
             {/* Message Display */}
             {message && (
               <div className={`mb-6 p-4 rounded-lg flex items-start gap-3 ${
@@ -195,149 +319,176 @@ const EventRegistration = () => {
               </div>
             )}
 
-            <div className="space-y-6">
-              {/* Event Selection */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Select Event *
-                </label>
-                <select
-                  value={selectedEvent?.id || ''}
-                  onChange={handleEventSelect}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                  disabled={loading}
+            {/* Retry Button for Failed Load */}
+            {!fetchingEvents && events.length === 0 && message?.type === 'error' && (
+              <div className="text-center py-8">
+                <button
+                  onClick={fetchEvents}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
                 >
-                  <option value="">-- Choose an Event --</option>
-                  {events.map((event) => (
-                    <option key={event.id} value={event.id}>
-                      {event.EventName || event.name} 
-                      {event.EventCategory && ` (${event.EventCategory})`}
-                    </option>
-                  ))}
-                </select>
+                  <RefreshCw className="w-4 h-4" />
+                  Retry Loading Events
+                </button>
               </div>
+            )}
 
-              {/* Event Details */}
-              {selectedEvent && (
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <div className="flex items-start gap-3">
-                    <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                    <div className="flex-1 space-y-2">
-                      <h3 className="font-semibold text-blue-900">
-                        {selectedEvent.EventName || selectedEvent.name}
-                      </h3>
-                      {selectedEvent.EventDescription && (
-                        <p className="text-sm text-blue-800">
-                          {selectedEvent.EventDescription}
-                        </p>
-                      )}
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <span className="font-medium text-blue-900">Team Size:</span>
-                          <span className="ml-2 text-blue-700">
-                            {selectedEvent.EventTeamMinSize || 1} - {selectedEvent.EventTeamMaxSize || 'Unlimited'}
-                          </span>
-                        </div>
-                        <div>
-                          <span className="font-medium text-blue-900">Max Registrations:</span>
-                          <span className="ml-2 text-blue-700">
-                            {selectedEvent.EventMaxReg === -1 ? 'Unlimited' : selectedEvent.EventMaxReg}
-                          </span>
-                        </div>
-                      </div>
-                      
-                      {eventStats && (
-                        <div className="mt-3 pt-3 border-t border-blue-200">
-                          <p className="text-sm font-medium text-blue-900">Current Stats:</p>
-                          <div className="grid grid-cols-2 gap-4 mt-2 text-sm">
-                            <div>
-                              <span className="text-blue-700">Teams: </span>
-                              <span className="font-semibold text-blue-900">
-                                {eventStats.currentStats.totalTeams}
-                              </span>
-                            </div>
-                            <div>
-                              <span className="text-blue-700">Participants: </span>
-                              <span className="font-semibold text-blue-900">
-                                {eventStats.currentStats.totalParticipants}
-                              </span>
-                            </div>
-                            {eventStats.currentStats.spotsRemaining !== 'Unlimited' && (
-                              <div className="col-span-2">
-                                <span className="text-blue-700">Spots Remaining: </span>
-                                <span className={`font-semibold ${
-                                  eventStats.currentStats.spotsRemaining < 10 
-                                    ? 'text-red-600' 
-                                    : 'text-green-600'
-                                }`}>
-                                  {eventStats.currentStats.spotsRemaining}
-                                </span>
-                              </div>
-                            )}
+            {!fetchingEvents && events.length > 0 && (
+              <div className="space-y-6">
+                {/* Event Selection */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Select Event *
+                  </label>
+                  <select
+                    value={selectedEvent?.id || ''}
+                    onChange={handleEventSelect}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                    disabled={loading}
+                  >
+                    <option value="">-- Choose an Event --</option>
+                    {events.map((event) => (
+                      <option key={event.id} value={event.id}>
+                        {event.EventName || event.name}
+                        {(event.EventCategory || event.category) && ` (${event.EventCategory || event.category})`}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Event Details */}
+                {selectedEvent && (
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div className="flex items-start gap-3">
+                      <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <div className="flex-1 space-y-2">
+                        <h3 className="font-semibold text-blue-900">
+                          {selectedEvent.EventName || selectedEvent.name}
+                        </h3>
+                        {(selectedEvent.EventDescription || selectedEvent.description) && (
+                          <p className="text-sm text-blue-800">
+                            {selectedEvent.EventDescription || selectedEvent.description}
+                          </p>
+                        )}
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <span className="font-medium text-blue-900">Team Size:</span>
+                            <span className="ml-2 text-blue-700">
+                              {selectedEvent.EventTeamMinSize || selectedEvent.minTeamSize || 1} - {selectedEvent.EventTeamMaxSize || selectedEvent.maxTeamSize || 'Unlimited'}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="font-medium text-blue-900">Max Registrations:</span>
+                            <span className="ml-2 text-blue-700">
+                              {(selectedEvent.EventMaxReg === -1 || selectedEvent.maxRegistrations === -1) ? 'Unlimited' : (selectedEvent.EventMaxReg || selectedEvent.maxRegistrations)}
+                            </span>
                           </div>
                         </div>
-                      )}
+                        
+                        {loadingStats && (
+                          <div className="flex items-center gap-2 mt-3 pt-3 border-t border-blue-200">
+                            <Loader2 className="w-4 h-4 text-blue-600 animate-spin" />
+                            <span className="text-sm text-blue-700">Loading stats...</span>
+                          </div>
+                        )}
+
+                        {eventStats && !loadingStats && (
+                          <div className="mt-3 pt-3 border-t border-blue-200">
+                            <p className="text-sm font-medium text-blue-900">Current Stats:</p>
+                            <div className="grid grid-cols-2 gap-4 mt-2 text-sm">
+                              <div>
+                                <span className="text-blue-700">Teams: </span>
+                                <span className="font-semibold text-blue-900">
+                                  {eventStats.currentStats.totalTeams}
+                                </span>
+                              </div>
+                              <div>
+                                <span className="text-blue-700">Participants: </span>
+                                <span className="font-semibold text-blue-900">
+                                  {eventStats.currentStats.totalParticipants}
+                                </span>
+                              </div>
+                              {eventStats.currentStats.spotsRemaining !== 'Unlimited' && (
+                                <div className="col-span-2">
+                                  <span className="text-blue-700">Spots Remaining: </span>
+                                  <span className={`font-semibold ${
+                                    eventStats.currentStats.spotsRemaining < 10 
+                                      ? 'text-red-600' 
+                                      : 'text-green-600'
+                                  }`}>
+                                    {eventStats.currentStats.spotsRemaining}
+                                  </span>
+                                  {eventStats.currentStats.isFull && (
+                                    <span className="ml-2 text-xs bg-red-100 text-red-700 px-2 py-1 rounded">
+                                      FULL
+                                    </span>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-
-              {/* Team ID */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Team ID *
-                </label>
-                <input
-                  type="text"
-                  value={teamId}
-                  onChange={(e) => setTeamId(e.target.value)}
-                  placeholder="e.g., TEAM_ALPHA, INVICTUS_01"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                  disabled={loading}
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  Enter a unique team identifier
-                </p>
-              </div>
-
-              {/* User IDs */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-                  <Users className="w-4 h-4" />
-                  User IDs (Avalanche IDs) *
-                </label>
-                <textarea
-                  value={userIds}
-                  onChange={(e) => setUserIds(e.target.value)}
-                  placeholder="AVA20250040, AVA20250041, AVA20250042"
-                  rows={3}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all resize-none"
-                  disabled={loading}
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  Enter Avalanche IDs separated by commas
-                </p>
-              </div>
-
-              {/* Submit Button */}
-              <button
-                onClick={handleRegister}
-                disabled={loading || !selectedEvent}
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold py-4 rounded-lg hover:from-purple-700 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
-              >
-                {loading ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Processing...
-                  </>
-                ) : (
-                  <>
-                    <CheckCircle className="w-5 h-5" />
-                    Register Team
-                  </>
                 )}
-              </button>
-            </div>
+
+                {/* Team ID */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Team ID *
+                  </label>
+                  <input
+                    type="text"
+                    value={teamId}
+                    onChange={(e) => setTeamId(e.target.value)}
+                    placeholder="e.g., TEAM_ALPHA, INVICTUS_01"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                    disabled={loading}
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Enter a unique team identifier
+                  </p>
+                </div>
+
+                {/* User IDs */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                    <Users className="w-4 h-4" />
+                    User IDs (Avalanche IDs) *
+                  </label>
+                  <textarea
+                    value={userIds}
+                    onChange={(e) => setUserIds(e.target.value)}
+                    placeholder="AVA20250040, AVA20250041, AVA20250042"
+                    rows={3}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all resize-none"
+                    disabled={loading}
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Enter Avalanche IDs separated by commas (Format: AVA20250040)
+                  </p>
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  onClick={handleRegister}
+                  disabled={loading || !selectedEvent || fetchingEvents}
+                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold py-4 rounded-lg hover:from-purple-700 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle className="w-5 h-5" />
+                      Register Team
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -359,7 +510,11 @@ const EventRegistration = () => {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-purple-600 font-bold">•</span>
-              <span>Use valid Avalanche IDs (e.g., AVA20250040)</span>
+              <span>Use valid Avalanche IDs in format: AVA20250040</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-purple-600 font-bold">•</span>
+              <span>Multiple IDs should be separated by commas</span>
             </li>
           </ul>
         </div>
