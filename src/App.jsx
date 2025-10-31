@@ -21,6 +21,7 @@ const Rule = lazy(() => import("./components/pages/rule"));
 const PaymentGateway = lazy(() => import("./components/pages/PaymentGateway"));
 const Contact = lazy(() => import("./components/pages/Contact"));
 const Schedule = lazy(() => import("./components/pages/Schedule"));
+const Test = lazy(() => import("./components/test"));
 
 function AppRoutes() {
   return (
@@ -42,6 +43,7 @@ function AppRoutes() {
         <Route path="/contact" element={<Contact />} />
         {<Route path="/payment-gateway" element={<PaymentGateway />} />}
         {<Route path="/schedule" element={<Schedule />} />}
+        <Route path="/test" element={<Test />}/>
 
 
 
