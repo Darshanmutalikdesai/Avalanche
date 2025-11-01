@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 
 const BackButton = () => {
   const navigate = useNavigate();
-
+  
   const handleBack = () => {
     // If there’s a previous page in history, go back.
     if (window.history.length > 1) {

@@ -74,7 +74,7 @@ const EventCard = ({ title, description, image, path }) => {
               to={path}
               className="
                 inline-block px-4 py-2 rounded-md border border-cyan-300/60
-                font-orbitron text-cyan-200 tracking-wide text-xs sm:text-sm uppercase
+                font-orbitron text-cyan-200 tracking-wide sm:text-lg uppercase
                 transition-all duration-500
                 hover:bg-cyan-300 hover:text-black
               "

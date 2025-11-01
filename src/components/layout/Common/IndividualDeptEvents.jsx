@@ -1,6 +1,6 @@
 // src/layout/Common/IndividualDeptEvents.jsx
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import NavigationBar from "./Navbar";
 import EventCard from "../Events/EventCard";
 import { DepartmentsData } from "../DepartmentEvents";
@@ -31,7 +31,8 @@ import DaD from "../../../assets/DaD.jpeg";
 import parachute from "../../../assets/Parachuting.png"
 
 const eventsData = [{
-  "Eventname": "Invictus",
+  "eventId": "invictus",
+  "eventName": "Invictus",
   "Dept": "AIML",
   "MaxReg": 60,
   "MinTeam": "Duo (Team of 2)",
@@ -44,7 +45,8 @@ const eventsData = [{
   "image" : AI
 },
 {
-  "Eventname": "MachFrame",
+  "eventId": "machframe",
+  "eventName": "MachFrame",
   "Dept": "MECH",
   "MaxReg": 50,
   "MinTeam": "Solo (Single member)",
@@ -58,7 +60,8 @@ const eventsData = [{
 },
 
 {
-  "Eventname": "MOBILE MARVELS",
+  "eventId": "mobile_marvels",
+  "eventName": "MOBILE MARVELS",
   "Dept": "ISE",
   "MaxReg": 20,
   "MinTeam": "Duo (Team of 2)",
@@ -72,7 +75,8 @@ const eventsData = [{
 },
 
 {
-  "Eventname": "Junk Genie",
+  "eventId": "junk_genie",
+  "eventName": "Junk Genie",
   "Dept": "Chem",
   "MaxReg": 40,
   "MinTeam": "Duo (Team of 2)",
@@ -86,7 +90,8 @@ const eventsData = [{
 },
 
 {
-  "Eventname": "Secret Signals",
+  "eventId": "secret_signals",
+  "eventName": "Secret Signals",
   "Dept": "CSE",
   "MaxReg": 80,
   "MinTeam": "Squad (Team of 4)",
@@ -101,7 +106,8 @@ const eventsData = [{
 
 
 {
-  "Eventname": "QUIZZY BRAINIACS",
+  "eventId": "quizzy_brainiacs",
+  "eventName": "QUIZZY BRAINIACS",
   "Dept": "ARCH",
   "MaxReg": 20,
   "MinTeam": "Duo (Team of 2)",
@@ -115,7 +121,8 @@ const eventsData = [{
 },
 
 {
-  "Eventname": "STEM",
+  "eventId": "stem",
+  "eventName": "STEM",
   "Dept": "Bsc",
   "MaxReg": 30,
   "MinTeam": "Duo (Team of 2)",
@@ -129,7 +136,8 @@ const eventsData = [{
 },
 
 {
-  "Eventname": "Welded Structure Building",
+  "eventId": "welded_structure",
+  "eventName": "Welded Structure Building",
   "Dept": "MECH",
   "MaxReg": 10,
   "MinTeam": "Duo (Team of 2)",
@@ -143,7 +151,8 @@ const eventsData = [{
 },
 
 {
-  "Eventname": "ImagiX: The AI Story Matrix",
+  "eventId": "imagix",
+  "eventName": "ImagiX: The AI Story Matrix",
   "Dept": "CSE",
   "MaxReg": 100,
   "MinTeam": "Duo (Team of 2)",
@@ -157,7 +166,8 @@ const eventsData = [{
 },
 
 {
-  "Eventname": "Urban Pulse",
+  "eventId": "urban_pulse",
+  "eventName": "Urban Pulse",
   "Dept": "ISE",
   "MaxReg": 50,
   "MinTeam": "Duo (Team of 2)",
@@ -173,7 +183,8 @@ const eventsData = [{
 
 
 {
-  "Eventname": "Troubleshooting",
+  "eventId": "troubleshooting",
+  "eventName": "Troubleshooting",
   "Dept": "EEE",
   "MaxReg": 80,
   "MinTeam": "Duo (Team of 2)",
@@ -188,7 +199,8 @@ const eventsData = [{
 
 
 {
-  "Eventname": "Collage making (Journey into the quantum world)",
+  "eventId": "collage_quantum",
+  "eventName": "Collage making (Journey into the quantum world)",
   "Dept": "Phy",
   "MaxReg": 60,
   "MinTeam": "Solo (Single member)",
@@ -203,7 +215,8 @@ const eventsData = [{
 
 
 {
-  "Eventname": "B-PLAN",
+  "eventId": "bplan",
+  "eventName": "B-PLAN",
   "Dept": "MBA",
   "MaxReg": 30,
   "MinTeam": "Squad (Team of 4)",
@@ -218,7 +231,8 @@ const eventsData = [{
 
 
 {
-  "Eventname": "ModelXpo - Model Making",
+  "eventId": "modelxpo",
+  "eventName": "ModelXpo - Model Making",
   "Dept": "EEE",
   "MaxReg": 80,
   "MinTeam": "Duo (Team of 2)",
@@ -232,7 +246,8 @@ const eventsData = [{
 },
 
 {
-  "Eventname": "Laser maze",
+  "eventId": "lazer_maze",
+  "eventName": "Laser maze",
   "Dept": "ECE",
   "MaxReg": 60,
   "MinTeam": "Squad (Team of 4)",
@@ -246,7 +261,8 @@ const eventsData = [{
 },
 
 {
-  "Eventname": "Cad-A-Thon",
+  "eventId": "cad_a_thon",
+  "eventName": "Cad-A-Thon",
   "Dept": "CIVIL",
   "MaxReg": 50,
   "MinTeam": "Solo (Single member)",
@@ -261,7 +277,8 @@ const eventsData = [{
 
 
 {
-  "Eventname": "Stick Structures",
+  "eventId": "stick_structures",
+  "eventName": "Stick Structures",
   "Dept": "CIVIL",
   "MaxReg": 60,
   "MinTeam": "Duo (Team of 2)",
@@ -275,7 +292,8 @@ const eventsData = [{
 },
 
 {
-  "Eventname": "VisionRacer - The Autonomous Line Challenge",
+  "eventId": "visionracer",
+  "eventName": "VisionRacer - The Autonomous Line Challenge",
   "Dept": "ECE",
   "MaxReg": 40,
   "MinTeam": "Squad (Team of 4)",
@@ -294,7 +312,8 @@ const eventsData = [{
 },
 
 {
-  "Eventname": "Glider Making",
+  "eventId": "glider_making",
+  "eventName": "Glider Making",
   "Dept": "AERO",
   "MaxReg": 50,
   "MinTeam": "Duo (Team of 2)",
@@ -312,7 +331,8 @@ const eventsData = [{
 },
 
 {
-  "Eventname": "The Unknown Frame",
+  "eventId": "unknown_frame",
+  "eventName": "The Unknown Frame",
   "Dept": "ARCH",
   "MaxReg": 20,
   "MinTeam": "Solo (Single member)",
@@ -321,7 +341,8 @@ const eventsData = [{
   "image": lens
 },
 {
-  "Eventname":"Battle of the Brains",
+  "eventId": "battle_brains",
+  "eventName":"Battle of the Brains",
   "Dept":"MCA",
   "MaxReg": 20,
   "MinTeam": "Solo (Single member)",
@@ -330,7 +351,8 @@ const eventsData = [{
   "image": BattleofBrains
 },
 {
-  "Eventname":"Decode and Discover",
+  "eventId": "decode_discover",
+  "eventName":"Decode and Discover",
   "Dept":"MCA",
   "MaxReg": 30,
   "MinTeam": "Squad (Team of 4)",
@@ -339,7 +361,8 @@ const eventsData = [{
   "image": DaD
 },
 {
-  "Eventname": "Parachuting",
+  "eventId": "parachuting",
+  "eventName": "Parachuting",
   "Dept": "AERO",
   "MaxReg": 50,
   "MinTeam": "Duo (Team of 2)",
@@ -353,6 +376,9 @@ const eventsData = [{
 export default function IndividualDeptEvents() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const { deptName } = useParams();
+  const location = useLocation();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
 
   // Star background effect
   useEffect(() => {
@@ -372,6 +398,21 @@ export default function IndividualDeptEvents() {
       container.appendChild(star);
     }
   }, []);
+
+  useEffect(() => {
+        const checkAuth = () => {
+          // Check for userId and user data to ensure user is logged in
+          const userId = localStorage.getItem("userId");
+          const userData = localStorage.getItem("user");
+          const newLoginState = !!(userId && userData);
+          
+          if (newLoginState !== isLoggedIn) {
+            setIsLoggedIn(newLoginState);
+          }
+        };
+    
+        checkAuth();
+      }, [location, isLoggedIn]);
 
   const readableName =
     DepartmentsData.find((dept) => dept.id === deptName)?.title || deptName;
@@ -412,12 +453,11 @@ export default function IndividualDeptEvents() {
                 key={event.id}
                 onClick={() => setSelectedEvent(event)}
                 className="cursor-pointer transition-transform duration-300 hover:scale-105 
-                          w-full sm:w-[calc(50%-0.75rem)] md:w-[calc(33.333%-1.25rem)] 
-                          lg:w-[calc(25%-1.875rem)] xl:w-[calc(20%-2rem)]
+                          w-[90%] sm:w-60 md:w-72 lg:w-80 xl:w-96
                           max-w-[320px] flex justify-center"
               >
               <EventCard
-                title={event.Eventname}
+                title={event.eventName}
                 image={event.image}
                 className="h-full w-full"
               />
@@ -478,7 +518,7 @@ export default function IndividualDeptEvents() {
           >
             {/* Title */}
             <h2 className="text-2xl sm:text-3xl font-bold font-nasal text-[#ffcc00] mb-4 drop-shadow-[0_0_10px_#ffcc00]">
-              {selectedEvent.Eventname}
+              {selectedEvent.eventName}
             </h2>
 
             {/* Description */}
@@ -495,12 +535,16 @@ export default function IndividualDeptEvents() {
                 Close
               </button>
 
-              <button
-                className="px-5 py-2.5 sm:px-6 sm:py-3 bg-[#00f7ff] border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
-                onClick={() => setSelectedEvent(null)}
+              <Link
+                to={isLoggedIn
+                  ? "/events/register"
+                  : "/auth"
+                }
+                state={{ event: selectedEvent }}
+                className="px-6 py-3 bg-[#00f7ff] border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
               >
-                Coming Soon...
-              </button>
+                Register
+              </Link>
             </div>
           </div>
         </div>

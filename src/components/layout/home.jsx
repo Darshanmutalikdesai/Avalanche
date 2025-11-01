@@ -177,7 +177,7 @@ export default function HomePage() {
       </div>
 
       {/* 🚀 Hero Section */}
-      <div className="relative z-[10] flex flex-col items-center justify-center min-h-screen text-center px-4 pt-20">
+      <div className="relative z-[10] flex flex-col items-center justify-center min-h-screen text-center px-4 pt-8">
         <motion.img
           src={Logo}
           alt="Avalanche Logo"
@@ -187,7 +187,7 @@ export default function HomePage() {
           transition={{ duration: 1.2 }}
         />
         <motion.h1
-          className="text-5xl md:text-8xl text-white drop-shadow-lg font-nasal font-bold"
+          className="text-3xl sm:text-6xl md:text-7xl lg:9xl text-white drop-shadow-lg font-nasal font-bold"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}

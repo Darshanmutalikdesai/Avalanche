@@ -79,6 +79,7 @@ const DepartmentEvents = () => {
         className="
           relative z-[20]
           w-full
+          max-w-full
           pt-32 sm:pt-28 pb-20
           px-4 sm:px-6 lg:px-8
           flex flex-col items-center
@@ -115,8 +116,8 @@ const DepartmentEvents = () => {
                 key={dept.id}
                 onClick={() => navigate(`/events/department-events/${slug}`)}
                 className="cursor-pointer transition-transform duration-300 hover:scale-105 
-                          w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)]
-                          max-w-[350px]"
+                          w-[90%] sm:w-60 md:w-72 lg:w-80 xl:w-96
+                          max-w-[1000px]"
               >
                 <EventCard
                   title={dept.title}

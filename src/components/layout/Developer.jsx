@@ -177,7 +177,7 @@ const DevelopersPage = () => {
       id: 5,
       name: "IAN D'SOUZA",
       designation: "Export Successful",
-      developerType: "Frontend Designer",
+      developerType: "Graphic Designer",
       linkedin: "https://www.linkedin.com/in/dsouza-ian/",
       phone: "+919513421759",
       image: "https://media.licdn.com/dms/image/v2/D5603AQG4iYpm6_a63g/profile-displayphoto-shrink_400_400/B56ZSotL2NHwAk-/0/1737997206706?e=1762992000&v=beta&t=NzqEl6BYa_WqxF-GUmGSpDZWOGp2vj-TT8hMZ74KHMc"
@@ -185,7 +185,7 @@ const DevelopersPage = () => {
     {
       id: 6,
       name: "AMOGH KALLIMATH",
-      designation: "Build-Succeeded-Barely",
+      designation: "Pixel & Pipeline",
       developerType: "Production Team",
       linkedin: "https://www.linkedin.com/in/amogh-kallimath-a6b06a292/",
       phone: "+916361234618",
@@ -195,7 +195,7 @@ const DevelopersPage = () => {
       id: 7,
       name: "Shreya Ammanagi",
       designation: "UI Alchemist",
-      developerType: "Frontend Designer",
+      developerType: "Graphic Designer",
       linkedin: "https://www.linkedin.com/in/shreya-ammanagi-25670a2bb/",
       phone: "+919449685752",
       image: "https://media.licdn.com/dms/image/v2/D4D03AQHoQL_W47Qqaw/profile-displayphoto-scale_200_200/B4DZhIM.jPGkAY-/0/1753558020380?e=1762992000&v=beta&t=iGxeDhFfb6W1XFOg7UQrVKRQbYsKNPZisRtu_rXcUIc"

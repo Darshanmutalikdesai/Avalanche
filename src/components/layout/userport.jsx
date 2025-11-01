@@ -9,6 +9,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import PaymentButton from "./Common/payment-button";
 
 export default function CosmicProfile() {
   const [profile, setProfile] = useState(null);
@@ -20,7 +21,7 @@ export default function CosmicProfile() {
   const getCurrentUser = async (userId) => {
     try {
       const response = await fetch(
-        `https://avalanche.git.edu/api/user/current/${userId}`,
+        `https://avalanche.git.edu/api/user/${userId}`,
         {
           method: "GET",
           headers: {
@@ -31,16 +32,43 @@ export default function CosmicProfile() {
       );
       
       if (!response.ok) {
-        throw new Error("Failed to fetch user");
+        throw new Error(`Failed to fetch user (Status: ${response.status})`);
       }
       
       const data = await response.json();
-      return data; // Returns { avalancheId, email, name, schlclgName, rollno }
+      return data.user;
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error in getCurrentUser:", error);
       throw error;
     }
   };
+
+  // 🔗 Fetch registered events for the user
+  /*const getRegisteredEvents = async (userId) => {
+    try {
+      const response = await fetch(
+        `https://avalanche.git.edu/api/events/user/${userId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch events (Status: ${response.status})`);
+      }
+      
+      const data = await response.json();
+      console.log(data)
+      return data.events || [];
+    } catch (error) {
+      console.error("Error in getRegisteredEvents:", error);
+      return [];
+    }
+  };*/
 
   // 🔗 Fetch user profile
   const fetchProfile = async () => {
@@ -54,33 +82,13 @@ export default function CosmicProfile() {
         throw new Error("No user ID found. Please login.");
       }
 
-      // Fetch user details using the new API
+      // Fetch user details using the primary API
       const userDetails = await getCurrentUser(userId);
       
-      // Also fetch the original profile for registered events and payment status
-      const token = localStorage.getItem("token");
-      let registeredEvents = [];
-      let hasPaid = false;
+      // Fetch registered events using the new API
+      //const registeredEvents = await getRegisteredEvents(userId);
       
-      if (token) {
-        try {
-          const res = await fetch("https://avalanche.git.edu/api/users/profile", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          
-          if (res.ok) {
-            const data = await res.json();
-            registeredEvents = data.user?.registeredEvents || [];
-            hasPaid = data.user?.hasPaid || false;
-          }
-        } catch (err) {
-          console.warn("Could not fetch additional profile data:", err);
-        }
-      }
+      const hasPaid = userDetails.payment || false;
 
       // Set profile with data from getCurrentUser API
       setProfile({
@@ -89,13 +97,12 @@ export default function CosmicProfile() {
         email: userDetails.email || "—",
         institute: userDetails.schlclgName || "—",
         rollNumber: userDetails.rollno || "—",
-        registeredEvents: registeredEvents,
+        registeredEvents: userDetails.registeredEvents,
         hasPaid: hasPaid,
       });
     } catch (err) {
       console.error("Profile fetch error:", err.message);
       setError(err.message);
-      alert(err.message);
     } finally {
       setLoading(false);
     }
@@ -227,6 +234,11 @@ export default function CosmicProfile() {
               label="ROLL NUMBER"
               value={profile.rollNumber}
             />
+             <InfoCard
+              icon={<Award className={`w-5 h-5 ${profile.hasPaid ? 'text-green-400' : 'text-red-400'}`} />}
+              label="PAYMENT STATUS"
+              value={profile.hasPaid ? 'PAID' : 'UNPAID'}
+            />
           </div>
 
           {/* Registered events */}
@@ -241,14 +253,16 @@ export default function CosmicProfile() {
               {profile.registeredEvents.length > 0 ? (
                 profile.registeredEvents.map((event, index) => (
                   <div
-                    key={index}
+                    key={event.eventid || index}
                     className="relative bg-slate-900/50 border border-cyan-500/30 p-4 hover:bg-slate-900/70 hover:border-cyan-400/50 transition-all"
                   >
                     <div className="flex items-center gap-4">
                       <Award className="w-5 h-5 text-cyan-400 flex-shrink-0" />
-                      <span className="text-white text-lg flex-1">
-                        {event}
-                      </span>
+                      <div className="flex-1">
+                        <span className="text-white text-lg block">
+                          {event.name || "Event"}
+                        </span>
+                      </div>
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                         <span className="text-green-400 text-xs font-mono">
@@ -283,7 +297,26 @@ export default function CosmicProfile() {
                 </div>
               </div>
             </div>
-          ) : null}
+          ) : (
+             <div className="relative bg-red-900/30 border border-red-500/40 p-6">
+              <div className="flex items-center justify-center gap-3">
+                <div className="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center">
+                  <Award className="w-6 h-6 text-red-400" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-red-400 tracking-wider">
+                    PAYMENT PENDING
+                  </h3>
+                  <p className="text-red-300/80 text-sm font-mono mt-1">
+                    Complete your payment to confirm event registrations.
+                  </p>
+                </div>
+                <div className="justify-items-center">
+                <PaymentButton />
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Logout Button */}
           <div className="mt-6 flex justify-center">

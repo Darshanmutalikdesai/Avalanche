@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom"
 import NavigationBar from "./Common/Navbar";
 import EventCard from "../layout/Events/EventCard";
 import scienceexpo from "../../assets/ScienceExpo.jpeg";
@@ -8,6 +9,9 @@ import Footer from "../../components/layout/Common/footer";
 
 const SchoolEvents = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
+    const location = useLocation();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
   useEffect(() => {
     // Create animated stars dynamically
@@ -29,17 +33,32 @@ const SchoolEvents = () => {
     }
   }, []);
 
+  useEffect(() => {
+          const checkAuth = () => {
+            // Check for userId and user data to ensure user is logged in
+            const userId = localStorage.getItem("userId");
+            const userData = localStorage.getItem("user");
+            const newLoginState = !!(userId && userData);
+            
+            if (newLoginState !== isLoggedIn) {
+              setIsLoggedIn(newLoginState);
+            }
+          };
+      
+          checkAuth();
+        }, [location, isLoggedIn]);
+
     const SchoolEventsData = [
         {
-            "id": 1,
-            "title": "Science Expo",
+            "eventId": "science_expo",
+            "eventName": "Science Expo",
             "description": "An engaging exhibition where young innovators present science and technology projects that inspire curiosity, creativity, and problem-solving.",
             "image": scienceexpo,
             "instructions": "Eligibility:\nOpen to all high school students.\n\nRegistration:\nSubmit a 100–150 word abstract describing your project.\n\nTeam Composition:\n2–4 members per team.\n\nProject Type:\nWorking models, demonstrations, or research-based projects related to science and technology.\n\nOriginality:\nProjects must be original and student-made. Teacher or parent guidance is allowed but should not replace student effort.\n\nDisplay Requirements:\nEach project must include: Title & Team Details, Aim / Problem Statement, Procedure / Method, Observations / Results, Conclusion / Innovation.\n\nSetup & Logistics:\nTables, boards, and power points will be provided. Report 1 hour before the start for setup. Sections include Physics, Chemistry, Biology, and Technology. Bring all required materials; internet may not be available.\n\nSafety & Conduct:\nFollow safety instructions. Maintain discipline and cooperate with organizers.\n\nRound Details:\nRound 1 - 60 minutes.",
         },
         {
-          "id": 2,
-          "title": "Fish Tank",
+          "id": "fish_tank",
+          "eventName": "Fish Tank",
           "description": "Fish Tank is an idea pitching event for PUC students to present innovative solutions to real-world challenges aligned with themes.",
           "image": FishTank,
           "instructions": "Objectives of the Event\nThe Idea Pitching Event is conducted to encourage creativity, innovation, and awareness among PUC students.\nIt allows students to identify real-world challenges within the selected theme and propose practical solutions that can positively impact society, promote national growth, and enhance safety and sustainability.\n\nParticipation Rules\n1. Eligibility: Open to all PUC I and PUC II students.\n2. Team Composition: Minimum 2 and maximum 4 members per team.\n3. Idea Domain (Choose based on Theme):\n• Traffic Rules: Road safety awareness, smart traffic management, reducing accidents, public awareness campaigns.\n• Made in India: Promoting local manufacturing, indigenous innovation, Atmanirbhar Bharat ideas, boosting Indian brands.\n• E-Commerce: Digital shopping safety, delivery innovations, rural e-commerce solutions, AI in customer service.\n• Sustainability: Renewable energy, waste management, eco-friendly practices, water conservation, carbon reduction.\n• Health Care: Affordable health solutions, medical technology, disease prevention, digital health monitoring.\n• Defence: National security technologies, drone defense, cybersecurity, border safety innovations.\n4. Registration:\n• Teams must register before the announced deadline.\n• Each team must submit an abstract (100–150 words) explaining the problem they are addressing, why it is important, and its current relevance in India.\n5. Originality:\n• The idea must be student-developed and original.\n• Existing ideas are allowed only if they provide significant innovation or improvement.\n\nEvent Rounds\nRound 1: Problem Identification Presentation\n• Teams must present a real-world problem related to the selected theme.\n• The presentation should clearly include:\n  • What is the problem?\n  • Who is affected?\n  • Why is it important to solve?\n• Time Limit: 4 minutes presentation + 2 minutes Q&A\n\nRound 2: Solution Pitch\n• Selected teams will present their innovative solution to the problem from Round 1.\n• The presentation should include:\n  • Proposed solution and concept\n  • Technology or approach used\n  • Feasibility and implementation strategy\n  • Potential economic or societal impact\n  • Scalability and future scope\n• Time Limit: 5 minutes presentation + 3 minutes Q&A\n\nPitch Presentation Guidelines\nEach team’s pitch (for both Rounds) should clearly include:\nPresentation Format\n• Title of the Idea\n• Team Member Names and Class (PUC I or II)\n• Theme Chosen\n• Selected Problem Statement (Round 1)\n• Proposed Solution (Round 2)\n• Innovation / Technology / Method Used\n• Feasibility & Practical Impact\n• Beneficiaries and Target Sector\n• Future Scope / Scalability\n\nSupporting Material\n• PPT is mandatory (maximum 8 slides per round).\n• Charts, posters, videos, or simple models may be used.\n\nEvaluation Criteria\n• Relevance to the theme\n• Problem significance\n• Creativity and innovation of solution\n• Practical feasibility\n• Economic and social impact\n• Clarity and presentation skills\n\nLogistics & Setup\n1. Projector, screen, and microphone will be provided.\n2. Each team must bring their own laptop or supporting device.\n3. Teams must report 30 minutes prior to their presentation slot.\n\nRules & Regulations\n1. Time limits must be strictly followed.\n2. The idea must not contain inappropriate, offensive, or politically sensitive content.\n3. Use of copyrighted or plagiarized content will lead to disqualification.\n4. Professionalism and decorum must be maintained.\n5. Judges' decisions are final and binding.\n\nOutcomes & Rewards\n• Only two teams will be selected as winners after the completion of both rounds.\n• The selected teams will be given first and second prize according to their rank.\n• Winners will receive certificates and prize money as part of the final recognition.",
@@ -142,24 +161,16 @@ const SchoolEvents = () => {
                 Close
               </button>
 
-              <button
-                className="px-6 py-3 bg-[#00f7ff] border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
-                onClick={() => setSelectedEvent(null)}
-              >
-                Coming Soon...
-              </button>
-
-              {/* <Link
-                to={
-                  selectedEvent.special
-                    ? "/events/register-paper"
-                    : "/events/register-events"
+              <Link
+                to={isLoggedIn
+                  ? "/events/register"
+                  : "/auth"
                 }
                 state={{ event: selectedEvent }}
                 className="px-6 py-3 bg-[#00f7ff] border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
               >
                 Register
-              </Link> */}
+              </Link>
             </div>
           </div>
         </div>

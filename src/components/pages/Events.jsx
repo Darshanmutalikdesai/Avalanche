@@ -6,8 +6,7 @@ import IndividualDeptEvents from "../layout/Common/IndividualDeptEvents";
 import EventsPage from "../layout/EventsPage";
 import CentralEvents from "../layout/CentralEvents";
 import DepartmentEvents from "../layout/DepartmentEvents";
-import RegisterEvents from "../layout/RegisterEvents";
-import RegisterPaperPage from "../layout/RegisterPaperPage";
+import RegisterPaperPage from "../layout/RegisterPage";
 import SchoolEvents from "../layout/SchoolEvents";
 
 
@@ -33,9 +32,8 @@ export default function Events() {
         <Route path="puc-events" element={<SchoolEvents />} />
 
         {/* Register Event (receives state from CentralEvents/DepartmentEvents) */}
-        <Route path="register-events" element={<RegisterEvents />} />
 
-        <Route path="register-paper" element={<RegisterPaperPage />} />
+        <Route path="register" element={<RegisterPaperPage />} />
 
 
 
