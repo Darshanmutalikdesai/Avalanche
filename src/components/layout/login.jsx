@@ -501,7 +501,7 @@ const RegisterPage = () => {
         <div className="absolute top-1/3 right-20 w-28 h-28 rounded-full bg-gradient-to-br from-yellow-500 via-orange-500 to-red-500 opacity-20 blur-2xl animate-pulse" style={{animationDuration: '7s', animationDelay: '2s'}} />
 
         {/* Main container */}
-        <div className="relative z-10 min-h-screen flex items-center justify-center px-4 py-8">
+        <div className="relative z-10 min-h-screen flex items-center justify-center px-4 pt-8 pb-10">
           <div
             className={`w-full max-w-md transform transition-all duration-1000 ${
               isLoaded ? "translate-y-0 opacity-100 scale-100" : "translate-y-12 opacity-0 scale-95"
@@ -520,7 +520,7 @@ const RegisterPage = () => {
                 </div>
                 
                 {/* Header */}
-                <div className="relative px-6 py-8 md:px-8 md:py-10">
+                <div className="relative px-6 py-8 sm:pb-10 md:px-8 md:py-10">
                   {/* Rocket icon */}
                   <div className="flex justify-center mb-6 relative">
                     <div className="absolute w-32 h-32 border-2 border-cyan-500/20 rounded-full animate-spin-slow" style={{animationDuration: '10s'}} />
@@ -582,7 +582,7 @@ const RegisterPage = () => {
                     // Registration Form
                     <div className="space-y-4">
                       {/* User Info Display */}
-                      <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 mb-6">
+                      <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 mb-5">
                         <p className="text-cyan-300 text-sm mb-1">
                           <span className="text-cyan-500">Name:</span> {userName}
                         </p>
@@ -722,7 +722,7 @@ const RegisterPage = () => {
 
                   {/* Status */}
                   <div className="mt-6 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-full backdrop-blur-sm">
+                    <div className="inline-flex items-center gap-2 px-4 py-1 bg-green-500/10 border border-green-500/30 rounded-full backdrop-blur-sm">
                       <div className="relative">
                         <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50" />
                         <div className="absolute inset-0 w-2 h-2 bg-green-400 rounded-full animate-ping" />
@@ -740,10 +740,11 @@ const RegisterPage = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="absolute bottom-[1rem] right-6 sm:right-10 z-[120]">
+      <div className="absolute bottom-[0.3rem] right-6 sm:right-8 z-[120]">
         <BackButton />
       </div>
+      </div>
+
       <Footer />
 
     </GoogleOAuthProvider>
