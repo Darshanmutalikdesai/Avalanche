@@ -247,7 +247,7 @@ const eventsData = [{
 
 {
   "eventId": "lazer_maze",
-  "eventName": "Laser maze",
+  "eventName": "Laser Mazer",
   "Dept": "ECE",
   "MaxReg": 60,
   "MinTeam": "Squad (Team of 4)",
