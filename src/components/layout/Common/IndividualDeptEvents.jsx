@@ -246,7 +246,7 @@ const eventsData = [{
 },
 
 {
-  "eventId": "lazer_maze",
+  "eventId": "laser_maze",
   "eventName": "Laser Mazer",
   "Dept": "ECE",
   "MaxReg": 60,
