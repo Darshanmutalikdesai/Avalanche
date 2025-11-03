@@ -57,7 +57,7 @@ const SchoolEvents = () => {
             "instructions": "Eligibility:\nOpen to all high school students.\n\nRegistration:\nSubmit a 100–150 word abstract describing your project.\n\nTeam Composition:\n2–4 members per team.\n\nProject Type:\nWorking models, demonstrations, or research-based projects related to science and technology.\n\nOriginality:\nProjects must be original and student-made. Teacher or parent guidance is allowed but should not replace student effort.\n\nDisplay Requirements:\nEach project must include: Title & Team Details, Aim / Problem Statement, Procedure / Method, Observations / Results, Conclusion / Innovation.\n\nSetup & Logistics:\nTables, boards, and power points will be provided. Report 1 hour before the start for setup. Sections include Physics, Chemistry, Biology, and Technology. Bring all required materials; internet may not be available.\n\nSafety & Conduct:\nFollow safety instructions. Maintain discipline and cooperate with organizers.\n\nRound Details:\nRound 1 - 60 minutes.",
         },
         {
-          "id": "fish_tank",
+          "eventId": "fish_tank",
           "eventName": "Fish Tank",
           "description": "Fish Tank is an idea pitching event for PUC students to present innovative solutions to real-world challenges aligned with themes.",
           "image": FishTank,
