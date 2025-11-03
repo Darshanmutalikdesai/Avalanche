@@ -132,7 +132,14 @@ const SchoolEvents = () => {
               </div>
             ))}
           </div>
+      <div className="absolute bottom-[0.5rem] right-6 sm:right-10 z-[120]">
+        <BackButton />
       </div>
+
+      </div>
+ 
+      <Footer />
+
 
       {/* Popup Modal */}
       {selectedEvent && (
@@ -176,14 +183,7 @@ const SchoolEvents = () => {
         </div>
       )}
 
-  <div className="absolute bottom-[6rem] right-6 sm:right-10 z-[120]">
-    <BackButton />
-  </div>
-
-
-
       {/* ✅ Footer always at bottom */}
-      <Footer />
     </div>
   );
 };

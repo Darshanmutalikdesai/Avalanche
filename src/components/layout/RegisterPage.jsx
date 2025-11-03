@@ -346,7 +346,7 @@ const RegisterPage = () => {
                   <span className="text-green-400 text-xs ml-2">✓ Payment Confirmed</span>
                 )}
                 {paymentStatus[index] === false && (
-                  <span className="text-red-400 text-xs ml-2">✗ Payment Not Found</span>
+                  <span className="text-red-400 text-xs ml-2">✗ Payment Not Found (Please complete payment in the User Portal)</span>
                 )}
               </label>
               <input

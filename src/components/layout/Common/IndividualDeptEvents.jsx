@@ -32,12 +32,12 @@ import parachute from "../../../assets/Parachuting.png"
 
 const eventsData = [{
   "eventId": "invictus",
-  "eventName": "Invictus",
+  "eventName": "Invictus: A Mini Hackathon",
   "Dept": "AIML",
   "MaxReg": 60,
   "MinTeam": "Duo (Team of 2)",
   "MaxTeam": "Squad (Team of 4)",
-  "Description": "General Rulse:\n\n 1. Individual participation is not allowed.\n2. Team members must be from the same institution/college.\n3. All submissions and presentations must be original; plagiarism will lead to disqualification.\n4. Teams must adhere to the time limits and instructions given by organizers.\n5. Participants are expected to maintain decorum, professionalism, and team spirit.\n6. The judges’ decision is final and binding.\n7. Organizers reserve the right to modify event structure or rules if necessary. \n\nTeam Vibes:\n\n You need 2 to 4 people per team.\nNo lone wolves or big squads allowed!\nOnly 60 teams can sign up on the website, so get in quick!\n\nEvent Structure: \n There’s a pre-event 'Eliminatory Round' and then three main rounds.\n\nEliminatory Round (The First Cut):\n- Two days before the big event, all 60 registered teams get the competition theme.\n- Submit a one-page document explaining your problem statement and solution plan.\n- Only 30 teams make it through this round and start building prototypes before the event.\n\nRound 1: Prototype Check-in & Advice\n- Starts at 8:30 AM – don't be late!\n- Show off the prototype you’ve already built.\n- Examiners will give feedback and suggestions for improvement.\n- Use their tips for the next stage.\n\nRound 2: The First Real Challenge (Elimination Time)\n- You get 4 hours of development time before this round.\n- Happens from 12:30 PM to 2:00 PM.\n- Teams are scored out of 50 points.\n- Only the top 5–7 teams move on to the final round.\n\nRound 3: The Grand Finale!\n- From 3:00 PM to 4:00 PM.\n- Teams present their improved final solutions.\n- Scored out of 50 points.\n- Winners are decided by combining scores from Round 2 and Round 3.",
+  "Description": "Invictus embodies the true hackathon spirit, bringing together, teams of bright minds to innovate and tackle challenges head-on. It's an electrifying journey of rapid development, creative problem-solving, and collaborative energy, culminating in a showcase of groundbreaking solutions. Get ready for an intense and inspiring competition where ingenuity shines!\n\nGeneral Rulse:\n\n 1. Individual participation is not allowed.\n2. Team members must be from the same institution/college.\n3. All submissions and presentations must be original; plagiarism will lead to disqualification.\n4. Teams must adhere to the time limits and instructions given by organizers.\n5. Participants are expected to maintain decorum, professionalism, and team spirit.\n6. The judges’ decision is final and binding.\n7. Organizers reserve the right to modify event structure or rules if necessary. \n\nTeam Vibes:\n\n You need 2 to 4 people per team.\nNo lone wolves or big squads allowed!\nOnly 60 teams can sign up on the website, so get in quick!\n\nEvent Structure: \n There’s a pre-event 'Eliminatory Round' and then three main rounds.\n\nEliminatory Round (The First Cut):\n- Two days before the big event, all 60 registered teams get the competition theme.\n- Submit a one-page document explaining your problem statement and solution plan.\n- Only 30 teams make it through this round and start building prototypes before the event.\n\nRound 1: Prototype Check-in & Advice\n- Starts at 8:30 AM – don't be late!\n- Show off the prototype you’ve already built.\n- Examiners will give feedback and suggestions for improvement.\n- Use their tips for the next stage.\n\nRound 2: The First Real Challenge (Elimination Time)\n- You get 4 hours of development time before this round.\n- Happens from 12:30 PM to 2:00 PM.\n- Teams are scored out of 50 points.\n- Only the top 5–7 teams move on to the final round.\n\nRound 3: The Grand Finale!\n- From 3:00 PM to 4:00 PM.\n- Teams present their improved final solutions.\n- Scored out of 50 points.\n- Winners are decided by combining scores from Round 2 and Round 3.",
   "Coord1Name": "Sambhaji Fakirappa Patil",
   "Coord1Pno": "9420689497",
   "Coord2Name": "Yayati Patil",
@@ -465,14 +465,11 @@ export default function IndividualDeptEvents() {
           ))}
         </div>
                 )}
-
-
+      <div className="absolute bottom-[0.5rem] right-6 sm:right-10 z-[120]">
+        <BackButton />
+      </div>
       </main>
-      
 
-        <div className="absolute bottom-[6rem] right-6 sm:right-10 z-[120]">
-          <BackButton />
-        </div>
       {/* Footer */}
       <footer className="relative z-[70] mt-auto w-full">
         <Footer />
@@ -527,13 +524,20 @@ export default function IndividualDeptEvents() {
             </p>
 
             {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-end">
+            <div className="flex flex-wrap gap-4 justify-end">
               <button
-                className="px-5 py-2.5 sm:px-6 sm:py-3 bg-transparent border-2 border-[#00f7ff] rounded-lg text-[#00f7ff] font-bold transition-all duration-300 hover:bg-[#00f7ff] hover:text-black hover:shadow-[0_0_15px_#00f7ff]"
+                className="px-6 py-3 bg-transparent border-2 border-[#00f7ff] rounded-lg text-[#00f7ff] font-bold transition-all duration-300 ease-in-out hover:bg-[#00f7ff] hover:text-black hover:shadow-[0_0_15px_#00f7ff]"
                 onClick={() => setSelectedEvent(null)}
               >
                 Close
               </button>
+
+              {/*<button
+                className="px-6 py-3 bg-[#00f7ff] border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
+                onClick={() => setSelectedEvent(null)}
+              >
+                Coming Soon...
+              </button>*/}
 
               <Link
                 to={isLoggedIn
@@ -541,7 +545,7 @@ export default function IndividualDeptEvents() {
                   : "/auth"
                 }
                 state={{ event: selectedEvent }}
-                className="px-6 py-3 bg-[#00f7ff] border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
+                className="px-6 py-3 bg-[#00f7ff] justify-items-center border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
               >
                 Register
               </Link>

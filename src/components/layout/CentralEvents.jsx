@@ -52,14 +52,12 @@ const CentralEvents = () => {
     {
       eventId: "tech_quiz_circuit",
       eventName: "Technical Quiz(Circuit)",
-      description: "Dive into a world where logic meets innovation! From trending technologies to mind-bending problem statements.",
       image: image1,
       instructions: "Technical Quiz General Rules\n 1.The Quizmaster is God and their decision is final.\n 2. Use of mobile phones or electronic devices is strictly prohibited.\n 3. The quiz will consist of 25 questions in the preliminary round.\n 4. ‘*’ (Star mark) questions will act as tie-breakers.\n 5. No negative marking in the first round.\n 6. No prompting of answers is allowed.\n 7. If there are more than three blockers, no further hints will be given.\n 8. Any form of misconduct or discussion during the quiz will lead to disqualification.\n\n\nTechnical Quiz Guidelines 1. Each team can have a maximum of two participants.\n 2. The quiz will consist of two rounds – Preliminary Round and Final Round.\n 3. Round 1 (Preliminary) will be a written pen-and-paper round.\n 4. Use of mobile phones or electronic devices is strictly prohibited.\n 5. Top teams from the preliminary round will qualify for the final round.\n 6. Any form of misconduct or unfair means will lead to disqualification.\n 7. Decisions of the judges and organizers will be final and binding.\n 8. Questions will test technical knowledge, logic, and awareness.\n",
     },
     {
       eventId: "paper_presentation",
       eventName: "Paper Presentation",
-      description: "Turn your ideas into impact!Our Event lets you share your innovations, discoveries, and creative solutions with the world.",
       image: image5,
       instructions:
         "Mode of Presentation: \n\n The paper presentation will be conducted in hybrid mode, allowing participants to either present online or offline.\n\n By participating in the Paper Presentation event of Avalanche'25, all registrants must adhere to the following rules and guidelines to ensure a smooth and productive event.\n\n1. Teams interested in participating in the Paper Presentation must choose a track provided by their respective departments.\n2. Teams must send an email with the subject format 'trackname_departmentname' and attach their completed paper.\n3. The mail must be sent to the given email IDs (to be published shortly).\n4. The mail should include: a) Title and Track of the paper, b) Names of the authors, c) Phone numbers of the authors, d) Email IDs of the authors.\n5. The paper must include the following sections: Abstract, Index, List of Figures, List of Tables, Introduction, Literature Survey, Methodology, Materials and Results, Conclusion, and References.\n6. All participants should bring their PowerPoint presentations on a pen drive.\n7. Papers must follow the IEEE format as provided on the official IEEE website.\n8. Font size should be 12.\n9. Font style should be Times New Roman.\n10. Use a double-column layout.\n11. The event encourages original and authentic research work free from plagiarism. A similarity index of up to 40% is acceptable depending on context and references.\n12. The decision of the judges will be final and binding; no appeals or arguments will be entertained.\n13. Dress Code: Formals. Participants must wear their college ID cards.\n14. Be prepared for technical issues — keep a backup of all materials on portable media such as a pen drive.\n15. The final format and details will be shared in the official WhatsApp group after registration.\n\n Round Details: Each team will have 12 minutes total — 10 minutes for presentation followed by 2 minutes for Q&A. Participants must strictly adhere to the allotted time, as exceeding it may disrupt the schedule.",
@@ -67,14 +65,12 @@ const CentralEvents = () => {
     {
       eventId: "tech_quix_noncirc_",
       eventName: "Technical Quiz(Non Circuit)",
-      description: "A fusion of creativity, knowledge, and quick thinking! Explore fascinating concepts from science, engineering, and everyday innovation.",
       image: image3,
       instructions: "Technical Quiz General Rules\n 1.The Quizmaster is God and their decision is final.\n 2. Use of mobile phones or electronic devices is strictly prohibited.\n 3. The quiz will consist of 25 questions in the preliminary round.\n 4. ‘*’ (Star mark) questions will act as tie-breakers.\n 5. No negative marking in the first round.\n 6. No prompting of answers is allowed.\n 7. If there are more than three blockers, no further hints will be given.\n 8. Any form of misconduct or discussion during the quiz will lead to disqualification.\n\n\nTechnical Quiz Guidelines 1. Each team can have a maximum of two participants.\n 2. The quiz will consist of two rounds – Preliminary Round and Final Round.\n 3. Round 1 (Preliminary) will be a written pen-and-paper round.\n 4. Use of mobile phones or electronic devices is strictly prohibited.\n 5. Top teams from the preliminary round will qualify for the final round.\n 6. Any form of misconduct or unfair means will lead to disqualification.\n 7. Decisions of the judges and organizers will be final and binding.\n 8. Questions will test technical knowledge, logic, and awareness.\n",
     },
     {
       eventId: "tech_debate",
       eventName: "Technical Debate",
-      description: "Technical Debate 2025 challenges participants to think critically, argue persuasively, and adapt quickly across two intense rounds.",
       image: image4,
       instructions: "Round 1 – Devil’s Advocate:\nParticipants debate individually, first arguing for and then against an assigned topic within 3 minutes.\nThis round tests analytical depth, smooth transitions, and convincing delivery.\nTen finalists advance based on their ability to defend opposing viewpoints logically and persuasively.\n\nRound 2 – Oxford-Style Debate:\nFinalists are grouped into Proposition and Opposition teams to debate a given motion.\nEach side presents opening statements, rebuttals, and closing arguments, followed by audience or judge questions.\n\nThroughout the event, participants are expected to uphold respect, professionalism, logical reasoning, and adherence to time limits—making Technical Debate 2025 a true test of intellect, communication, and composure.",
     },
@@ -141,7 +137,7 @@ const CentralEvents = () => {
               >
                 <EventCard
                   title={event.eventName}
-                  description={event.description}
+                  description=""
                   image={event.image}
                 />
               </div>
@@ -189,7 +185,7 @@ const CentralEvents = () => {
                   : "/auth"
                 }
                 state={{ event: selectedEvent }}
-                className="px-6 py-3 bg-[#00f7ff] border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
+                className="px-6 py-3 bg-[#00f7ff] justify-items-center border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
               >
                 Register
               </Link>

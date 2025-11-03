@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import NavigationBar from './Common/Navbar';
 import amogh from "../../assets/Amogh.jpeg";
 import darshan from "../../assets/Darshan.jpeg";
+import laxman from "../../assets/Laxman.jpg";
 import Footer from "../../components/layout/Common/footer";
 import BackButton from '../layout/Common/BackButton';
 
@@ -171,7 +172,7 @@ const DevelopersPage = () => {
       developerType: "Backend Dev`",
       linkedin: "https://www.linkedin.com/in/desai-laxman/",
       phone: "+919380055232",
-      image: "https://media.licdn.com/dms/image/v2/D5603AQEvGCv7y6GM5w/profile-displayphoto-shrink_200_200/B56Zc0rsfJHoAY-/0/1748935560749?e=1762992000&v=beta&t=7hf1MEudIAVXl0o_4y8QECVz0ErqeajZ0fm1jyeICB0"
+      image: laxman
     },
      {
       id: 5,

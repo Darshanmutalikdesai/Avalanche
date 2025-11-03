@@ -158,7 +158,7 @@ export default function HomePage() {
   const handleLaunch = () => {
     setLaunch(true);
     setTimeout(() => {
-      navigate("/events");
+      navigate("/auth");
     }, 1500);
   };
 
