@@ -10,7 +10,6 @@ import Mechanical from "../../assets/Mechanical.jpeg";
 import Footer from "../../components/layout/Common/footer";
 import chem from "../../assets/chem.jpeg";
 import ai from "../../assets/AI.jpeg";
-import Maths from "../../assets/Maths.jpeg";
 import bsc from "../../assets/BSc.jpeg";
 import cse from "../../assets/CSE.jpeg";
 import civil from "../../assets/Civil.jpeg";
@@ -24,7 +23,6 @@ export const DepartmentsData = [
   { id: "AERO", title: "Aeronautical", description: "About the Department", image: image1 },
   { id: "ARCH", title: "Architecture", description: "About the Department", image: image2 },
   { id: "Phy", title: "Physics", description: "About the Department", image: image3 },
-  { id: "MATH", title: "Maths", description: "About the Department", image: Maths },
   { id: "Chem", title: "Chemistry", description: "About the Department", image: chem },
   { id: "Bsc", title: "BSc", description: "About the Department", image: bsc },
   { id: "CSE", title: "Computer Science", description: "About the Department", image: cse },
