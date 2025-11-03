@@ -60,6 +60,7 @@ const RegisterPage = () => {
   "Islamiya PU College (Camp)",
   "Islamiya Urdu High School (Camp)",
   "Jain College of Engineering (JCE), Belagavi",
+  "Jain College of Engineering and Research (JCER), Udyambag, Belagavi",
   "Jyoti PU College (Club Road, Camp)",
   "Kalpavruksha Model School (Belagavi)",
   "Kannada High Primary School Mutenatti (Belagavi)",
