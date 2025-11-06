@@ -8,6 +8,7 @@ import QueryProvider from "./components/layout/Common/QueryProvider";
 
 import NotFound from "./components/pages/Pagenotfound";
 import RocketCursor from "./components/layout/Common/RocketCursor"; // 🚀 Cursor
+import MegaEventGuidelines from "./components/layout/MegaEventGuidelines";
 
 // Lazy load pages
 const LandingPage = lazy(() => import("./components/pages/landing"));
@@ -42,6 +43,7 @@ function AppRoutes() {
         <Route path="/contact" element={<Contact />} />
         {<Route path="/payment-gateway" element={<PaymentGateway />} />}
         {<Route path="/schedule" element={<Schedule />} />}
+        <Route path="/mega-event-guidelines" element={<MegaEventGuidelines />} />
 
 
 

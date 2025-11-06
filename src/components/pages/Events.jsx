@@ -8,6 +8,7 @@ import CentralEvents from "../layout/CentralEvents";
 import DepartmentEvents from "../layout/DepartmentEvents";
 import RegisterPaperPage from "../layout/RegisterPage";
 import SchoolEvents from "../layout/SchoolEvents";
+import MegaEventGuidelines from "../layout/MegaEventGuidelines";
 
 
 // Layout wrapper
@@ -35,7 +36,7 @@ export default function Events() {
 
         <Route path="register" element={<RegisterPaperPage />} />
 
-
+        <Route path="mega-event-guidelines" element={<MegaEventGuidelines />} />
 
         {/* Catch all → redirect back */}
         <Route path="*" element={<Navigate to="/events" />} />

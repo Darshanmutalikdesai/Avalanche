@@ -53,11 +53,11 @@ const StarButton = () => {
         // ⚠️ User not valid anymore
         localStorage.removeItem("userId");
         localStorage.removeItem("token");
-        navigate("/auth"); // redirect to auth page
+        navigate("/events"); // redirect to auth page
       }
     } else {
       // 🚫 Not logged in
-      navigate("/auth"); // redirect to auth/login page
+      navigate("/events"); // redirect to auth/login page
     }
   };
 
@@ -105,7 +105,7 @@ export default function HomePage() {
   const [chatOpen, setChatOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  
 
   // 💬 Chat handling
   const handleSendMessage = () => {
@@ -237,7 +237,7 @@ export default function HomePage() {
   <motion.button
     whileHover={{ scale: 1.08 }}
     whileTap={{ scale: 0.95 }}
-    onClick={() => setShowModal(false)}
+    onClick={() => navigate("/mega-event-guidelines")}
     className="relative overflow-hidden
       px-14 py-3 rounded-full
       text-white font-extrabold text-2xl tracking-widest uppercase
@@ -246,7 +246,7 @@ export default function HomePage() {
       shadow-[0_0_40px_rgba(255,120,0,0.9)]
       transition-all duration-300"
   >
-    <span className="relative z-20">🏁 Coming Soon...</span>
+    <span className="relative z-20">🏁 Register</span>
 
     {/* 🔥 Neon Blue Flames */}
     <span className="absolute inset-x-0 bottom-0 h-[160%] opacity-80 blur-[10px]
@@ -349,49 +349,7 @@ export default function HomePage() {
 
       </section>
 
-      {/* 📜 Modal */}
-      {showModal && (
-        <motion.div
-          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          <motion.div
-            className="bg-gray-900 text-white rounded-2xl p-8 w-11/12 max-w-xl relative"
-            initial={{ y: 50 }}
-            animate={{ y: 0 }}
-            exit={{ y: 50 }}
-          >
-            <h3 className="text-2xl font-bold mb-4">Event Guidelines</h3>
-            <p className="mb-6 text-gray-300 leading-relaxed">
-              1. Follow the schedule strictly.<br />
-              2. Maintain decorum and discipline.<br />
-              3. Bring your ID and registration proof.<br />
-              4. Respect other participants and staff.<br />
-              5. Enjoy and explore all events!
-            </p>
-            <div className="flex justify-end gap-4">
-              <button
-                className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition"
-                onClick={() => setShowModal(false)}
-              >
-                Close
-              </button>
-              <button
-                className="px-4 py-2 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-lg shadow-lg text-white transition hover:scale-105"
-                onClick={() =>
-                  navigate("/events/register-paper", {
-                    state: { eventName: "Mega Event" },
-                  })
-                }
-              >
-                Register
-              </button>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
+      
 
       {/* ℹ️ About Section */}
       <section
