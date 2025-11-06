@@ -43,7 +43,7 @@ function AppRoutes() {
         <Route path="/contact" element={<Contact />} />
         {<Route path="/payment-gateway" element={<PaymentGateway />} />}
         {<Route path="/schedule" element={<Schedule />} />}
-        <Route path="/mega-event-guidelines" element={<MegaEventGuidelines />} />
+        {/*<Route path="/mega-event-guidelines" element={<MegaEventGuidelines />} />*/}
 
 
 
