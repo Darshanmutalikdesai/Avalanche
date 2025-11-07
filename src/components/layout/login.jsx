@@ -281,7 +281,7 @@ const RegisterPage = () => {
         window.dispatchEvent(new Event('authStateChanged'));
         
         alert(`✅ Welcome back! Your Avalanche ID: ${data.avalancheId}`);
-        navigate("/home");
+        navigate("/user-portal");
       }
     } catch (error) {
       console.error('Authentication error:', error);
