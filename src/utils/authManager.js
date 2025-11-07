@@ -1,4 +1,3 @@
-// Create a new file: src/utils/authManager.js
 
 const TOKEN_KEY = 'googleAuthToken';
 const TOKEN_EXPIRY_KEY = 'tokenExpiry';
