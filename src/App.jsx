@@ -19,7 +19,6 @@ const Events = lazy(() => import("./components/pages/Events"));
 const Developer = lazy(() => import("./components/pages/Developer"));
 const User = lazy(() => import("./components/pages/user"));
 const Rule = lazy(() => import("./components/pages/rule"));
-const PaymentGateway = lazy(() => import("./components/pages/PaymentGateway"));
 const Contact = lazy(() => import("./components/pages/Contact"));
 const Schedule = lazy(() => import("./components/pages/Schedule"));
 
