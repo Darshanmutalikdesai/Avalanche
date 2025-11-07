@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import NavigationBar from "../layout/Common/Navbar";
+import NavigationBar from "./Common/Navbar";
 import Footer from "./Common/footer";
 import BackButton from "./Common/BackButton";
+import AuthManager from "../../utils/authManager"; // IMPORT AUTH MANAGER
 
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
 const GOOGLE_CLIENT_ID = "333524285370-93g4b8ruu24q4q0l3jm3no14h9a8h9la.apps.googleusercontent.com";
-const API_URL = "https://avalanche.git.edu"; // Change to your backend URL
+const API_URL = "https://avalanche.git.edu";
 
 const RegisterPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -31,7 +32,7 @@ const RegisterPage = () => {
   });
 
   const colleges = [
-    "Alva's Pre-University College",
+  "Alva's Pre-University College",
   "Angadi Institute of Technology and Management (AITM), Belagavi",
   "Angadi International School (English medium, Savagaon Road)",
   "Bandopanth Kulkarni Model High School (Camp)",
@@ -159,14 +160,21 @@ const RegisterPage = () => {
 
   // Check if user is already logged in
   useEffect(() => {
-    const userId = localStorage.getItem('userId');
-    const avalancheId = localStorage.getItem('avalancheId');
-    if (userId && avalancheId) {
-      navigate("/home");
+    // Check if session is still valid
+    if (AuthManager.isAuthenticated()) {
+      const userId = localStorage.getItem('userId');
+      const avalancheId = localStorage.getItem('avalancheId');
+      
+      if (userId && avalancheId) {
+        navigate("/user-portal");
+      }
+    } else {
+      // Clear any stale data if session expired
+      AuthManager.clearAuth();
     }
   }, [navigate]);
 
-  // 🌌 Animations Setup
+  // Animations Setup (keeping your existing code)
   useEffect(() => {
     setTimeout(() => setIsLoaded(true), 100);
 
@@ -196,7 +204,7 @@ const RegisterPage = () => {
     return () => clearInterval(shootingStarInterval);
   }, []);
 
-  // 🌠 Floating parallax
+  // Floating parallax (keeping your existing code)
   useEffect(() => {
     const handleMouseMove = (e) => {
       const floatingElements = document.querySelectorAll(".floating-object");
@@ -227,7 +235,7 @@ const RegisterPage = () => {
     return () => window.removeEventListener("click", handleClickOutside);
   }, []);
 
-  // 🧠 Input Handlers
+  // Input Handlers
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -247,12 +255,12 @@ const RegisterPage = () => {
       setFormData({ ...formData, clgName: college });
     }
     setIsDropdownOpen(false);
-    setSearchQuery(""); // Clear search when selection is made
+    setSearchQuery("");
   };
 
-  // 🔐 Handle Google OAuth Success
+  // Handle Google OAuth Success
   const handleGoogleSuccess = async (credentialResponse) => {
-    console.log('Google Sign-In Success');
+    console.log('🔐 Google Sign-In Success');
     setLoading(true);
     const token = credentialResponse.credential;
     
@@ -271,8 +279,14 @@ const RegisterPage = () => {
         setUserEmail(data.email);
         setUserName(data.name);
         setGoogleToken(token);
+        
+        // ⭐ STORE TOKEN WITH EXPIRY
+        AuthManager.setToken(token);
       } else {
         // Existing user - login successful
+        // ⭐ STORE TOKEN WITH EXPIRY
+        AuthManager.setToken(token);
+        
         localStorage.setItem('userId', data.userId);
         localStorage.setItem('avalancheId', data.avalancheId);
         localStorage.setItem('user', JSON.stringify(data.user));
@@ -280,37 +294,37 @@ const RegisterPage = () => {
 
         window.dispatchEvent(new Event('authStateChanged'));
         
-        alert(`✅ Welcome back! Your Avalanche ID: ${data.avalancheId}`);
+        alert(`✅ Welcome back! Your Avalanche ID: ${data.avalancheId}\n⏱️ Session valid for 1 hour`);
         navigate("/user-portal");
       }
     } catch (error) {
-      console.error('Authentication error:', error);
-      alert('⚠ Authentication failed. Please try again.');
+      console.error('❌ Authentication error:', error);
+      alert('⚠️ Authentication failed. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  // 🚀 Complete Registration
+  // Complete Registration
   const completeRegistration = async () => {
     setLoading(true);
     try {
       const phoneRegex = /^[0-9]{10}$/;
 
       if (!phoneRegex.test(formData.phone)) {
-        alert("⚠ Please enter a valid 10-digit phone number!");
+        alert("⚠️ Please enter a valid 10-digit phone number!");
         setLoading(false);
         return;
       }
 
       if (!formData.clgName.trim()) {
-        alert("⚠ Please select or enter your college/school name!");
+        alert("⚠️ Please select or enter your college/school name!");
         setLoading(false);
         return;
       }
 
       if (!formData.usn.trim()) {
-        alert("⚠ Please enter your roll number!");
+        alert("⚠️ Please enter your roll number!");
         setLoading(false);
         return;
       }
@@ -329,6 +343,8 @@ const RegisterPage = () => {
       const data = await response.json();
 
       if (response.ok) {
+        // ⭐ TOKEN ALREADY STORED FROM handleGoogleSuccess
+        
         localStorage.setItem('userId', data.userId);
         localStorage.setItem('avalancheId', data.avalancheId);
         localStorage.setItem('user', JSON.stringify(data.user));
@@ -336,20 +352,19 @@ const RegisterPage = () => {
 
         window.dispatchEvent(new Event('authStateChanged'));
         
-        alert(`✅ Registration successful! Your Avalanche ID: ${data.avalancheId}`);
+        alert(`✅ Registration successful! Your Avalanche ID: ${data.avalancheId}\n⏱️ Session valid for 1 hour`);
         navigate("/home");
       } else {
         alert(`❌ ${data.error || "Registration failed"}`);
       }
     } catch (error) {
-      console.error('Registration error:', error);
-      alert("⚠ Cannot connect to server. Check backend connection.");
+      console.error('❌ Registration error:', error);
+      alert("⚠️ Cannot connect to server. Check backend connection.");
     } finally {
       setLoading(false);
     }
   };
-
-  return (
+return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
 
       
@@ -563,13 +578,16 @@ const RegisterPage = () => {
                       <p className="text-center text-cyan-300/70 text-sm tracking-wide">
                         Sign in with Google to access Avalanche 2025
                       </p>
+                      <p className="text-center text-yellow-400/80 text-xs tracking-wide">
+                        ⏱️ Session valid for 1 hour after login
+                      </p>
                       
                       <div className="flex justify-center">
                         <GoogleLogin
                           onSuccess={handleGoogleSuccess}
                           onError={() => {
                             console.log('Login Failed');
-                            alert('⚠ Google Sign-In failed. Please try again.');
+                            alert('⚠️ Google Sign-In failed. Please try again.');
                           }}
                           theme="filled_blue"
                           size="large"

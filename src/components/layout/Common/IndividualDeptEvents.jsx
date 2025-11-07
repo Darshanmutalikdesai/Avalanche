@@ -81,7 +81,7 @@ const eventsData = [{
   "MaxReg": 40,
   "MinTeam": "Duo (Team of 2)",
   "MaxTeam": "Duo (Team of 2)",
-  "Description": "Unleash your creativity by transforming discarded materials into innovative, functional creations. Join Junk Genie to build, innovate, and showcase sustainable solutions from junk.\n\nRound Timings:\nRound 1 - 120 mins",
+  "Description": "1. Event Structure:\n\ni. Team of 2 participants only.\nii. Waste materials used by the participants (e.g., plastics, metal scraps, wires, bottles, cardboard, motors, e-waste).\niii. Time limit must be max 2 hrs which includes planning, preparing, and demonstrating the model.\niv. The presentation duration must be between 2 to 5 minutes.\nv. Participants should not continue to structure their model beyond the stipulated time.\n\n2. Judging Criteria:\n• Creativity and Innovation\n• Functionality\n• Feasibility\n• Sustainability\n• Presentation\n\n3. Safety Tips:\ni. Teams should wear gloves and safety glasses, if required.\nii. No hazardous materials will be entertained.\n\nThis event not only highlights sustainability but also fosters teamwork and real-world problem-solving skills in a fun, competitive environment using waste materials.",
   "Coord1Name": "Anushka Pujari",
   "Coord1Pno": "8296807834",
   "Coord2Name": "Mahima Mirashi",

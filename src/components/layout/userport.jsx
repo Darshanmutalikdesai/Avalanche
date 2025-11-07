@@ -7,26 +7,26 @@ import {
   Building2,
   GraduationCap,
   LogOut,
+  Clock,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PaymentButton from "./Common/payment-button";
+import AuthManager from "../../utils/authManager"; // IMPORT AUTH MANAGER
 
 export default function CosmicProfile() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [sessionTime, setSessionTime] = useState(0);
   const navigate = useNavigate();
 
-  // 🔗 Fetch current user details using the new API
   const getCurrentUser = async (userId) => {
     try {
-      const response = await fetch(
+      // ⭐ USE AUTHENTICATED FETCH
+      const response = await AuthManager.authenticatedFetch(
         `https://avalanche.git.edu/api/user/${userId}`,
         {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
           credentials: "include",
         }
       );
@@ -38,59 +38,34 @@ export default function CosmicProfile() {
       const data = await response.json();
       return data.user;
     } catch (error) {
+      if (error.message === 'SESSION_EXPIRED') {
+        throw new Error('Your session has expired. Please login again.');
+      }
       console.error("Error in getCurrentUser:", error);
       throw error;
     }
   };
 
-  // 🔗 Fetch registered events for the user
-  /*const getRegisteredEvents = async (userId) => {
-    try {
-      const response = await fetch(
-        `https://avalanche.git.edu/api/events/user/${userId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
-      
-      if (!response.ok) {
-        throw new Error(`Failed to fetch events (Status: ${response.status})`);
-      }
-      
-      const data = await response.json();
-      console.log(data)
-      return data.events || [];
-    } catch (error) {
-      console.error("Error in getRegisteredEvents:", error);
-      return [];
-    }
-  };*/
-
-  // 🔗 Fetch user profile
   const fetchProfile = async () => {
     setLoading(true);
     setError(null);
     
     try {
+      // ⭐ CHECK SESSION VALIDITY
+      if (!AuthManager.isAuthenticated()) {
+        throw new Error("Session expired. Please login again.");
+      }
+
       const userId = localStorage.getItem("userId");
       
       if (!userId) {
         throw new Error("No user ID found. Please login.");
       }
 
-      // Fetch user details using the primary API
       const userDetails = await getCurrentUser(userId);
-      
-      // Fetch registered events using the new API
-      //const registeredEvents = await getRegisteredEvents(userId);
       
       const hasPaid = userDetails.payment || false;
 
-      // Set profile with data from getCurrentUser API
       setProfile({
         _id: userDetails.avalancheId || userId,
         name: userDetails.name || "Participant",
@@ -103,23 +78,52 @@ export default function CosmicProfile() {
     } catch (err) {
       console.error("Profile fetch error:", err.message);
       setError(err.message);
+      
+      // If session expired, redirect to login
+      if (err.message.includes('expired') || err.message.includes('SESSION_EXPIRED')) {
+        AuthManager.clearAuth();
+        setTimeout(() => navigate("/auth"), 2000);
+      }
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchProfile();
-  }, []);
+    // ⭐ CHECK SESSION ON MOUNT
+    if (!AuthManager.isAuthenticated()) {
+      alert('⚠️ Session expired. Please login again.');
+      navigate("/auth");
+      return;
+    }
 
-  // 🚪 Logout handler
+    fetchProfile();
+
+    // ⭐ START SESSION MONITOR
+    AuthManager.startSessionMonitor(() => {
+      alert('⏱️ Your session has expired. Please login again.');
+      navigate("/auth");
+    });
+
+    // Update session time display every minute
+    const timeInterval = setInterval(() => {
+      setSessionTime(AuthManager.getTimeRemaining());
+    }, 60000);
+
+    // Initial time set
+    setSessionTime(AuthManager.getTimeRemaining());
+
+    return () => {
+      AuthManager.stopSessionMonitor();
+      clearInterval(timeInterval);
+    };
+  }, [navigate]);
+
+  // Logout handler
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
-      // Clear storage
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      
-      // Navigate to login page
+      AuthManager.clearAuth();
+      AuthManager.stopSessionMonitor();
       navigate("/auth");
     }
   };
@@ -136,7 +140,7 @@ export default function CosmicProfile() {
       <div className="min-h-screen flex items-center justify-center bg-slate-950 text-red-400 text-xl">
         <div className="text-center">
           <p className="mb-4">Unable to fetch profile.</p>
-          {error && <p className="text-sm text-red-300">{error}</p>}
+          {error && <p className="text-sm text-red-300 mb-4">{error}</p>}
           <button
             onClick={() => navigate("/auth")}
             className="mt-4 px-6 py-2 bg-red-500/20 border border-red-500/50 rounded-lg hover:bg-red-500/30 transition-all"
@@ -190,6 +194,14 @@ export default function CosmicProfile() {
               "polygon(0 20px, 20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px))",
           }}
         >
+          {/* ⭐ SESSION TIMER BADGE */}
+          <div className="absolute top-4 right-4 flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/30 px-3 py-1 rounded-full">
+            <Clock className="w-4 h-4 text-yellow-400" />
+            <span className="text-yellow-400 text-xs font-mono font-bold">
+              Session: {sessionTime}min
+            </span>
+          </div>
+
           {/* Header */}
           <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
             <div className="relative flex-shrink-0 w-32 h-32 bg-slate-800 border-2 border-cyan-500 flex items-center justify-center">
@@ -234,7 +246,7 @@ export default function CosmicProfile() {
               label="ROLL NUMBER"
               value={profile.rollNumber}
             />
-             <InfoCard
+            <InfoCard
               icon={<Award className={`w-5 h-5 ${profile.hasPaid ? 'text-green-400' : 'text-red-400'}`} />}
               label="PAYMENT STATUS"
               value={profile.hasPaid ? 'PAID' : 'UNPAID'}
@@ -282,7 +294,7 @@ export default function CosmicProfile() {
 
           {/* Payment Section */}
           {profile.hasPaid ? (
-            <div className="relative bg-green-900/30 border border-green-500/40 p-6">
+            <div className="relative bg-green-900/30 border border-green-500/40 p-6 mb-6">
               <div className="flex items-center justify-center gap-3">
                 <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
                   <Award className="w-6 h-6 text-green-400" />
@@ -298,7 +310,7 @@ export default function CosmicProfile() {
               </div>
             </div>
           ) : (
-             <div className="relative bg-red-900/30 border border-red-500/40 p-6">
+            <div className="relative bg-red-900/30 border border-red-500/40 p-6 mb-6">
               <div className="flex items-center justify-center gap-3">
                 <div className="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center">
                   <Award className="w-6 h-6 text-red-400" />
@@ -312,7 +324,7 @@ export default function CosmicProfile() {
                   </p>
                 </div>
                 <div className="justify-items-center">
-                <PaymentButton />
+                  <PaymentButton />
                 </div>
               </div>
             </div>

@@ -41,7 +41,6 @@ function AppRoutes() {
         {<Route path="/user-portal/*" element={<User />} />}
         <Route path="/rulebook/*" element={<Rule />} />
         <Route path="/contact" element={<Contact />} />
-        {<Route path="/payment-gateway" element={<PaymentGateway />} />}
         {<Route path="/schedule" element={<Schedule />} />}
         {/*<Route path="/mega-event-guidelines" element={<MegaEventGuidelines />} />*/}
 

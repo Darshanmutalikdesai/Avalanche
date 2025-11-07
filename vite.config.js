@@ -12,6 +12,9 @@ export default defineConfig({
       "@hooks": path.resolve(__dirname, "./src/hooks"),
     },
   },
+  build: {
+    outDir: "dist",
+  },
   server: {
     proxy: {
       "/api": {
