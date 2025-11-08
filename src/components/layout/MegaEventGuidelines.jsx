@@ -217,16 +217,17 @@ const MegaEventGuidelines = () => {
             CLOSE ✖
           </motion.button>
 
-          <motion.button
-            href="https://drive.google.com/file/d/1aD07yhJQqLehTFkmbaQMzBPKcI7QPPtp/view?usp=drive_link"
-            download
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.1, boxShadow: "0 0 35px rgba(0,200,255,0.9)" }}
-            whileTap={{ scale: 0.95 }}
-            className="w-full sm:w-auto px-10 sm:px-14 py-3 sm:py-4 text-base sm:text-lg md:text-2xl rounded-full font-extrabold tracking-wider bg-gradient-to-r from-[#00c6ff] to-[#0072ff] border-4 border-cyan-300 shadow-[0_0_25px_rgba(0,180,255,0.7)] hover:shadow-[0_0_60px_rgba(0,220,255,1)] transition-all flex justify-center gap-2"
-          >
-            📘 DOWNLOAD RULEBOOK
-          </motion.button>
+          <motion.a
+  href="https://drive.google.com/uc?export=download&id=1aD07yhJQqLehTFkmbaQMzBPKcI7QPPtp"
+  download
+  target="_blank"
+  rel="noopener noreferrer"
+  whileHover={{ scale: 1.1, boxShadow: "0 0 35px rgba(0,200,255,0.9)" }}
+  whileTap={{ scale: 0.95 }}
+  className="w-full sm:w-auto px-10 sm:px-14 py-3 sm:py-4 text-base sm:text-lg md:text-2xl rounded-full font-extrabold tracking-wider bg-gradient-to-r from-[#00c6ff] to-[#0072ff] border-4 border-cyan-300 shadow-[0_0_25px_rgba(0,180,255,0.7)] hover:shadow-[0_0_60px_rgba(0,220,255,1)] transition-all flex justify-center gap-2"
+>
+  📘 DOWNLOAD RULEBOOK
+</motion.a>
 
           <motion.button
             whileHover={{ scale: 1.12, boxShadow: "0 0 40px rgba(255,230,0,1)" }}
