@@ -24,7 +24,7 @@ export default function CosmicProfile() {
     try {
       // ⭐ USE AUTHENTICATED FETCH
       const response = await AuthManager.authenticatedFetch(
-        `https://avalanche.git.edu/api/user/${userId}`,
+        `https://avalanche.git.edu/api/user/profile`,
         {
           method: "GET",
           credentials: "include",
