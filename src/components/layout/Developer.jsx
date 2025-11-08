@@ -148,7 +148,7 @@ const DevelopersPage = () => {
       {
       id: 2,
       name: "Darshan Mutalikdesai",
-      designation: "Loudspeaker",
+      designation: "500 error",
       developerType: "Full Stack Developer",
       linkedin: "https://www.linkedin.com/in/darshan-mutalikdesai-b4a4832a0/",
       phone: "7204092064",
