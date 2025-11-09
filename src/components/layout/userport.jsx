@@ -186,7 +186,7 @@ export default function CosmicProfile() {
         @keyframes glow-pulse {0%,100% {opacity:0.5;} 50% {opacity:1;}}
       `}</style>
 
-      <div className="relative max-w-4xl w-full z-10">
+      <div className="relative max-w-4xl pt-20 w-full z-10">
         <div
           className="relative bg-slate-900/90 backdrop-blur-sm p-8 md:p-12"
           style={{
@@ -197,9 +197,6 @@ export default function CosmicProfile() {
 
           {/* Header */}
           <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
-            <div className="relative flex-shrink-0 w-32 h-32 bg-slate-800 border-2 border-cyan-500 flex items-center justify-center">
-              <User className="w-16 h-16 text-cyan-400" />
-            </div>
 
             <div className="flex-1 text-center md:text-left">
               <h1 className="text-4xl md:text-5xl font-bold text-cyan-400 mb-2 tracking-wider">

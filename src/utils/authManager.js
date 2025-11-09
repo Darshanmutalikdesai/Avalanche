@@ -1,7 +1,7 @@
 
 const TOKEN_KEY = 'googleAuthToken';
 const TOKEN_EXPIRY_KEY = 'tokenExpiry';
-const SESSION_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
+const SESSION_DURATION = 8 * 60 * 60 * 1000; // 1 hour in milliseconds
 
 class AuthManager {
   // Store token with expiry timestamp
@@ -9,7 +9,6 @@ class AuthManager {
     const expiryTime = Date.now() + SESSION_DURATION;
     localStorage.setItem(TOKEN_KEY, token);
     localStorage.setItem(TOKEN_EXPIRY_KEY, expiryTime.toString());
-    console.log('✅ Token stored. Expires at:', new Date(expiryTime).toLocaleString());
   }
 
   // Get token if valid, null if expired
@@ -53,7 +52,6 @@ class AuthManager {
     localStorage.removeItem('avalancheId');
     localStorage.removeItem('user');
     localStorage.removeItem('payment');
-    console.log('🔒 Auth data cleared');
   }
 
   // Make authenticated API call

@@ -307,7 +307,7 @@ const RegisterPage = () => {
       if (error.message === 'SESSION_EXPIRED') {
         setMessage("⚠ Your session has expired. Please log in again.");
         setTimeout(() => {
-          navigate("/register");
+          navigate("/auth");
         }, 2000);
       } else {
         setMessage(`❌ ${error.message}`);
@@ -332,11 +332,6 @@ const RegisterPage = () => {
       style={{ fontFamily: "Nasalization, sans-serif" }}
     >
       <NavigationBar />
-
-      {/* ⭐ SESSION TIMER DISPLAY */}
-      <div className="fixed top-20 right-4 bg-black/60 border border-cyan-400 rounded-lg px-4 py-2 text-cyan-300 text-sm z-50">
-        ⏱ Session: {AuthManager.getTimeRemaining()}m remaining
-      </div>
 
       <div className="mt-32 bg-black/60 border border-cyan-400 rounded-2xl shadow-[0_0_20px_#00eaff] p-8 w-[90%] max-w-lg backdrop-blur-md">
         <h1 className="text-3xl font-bold text-cyan-300 text-center mb-6">
@@ -470,12 +465,18 @@ const RegisterPage = () => {
                     {message.includes("expired") ? (
                       "Your session has expired. Redirecting to login..."
                     ) : (
+                      
                       <>
+                      {message.includes("already registered")?(
+                        <>
                         You've already registered.
                         <br />
                         Please join the WhatsApp group if you haven't!!
                         <br /><br />
                         <b>Note:</b> If you haven't already registered, please contact our dev team to fix the issue!!
+                        </>
+                      ):
+                      ("")}
                       </>
                     )}
                   </>
@@ -488,7 +489,7 @@ const RegisterPage = () => {
                 )}
               </p>
               <div className="flex flex-wrap gap-4 justify-end">
-                {!message.includes("expired") && (
+                {!(message.includes("expired")) && message.includes("already registered")  && (
                   <a href={eventId === "paper_presentation" ? "https://linktr.ee/PaperPresentaion_avalanche25" : `${whatsappLink}`} target="_blank" rel="noopener noreferrer">
                     <div className="w-20 h-14 rounded-lg bg-gradient-to-br from-[#25D366] to-[#128C7E] flex items-center justify-center border-2 border-[#00f7ff] transition-all duration-300 hover:scale-110 hover:shadow-[0_0_15px_rgba(37,211,102,0.8)]">
                       <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
