@@ -144,7 +144,6 @@ const RegisterPage = () => {
   "Urdu Lower Primary School No.4 Mujwar Galli (Belagavi)",
   "V.S.M. Institute of Technology, Nipani Tal - Chikodi",
   "Visvesvaraya Technological University, Belagavi",
-    "Others"
   ];
 
   const spaceObjects = [
@@ -352,7 +351,7 @@ const RegisterPage = () => {
 
         window.dispatchEvent(new Event('authStateChanged'));
         
-        alert(`✅ Registration successful! Your Avalanche ID: ${data.avalancheId}`);
+        alert(`✅ Registration successful! Your Avalanche ID: ${data.avalancheId}\n⏱️ Session valid for 1 hour`);
         navigate("/home");
       } else {
         alert(`❌ ${data.error || "Registration failed"}`);
@@ -578,9 +577,6 @@ return (
                       <p className="text-center text-cyan-300/70 text-sm tracking-wide">
                         Sign in with Google to access Avalanche 2025
                       </p>
-                      <p className="text-center text-yellow-400/80 text-xs tracking-wide">
-                        ⏱️ Session valid for 1 hour after login
-                      </p>
                       
                       <div className="flex justify-center">
                         <GoogleLogin
@@ -639,7 +635,9 @@ return (
                             }}
                             className="relative w-full px-4 py-3.5 bg-slate-950/90 border border-cyan-500/30 rounded-lg text-cyan-100 text-sm tracking-wide focus:outline-none focus:border-cyan-400 focus:bg-slate-950 transition-all duration-300 flex justify-between items-center"
                           >
-                            {formData.clgName && !isOtherSelected ? formData.clgName : "◉ SELECT COLLEGE/SCHOOL"}
+                            {formData.clgName && !isOtherSelected
+                              ? formData.clgName
+                              : "◉ SELECT COLLEGE/SCHOOL"}
                             <span className="text-cyan-400 text-xs">▼</span>
                           </button>
                         ) : (
@@ -657,8 +655,9 @@ return (
                         {/* Dropdown list with filtered results */}
                         {isDropdownOpen && (
                           <div className="absolute z-10 w-full mt-1 bg-slate-950 border border-cyan-500/30 rounded-lg shadow-lg max-h-60 overflow-y-auto text-sm">
+                            {/* Filtered college list */}
                             {colleges
-                              .filter(college => 
+                              .filter((college) =>
                                 college.toLowerCase().includes(searchQuery.toLowerCase())
                               )
                               .map((college, idx) => (
@@ -670,13 +669,21 @@ return (
                                   {college}
                                 </div>
                               ))}
-                            
-                            {/* Show "No results" message if search returns nothing */}
-                            {colleges.filter(college => 
+
+                            {/* Always visible "Others" option */}
+                            <div
+                              onClick={() => handleSelect("Others")}
+                              className="px-4 py-2 text-cyan-100 hover:bg-cyan-500/20 cursor-pointer transition-colors border-t border-cyan-500/10"
+                            >
+                              Others
+                            </div>
+
+                            {/* Show "No results" message only when nothing matches */}
+                            {colleges.filter((college) =>
                               college.toLowerCase().includes(searchQuery.toLowerCase())
                             ).length === 0 && (
                               <div className="px-4 py-3 text-cyan-300/50 text-center">
-                                No colleges found. Select "Others" to enter manually.
+                                No colleges found. You can select "Others" to enter manually.
                               </div>
                             )}
                           </div>
