@@ -17,82 +17,49 @@ const StarButton = () => {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
-  // ✅ Check current user from backend (optional: if you want extra validation)
-  const getCurrentUser = async (userId) => {
-    try {
-      const response = await fetch(`https://avalanche.git.edu/api/user/current/${userId}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch user");
-      }
-
-      const data = await response.json();
-      return data; // e.g. { avalancheId, email, name, schlclgName, rollno }
-    } catch (error) {
-      console.error("Error fetching current user:", error);
-      return null;
-    }
-  };
-
-  // ✅ Handle Explore click
-  const handleExploreClick = async () => {
-    const userId = localStorage.getItem("userId");
-
-    if (userId) {
-      // Optionally verify if the user still exists
-      const user = await getCurrentUser(userId);
-
-      if (user && user.email) {
-        // ✅ Valid user found
-        navigate("/events"); // redirect to events page
-      } else {
-        // ⚠️ User not valid anymore
-        localStorage.removeItem("userId");
-        localStorage.removeItem("token");
-        navigate("/events"); // redirect to auth page
-      }
-    } else {
-      // 🚫 Not logged in
-      navigate("/events"); // redirect to auth/login page
-    }
+  // ✅ Always redirect to events page
+  const handleExploreClick = () => {
+    navigate("/events");
   };
 
   return (
     <>
-    <button
-      onClick={handleExploreClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className={`relative px-4 sm:px-6 py-2 sm:py-3 
-        text-sm sm:text-base text-white font-semibold
-        bg-gradient-to-r from-[#36266d] via-[#36266d] to-[#36266d] border-2 border-[#0080ff]
-        rounded-lg shadow-lg
-        transition-all duration-300 font-['Nasalization']
-        ${isHovered ? "shadow-blue-800/60 shadow-2xl" : ""}`}
-    >
-      <div
-        className={`absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-transparent opacity-0 transition-opacity duration-700 ${
-          isHovered ? "opacity-20" : ""
-        }`}
-        style={{
-          transform: isHovered ? "translateX(100%)" : "translateX(-100%)",
-          transition: "transform 0.7s, opacity 0.7s",
-        }}
-      />
-      <div className="flex items-center gap-2 relative z-10">
-        <Star
-          className={`transition-all duration-500 ${
-            isHovered ? "rotate-180 scale-110 fill-white" : ""
-          }`}
-          size={18}
+      <button
+        onClick={handleExploreClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className={`relative px-4 sm:px-6 py-2 sm:py-3 
+          text-sm sm:text-base text-white font-semibold
+          bg-gradient-to-r from-[#36266d] via-[#36266d] to-[#36266d] 
+          border-2 border-[#0080ff]
+          rounded-lg shadow-lg
+          transition-all duration-300 font-['Nasalization']
+          ${isHovered ? "shadow-blue-800/60 shadow-2xl" : ""}`}
+      >
+        {/* 🔵 Shine effect */}
+        <div
+          className={`absolute inset-0 bg-gradient-to-r 
+            from-transparent via-transparent to-transparent 
+            opacity-0 transition-opacity duration-700 ${
+              isHovered ? "opacity-20" : ""
+            }`}
+          style={{
+            transform: isHovered ? "translateX(100%)" : "translateX(-100%)",
+            transition: "transform 0.7s, opacity 0.7s",
+          }}
         />
-        <span>Explore</span>
-      </div>
-    </button>
+
+        {/* ⭐ Button Content */}
+        <div className="flex items-center gap-2 relative z-10">
+          <Star
+            className={`transition-all duration-500 ${
+              isHovered ? "rotate-180 scale-110 fill-white" : ""
+            }`}
+            size={18}
+          />
+          <span>Explore</span>
+        </div>
+      </button>
     </>
   );
 };
