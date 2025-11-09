@@ -260,7 +260,7 @@ const RulebookComponent = () => {
             <p>For queries and support, reach out to the organizing committee.</p>
             <p>Email: avalanche25@git.edu</p>
             <a 
-              href="https://drive.google.com/file/d/1CceXYNaRjeZqrDSEDLYKmTLD0n-Ytsbz/view?usp=drive_link" 
+              href="https://drive.google.com/file/d/1RNpNnv1HQ3eTaR4WpXr6m8lZ6NjcvRfd/view?usp=drive_link" 
               target="_blank" 
               rel="noopener noreferrer"
               className="download-btn"
