@@ -194,13 +194,6 @@ export default function CosmicProfile() {
               "polygon(0 20px, 20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px))",
           }}
         >
-          {/* ⭐ SESSION TIMER BADGE */}
-          <div className="absolute top-4 right-4 flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/30 px-3 py-1 rounded-full">
-            <Clock className="w-4 h-4 text-yellow-400" />
-            <span className="text-yellow-400 text-xs font-mono font-bold">
-              Session: {sessionTime}min
-            </span>
-          </div>
 
           {/* Header */}
           <div className="flex flex-col md:flex-row items-center gap-8 mb-8">

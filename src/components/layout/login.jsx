@@ -352,7 +352,7 @@ const RegisterPage = () => {
 
         window.dispatchEvent(new Event('authStateChanged'));
         
-        alert(`✅ Registration successful! Your Avalanche ID: ${data.avalancheId}\n⏱️ Session valid for 1 hour`);
+        alert(`✅ Registration successful! Your Avalanche ID: ${data.avalancheId}`);
         navigate("/home");
       } else {
         alert(`❌ ${data.error || "Registration failed"}`);
