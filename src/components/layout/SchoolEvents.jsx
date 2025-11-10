@@ -54,7 +54,7 @@ const SchoolEvents = () => {
             "eventName": "Science Expo",
             "description": "An engaging exhibition where young innovators present science and technology projects that inspire curiosity, creativity, and problem-solving.",
             "image": scienceexpo,
-            "instructions": "Eligibility:\nOpen to all high school students.\n\nRegistration:\nSubmit a 100–150 word abstract describing your project.\n\nTeam Composition:\n2–4 members per team.\n\nProject Type:\nWorking models, demonstrations, or research-based projects related to science and technology.\nTheme: Open (participants may present any science or technology-based project of their choice.)\n\nOriginality:\nProjects must be original and student-made. Teacher or parent guidance is allowed but should not replace student effort.\n\nDisplay Requirements:\nEach project must include: Title & Team Details, Aim / Problem Statement, Procedure / Method, Observations / Results, Conclusion / Innovation.\n\nSetup & Logistics:\nTables, boards, and power points will be provided. Report 1 hour before the start for setup. Sections include Physics, Chemistry, Biology, and Technology. Bring all required materials; internet may not be available.\n\nSafety & Conduct:\nFollow safety instructions. Maintain discipline and cooperate with organizers.\n\nRound Details:\nRound 1 - 60 minutes.",
+            "instructions": "Eligibility:\nOpen to all high school students.\n\nRegistration:\nSubmit a 100–150 word abstract describing your project.\n\nTeam Composition:\n2–4 members per team.\n\nProject Type:\nWorking models, demonstrations, or research-based projects related to science and technology.\n\nOriginality:\nProjects must be original and student-made. Teacher or parent guidance is allowed but should not replace student effort.\n\nDisplay Requirements:\nEach project must include: Title & Team Details, Aim / Problem Statement, Procedure / Method, Observations / Results, Conclusion / Innovation.\n\nSetup & Logistics:\nTables, boards, and power points will be provided. Report 1 hour before the start for setup. Sections include Physics, Chemistry, Biology, and Technology. Bring all required materials; internet may not be available.\n\nSafety & Conduct:\nFollow safety instructions. Maintain discipline and cooperate with organizers.\n\nRound Details:\nRound 1 - 60 minutes.",
         },
         {
           "eventId": "fish_tank",
@@ -106,12 +106,15 @@ const SchoolEvents = () => {
       {/* Content Section */}
       <div className="relative z-[2] min-h-screen pb-20 p-4 sm:p-6 lg:p-8 pt-36 sm:pt-32 lg:pt-28">
         <div className="text-center mb-16 sm:mb-20 lg:mb-24">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold font-nasal text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold font-nasal text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-3">
             School Level Events
           </h1>
           <p className="text-base sm:text-lg lg:text-xl text-gray-100 opacity-100">
             Explore the exciting events lined up for school students at AVALANCHE!
           </p>
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-semibold font-nasal text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)]">
+            Note: Only the team leaders of the team should register here. The team members should only have a valid Avalanche ID, They need not pay!!.
+          </h1>
         </div>
 
           <div className="flex flex-wrap justify-center items-start gap-4 sm:gap-6 md:gap-8 lg:gap-10 w-full px-4 sm:px-6 md:px-8">
@@ -125,7 +128,7 @@ const SchoolEvents = () => {
                           min-w-[280px] max-w-[380px]"
               >
                 <EventCard
-                  title={event.title}
+                  title={event.eventName}
                   description={event.description}
                   image={event.image}
                 />
@@ -154,8 +157,11 @@ const SchoolEvents = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-2xl sm:text-3xl font-bold font-nasal text-[#ffcc00] mb-4 drop-shadow-[0_0_10px_#ffcc00]">
-              {selectedEvent.title}
+              {selectedEvent.eventName}
             </h2>
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold font-nasal text-[#00eaff] drop-shadow-[0_0_15px_rgba(0,234,255,0.7)] mb-4">
+              Note: Only the team leaders of the team should register here. The team members should only have a valid Avalanche ID, They need not pay!!.
+            </h3>
             <p className="text-base sm:text-lg text-gray-300 font-orbitron whitespace-pre-line leading-relaxed mb-6">
               {selectedEvent.instructions}
             </p>
