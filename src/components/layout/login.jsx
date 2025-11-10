@@ -293,7 +293,7 @@ const RegisterPage = () => {
 
         window.dispatchEvent(new Event('authStateChanged'));
         
-        alert(`✅ Welcome back! Your Avalanche ID: ${data.avalancheId}\n⏱️ Session valid for 1 hour`);
+        alert(`✅ Welcome back! Your Avalanche ID: ${data.avalancheId}`);
         navigate("/user-portal");
       }
     } catch (error) {
@@ -351,8 +351,8 @@ const RegisterPage = () => {
 
         window.dispatchEvent(new Event('authStateChanged'));
         
-        alert(`✅ Registration successful! Your Avalanche ID: ${data.avalancheId}\n⏱️ Session valid for 1 hour`);
-        navigate("/home");
+        alert(`✅ Registration successful! Your Avalanche ID: ${data.avalancheId}`);
+        navigate("/user-portal");
       } else {
         alert(`❌ ${data.error || "Registration failed"}`);
       }

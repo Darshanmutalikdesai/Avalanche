@@ -489,7 +489,7 @@ const RegisterPage = () => {
                 )}
               </p>
               <div className="flex flex-wrap gap-4 justify-end">
-                {!(message.includes("expired")) && message.includes("already registered")  && (
+                {!(message.includes("expired")) && (message.includes("already registered") || message.includes("Successfully registered")) && (
                   <a href={eventId === "paper_presentation" ? "https://linktr.ee/PaperPresentaion_avalanche25" : `${whatsappLink}`} target="_blank" rel="noopener noreferrer">
                     <div className="w-20 h-14 rounded-lg bg-gradient-to-br from-[#25D366] to-[#128C7E] flex items-center justify-center border-2 border-[#00f7ff] transition-all duration-300 hover:scale-110 hover:shadow-[0_0_15px_rgba(37,211,102,0.8)]">
                       <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
