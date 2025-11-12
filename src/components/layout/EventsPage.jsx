@@ -7,6 +7,8 @@ import image3 from "../../assets/puc_image.jpg";
 import Footer from "../../components/layout/Common/footer";
 import BackButton from "./Common/BackButton";
 
+import MegaEventCard from "../layout/Events/MegaEventCard";
+import F1SyncLogo from "../../assets/F1synclogo.png"
 
 const EventsPage = () => {
   useEffect(() => {
@@ -47,6 +49,16 @@ const EventsPage = () => {
       description: "High School and Pre-University Level Events",
       image: image3,
       path: "/events/puc-events",
+    },
+  ];
+
+  const MegaEventsData = [
+    {
+      id: 1,
+      title: "F1 SYNC",
+      description: "Mega Event",
+      image: F1SyncLogo,
+      path: "/mega-event",
     },
   ];
 
@@ -91,6 +103,16 @@ const EventsPage = () => {
             pb-20
           "
         >
+           {MegaEventsData.map((event) => (
+            <MegaEventCard
+              key={event.id}
+              title={event.title}
+              description={event.description}
+              image={event.image}
+              path={event.path}
+            />
+          ))}
+
           {eventsData.map((event) => (
             <EventCard
               key={event.id}
@@ -100,6 +122,7 @@ const EventsPage = () => {
               path={event.path}
             />
           ))}
+
         </div>
       </div>
       <div
