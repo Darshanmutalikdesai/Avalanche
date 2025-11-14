@@ -21,6 +21,7 @@ const User = lazy(() => import("./components/pages/user"));
 const Rule = lazy(() => import("./components/pages/rule"));
 const Contact = lazy(() => import("./components/pages/Contact"));
 const Schedule = lazy(() => import("./components/pages/Schedule"));
+const Maintenance = lazy(() => import("./components/pages/Maintainance"));
 
 function AppRoutes() {
   return (
@@ -28,25 +29,24 @@ function AppRoutes() {
       <Routes>
         {/* Landing and Home */}
         <Route path="/" element={<LandingPage />} />
-        <Route path="/home" element={<Home />} />
+        {/*<Route path="/home" element={<Home />} />
 
-        {/* Auth Pages */}
         <Route path="/auth" element={<LoginPage />} />
         <Route path="/otp" element={<OTPPage />} />
 
-        {/* Other Pages */}
         <Route path="/events/*" element={<Events />} />
         <Route path="/developer" element={<Developer />} />
         {<Route path="/user-portal/*" element={<User />} />}
         <Route path="/rulebook/*" element={<Rule />} />
         <Route path="/contact" element={<Contact />} />
         {<Route path="/schedule" element={<Schedule />} />}
-        <Route path="/mega-event" element={<MegaEventGuidelines />} />
+        <Route path="/mega-event" element={<MegaEventGuidelines />} />*/}
+        <Route path="/maintenance" element={<Maintenance/>} />
 
 
 
         {/* Fallback / 404 */}
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Maintenance />} />
       </Routes>
       
     </Suspense>
