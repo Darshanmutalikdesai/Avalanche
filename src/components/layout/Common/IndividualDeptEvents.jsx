@@ -28,7 +28,8 @@ import troubleshooting from "../../../assets/troubleshooting.jpeg";
 import visionrace from "../../../assets/visionrace.jpeg";
 import BattleofBrains from "../../../assets/BattleOfBrains.jpeg";
 import DaD from "../../../assets/DaD.jpeg";
-import parachute from "../../../assets/Parachuting.png"
+import parachute from "../../../assets/Parachuting.png";
+import closed from  "../../../assets/closed.png";
 
 const eventsData = [{
   "eventId": "invictus",
@@ -147,7 +148,8 @@ const eventsData = [{
   "Coord1Pno": "9449443132",
   "Coord2Name": "Tanmay Bhadale",
   "Coord2Pno": "8867288373",
-  "image": WSB
+  "regfull":true,
+  "image": closed
 },
 
 {
@@ -257,7 +259,8 @@ const eventsData = [{
   "Coord1Pno": "+916362264977",
   "Coord2Name": "Rakshita Dooganavar",
   "Coord2Pno": "+918095286001",
-  "image": lazer
+  "regfull":true,
+  "image": closed
 },
 
 {
@@ -538,17 +541,23 @@ export default function IndividualDeptEvents() {
               >
                 Coming Soon...
               </button>*/}
+              {selectedEvent?.regfull ? (
+                <button
+                  onClick={() => setSelectedEvent(null)}
+                  className="px-6 py-3 bg-[#00f7ff] flex justify-center items-center border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
+                >
+                  REGISTRATIONS FULL!!
+                </button>
+              ) : (
+                <Link
+                  to={isLoggedIn ? "/events/register" : "/auth"}
+                  state={{ event: selectedEvent }}
+                  className="px-6 py-3 bg-[#00f7ff] flex justify-center items-center border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
+                >
+                  Register
+                </Link>
+              )}
 
-              <Link
-                to={isLoggedIn
-                  ? "/events/register"
-                  : "/auth"
-                }
-                state={{ event: selectedEvent }}
-                className="px-6 py-3 bg-[#00f7ff] justify-items-center border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
-              >
-                Register
-              </Link>
             </div>
           </div>
         </div>

@@ -8,6 +8,7 @@ import image4 from "../../assets/TechDebate.jpeg";
 import image5 from "../../assets/pp.jpeg";
 import Footer from "../../components/layout/Common/footer";
 import BackButton from "./Common/BackButton";
+import closed from "../../assets/closed.png"
 const CentralEvents = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -52,7 +53,8 @@ const CentralEvents = () => {
     {
       eventId: "tech_quiz_circuit",
       eventName: "Technical Quiz(Circuit)",
-      image: image1,
+      image: closed,
+      regfull: true,
       instructions: "Technical Quiz General Rules\n 1.The Quizmaster is God and their decision is final.\n 2. Use of mobile phones or electronic devices is strictly prohibited.\n 3. The quiz will consist of 25 questions in the preliminary round.\n 4. ‘*’ (Star mark) questions will act as tie-breakers.\n 5. No negative marking in the first round.\n 6. No prompting of answers is allowed.\n 7. If there are more than three blockers, no further hints will be given.\n 8. Any form of misconduct or discussion during the quiz will lead to disqualification.\n\n\nTechnical Quiz Guidelines 1. Each team can have a maximum of two participants.\n 2. The quiz will consist of two rounds – Preliminary Round and Final Round.\n 3. Round 1 (Preliminary) will be a written pen-and-paper round.\n 4. Use of mobile phones or electronic devices is strictly prohibited.\n 5. Top teams from the preliminary round will qualify for the final round.\n 6. Any form of misconduct or unfair means will lead to disqualification.\n 7. Decisions of the judges and organizers will be final and binding.\n 8. Questions will test technical knowledge, logic, and awareness.\n",
     },
     {
@@ -179,16 +181,22 @@ const CentralEvents = () => {
                 Coming Soon...
               </button>*/}
 
-              <Link
-                to={isLoggedIn
-                  ? "/events/register"
-                  : "/auth"
-                }
-                state={{ event: selectedEvent }}
-                className="px-6 py-3 bg-[#00f7ff] justify-items-center border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
-              >
-                Register
-              </Link>
+              {selectedEvent?.regfull ? (
+                <button
+                  onClick={() => setSelectedEvent(null)}
+                  className="px-6 py-3 bg-[#00f7ff] flex justify-center items-center border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
+                >
+                  REGISTRATIONS FULL!!
+                </button>
+              ) : (
+                <Link
+                  to={isLoggedIn ? "/events/register" : "/auth"}
+                  state={{ event: selectedEvent }}
+                  className="px-6 py-3 bg-[#00f7ff] flex justify-center items-center border-2 border-[#00f7ff] rounded-lg text-black font-bold transition-all duration-300 ease-in-out hover:bg-transparent hover:text-[#00f7ff] hover:shadow-[0_0_15px_#00f7ff]"
+                >
+                  Register
+                </Link>
+              )}
             </div>
           </div>
         </div>

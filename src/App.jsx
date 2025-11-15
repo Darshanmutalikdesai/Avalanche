@@ -29,7 +29,7 @@ function AppRoutes() {
       <Routes>
         {/* Landing and Home */}
         <Route path="/" element={<LandingPage />} />
-        {/*<Route path="/home" element={<Home />} />
+        <Route path="/home" element={<Home />} />
 
         <Route path="/auth" element={<LoginPage />} />
         <Route path="/otp" element={<OTPPage />} />
@@ -40,13 +40,13 @@ function AppRoutes() {
         <Route path="/rulebook/*" element={<Rule />} />
         <Route path="/contact" element={<Contact />} />
         {<Route path="/schedule" element={<Schedule />} />}
-        <Route path="/mega-event" element={<MegaEventGuidelines />} />*/}
+        <Route path="/mega-event" element={<MegaEventGuidelines />} />
         <Route path="/maintenance" element={<Maintenance/>} />
 
 
 
         {/* Fallback / 404 */}
-        <Route path="*" element={<Maintenance />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       
     </Suspense>
