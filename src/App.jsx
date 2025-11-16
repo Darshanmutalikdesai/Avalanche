@@ -22,6 +22,8 @@ const Rule = lazy(() => import("./components/pages/rule"));
 const Contact = lazy(() => import("./components/pages/Contact"));
 const Schedule = lazy(() => import("./components/pages/Schedule"));
 const Maintenance = lazy(() => import("./components/pages/Maintainance"));
+const Verification = lazy(() => import("./components/Routes/Scanner"));
+const UserVerification = lazy(() => import("./components/Routes/UserDetails"))
 
 function AppRoutes() {
   return (
@@ -42,7 +44,8 @@ function AppRoutes() {
         {<Route path="/schedule" element={<Schedule />} />}
         <Route path="/mega-event" element={<MegaEventGuidelines />} />
         <Route path="/maintenance" element={<Maintenance/>} />
-
+        <Route path="/verify-users" element={<Verification/>}/>
+        <Route path="/user-verification" element={<UserVerification/>}/>
 
 
         {/* Fallback / 404 */}
