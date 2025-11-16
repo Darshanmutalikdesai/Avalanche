@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {
-  User,
   Award,
   Calendar,
   Hash,
   Building2,
   GraduationCap,
   LogOut,
-  Clock,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PaymentButton from "./Common/payment-button";
@@ -17,7 +15,6 @@ export default function CosmicProfile() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [sessionTime, setSessionTime] = useState(0);
   const navigate = useNavigate();
 
   const getCurrentUser = async (userId) => {
@@ -78,52 +75,19 @@ export default function CosmicProfile() {
     } catch (err) {
       console.error("Profile fetch error:", err.message);
       setError(err.message);
-      
-      // If session expired, redirect to login
-      if (err.message.includes('expired') || err.message.includes('SESSION_EXPIRED')) {
-        AuthManager.clearAuth();
-        setTimeout(() => navigate("/auth"), 2000);
-      }
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    // ⭐ CHECK SESSION ON MOUNT
-    if (!AuthManager.isAuthenticated()) {
-      alert('⚠️ Session expired. Please login again.');
-      navigate("/auth");
-      return;
-    }
-
     fetchProfile();
-
-    // ⭐ START SESSION MONITOR
-    AuthManager.startSessionMonitor(() => {
-      alert('⏱️ Your session has expired. Please login again.');
-      navigate("/auth");
-    });
-
-    // Update session time display every minute
-    const timeInterval = setInterval(() => {
-      setSessionTime(AuthManager.getTimeRemaining());
-    }, 60000);
-
-    // Initial time set
-    setSessionTime(AuthManager.getTimeRemaining());
-
-    return () => {
-      AuthManager.stopSessionMonitor();
-      clearInterval(timeInterval);
-    };
   }, [navigate]);
 
   // Logout handler
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
       AuthManager.clearAuth();
-      AuthManager.stopSessionMonitor();
       navigate("/auth");
     }
   };
