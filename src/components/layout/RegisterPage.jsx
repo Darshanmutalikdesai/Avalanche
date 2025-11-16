@@ -46,22 +46,12 @@ const RegisterPage = () => {
     }
 
     if (!AuthManager.isAuthenticated()) {
-      alert('⚠ Your session has expired. Please log in again.');
       AuthManager.clearAuth();
-      navigate("/register");
+      navigate("/auth");
       return;
     }
 
-    // ⭐ START SESSION MONITOR
-    AuthManager.startSessionMonitor(() => {
-      alert('⚠ Your session has expired. Please log in again.');
-      navigate("/register");
-    });
-
-    return () => {
-      // ⭐ CLEANUP SESSION MONITOR
-      AuthManager.stopSessionMonitor();
-    };
+    return;
   }, [navigate]);
 
   // ⭐ PUBLIC API CALL FOR EVENT DETAILS (No Auth Required)
@@ -124,8 +114,7 @@ const RegisterPage = () => {
 
     // Check authentication before API call
     if (!AuthManager.isAuthenticated()) {
-      alert('⚠ Your session has expired. Please log in again.');
-      navigate("/register");
+      navigate("/auth");
       return;
     }
 
@@ -152,15 +141,10 @@ const RegisterPage = () => {
       setPaymentStatus(newPaymentStatus);
 
     } catch (error) {
-      if (error.message === 'SESSION_EXPIRED') {
-        alert('⚠ Your session has expired. Please log in again.');
-        navigate("/register");
-      } else {
-        console.error("Error checking payment for", avalancheId, ":", error);
-        const newPaymentStatus = [...paymentStatus];
-        newPaymentStatus[index] = false;
-        setPaymentStatus(newPaymentStatus);
-      }
+      console.error("Error checking payment for", avalancheId, ":", error);
+      const newPaymentStatus = [...paymentStatus];
+      newPaymentStatus[index] = false;
+      setPaymentStatus(newPaymentStatus);
     } finally {
       const newCheckingPayment = [...checkingPayment];
       newCheckingPayment[index] = false;
@@ -233,7 +217,7 @@ const RegisterPage = () => {
     try {
       // ⭐ CHECK AUTHENTICATION BEFORE SUBMISSION
       if (!AuthManager.isAuthenticated()) {
-        throw new Error('SESSION_EXPIRED');
+        throw new Error('Login First');
       }
 
       const avalancheIds = formData.userIds

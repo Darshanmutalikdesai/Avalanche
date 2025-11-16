@@ -41,7 +41,6 @@ class AuthManager {
       const data = await response.json();
       if (data.requiresLogin) {
         this.clearAuth();
-        throw new Error('SESSION_EXPIRED');
       }
     }
 
