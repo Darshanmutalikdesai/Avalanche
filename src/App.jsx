@@ -28,7 +28,7 @@ function AppRoutes() {
     <Suspense fallback={<Loading />}>
       <Routes>
         {/* Landing and Home */}
-        <Route path="/" element={<LandingPage />} />
+        {/*<Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<Home />} />
 
         <Route path="/auth" element={<LoginPage />} />
@@ -40,7 +40,7 @@ function AppRoutes() {
         <Route path="/rulebook/*" element={<Rule />} />
         <Route path="/contact" element={<Contact />} />
         {<Route path="/schedule" element={<Schedule />} />}
-        <Route path="/mega-event" element={<MegaEventGuidelines />} />
+        <Route path="/mega-event" element={<MegaEventGuidelines />} />*/}
         <Route path="/maintenance" element={<Maintenance/>} />
 
 
