@@ -35,9 +35,6 @@ export default function CosmicProfile() {
       const data = await response.json();
       return data.user;
     } catch (error) {
-      if (error.message === 'SESSION_EXPIRED') {
-        throw new Error('Your session has expired. Please login again.');
-      }
       console.error("Error in getCurrentUser:", error);
       throw error;
     }
@@ -50,7 +47,7 @@ export default function CosmicProfile() {
     try {
       // ⭐ CHECK SESSION VALIDITY
       if (!AuthManager.isAuthenticated()) {
-        throw new Error("Session expired. Please login again.");
+        throw new Error("Please login to access your profile");
       }
 
       const userId = localStorage.getItem("userId");
