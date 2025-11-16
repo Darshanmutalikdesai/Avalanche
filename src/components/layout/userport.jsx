@@ -9,17 +9,21 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PaymentButton from "./Common/payment-button";
-import AuthManager from "../../utils/authManager"; // IMPORT AUTH MANAGER
+import AuthManager from "../../utils/authManager";
+import QRCode from "react-qr-code"; // ⭐ QR CODE LIBRARY
 
 export default function CosmicProfile() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // ⭐ BASE64 EMAIL STORAGE
+  const [encodedEmail, setEncodedEmail] = useState("");
+
   const navigate = useNavigate();
 
-  const getCurrentUser = async (userId) => {
+  const getCurrentUser = async () => {
     try {
-      // ⭐ USE AUTHENTICATED FETCH
       const response = await AuthManager.authenticatedFetch(
         `https://avalanche.git.edu/api/user/profile`,
         {
@@ -27,11 +31,11 @@ export default function CosmicProfile() {
           credentials: "include",
         }
       );
-      
+
       if (!response.ok) {
         throw new Error(`Failed to fetch user (Status: ${response.status})`);
       }
-      
+
       const data = await response.json();
       return data.user;
     } catch (error) {
@@ -43,32 +47,33 @@ export default function CosmicProfile() {
   const fetchProfile = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
-      // ⭐ CHECK SESSION VALIDITY
       if (!AuthManager.isAuthenticated()) {
         throw new Error("Please login to access your profile");
       }
 
-      const userId = localStorage.getItem("userId");
-      
-      if (!userId) {
-        throw new Error("No user ID found. Please login.");
-      }
+      const userDetails = await getCurrentUser();
 
-      const userDetails = await getCurrentUser(userId);
-      
       const hasPaid = userDetails.payment || false;
 
-      setProfile({
-        _id: userDetails.avalancheId || userId,
+      const newProfile = {
+        _id: userDetails.avalancheId,
         name: userDetails.name || "Participant",
         email: userDetails.email || "—",
         institute: userDetails.schlclgName || "—",
         rollNumber: userDetails.rollno || "—",
-        registeredEvents: userDetails.registeredEvents,
+        registeredEvents: userDetails.registeredEvents || [],
         hasPaid: hasPaid,
-      });
+      };
+
+      setProfile(newProfile);
+
+      // ⭐ BASE64 ENCODE EMAIL
+      if (newProfile.email) {
+        const encoded = btoa(newProfile.email);
+        setEncodedEmail(encoded);
+      }
     } catch (err) {
       console.error("Profile fetch error:", err.message);
       setError(err.message);
@@ -79,9 +84,8 @@ export default function CosmicProfile() {
 
   useEffect(() => {
     fetchProfile();
-  }, [navigate]);
+  }, []);
 
-  // Logout handler
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
       AuthManager.clearAuth();
@@ -91,7 +95,7 @@ export default function CosmicProfile() {
 
   if (loading)
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-cyan-400 text-xl">
+      <div className="min-h-screen flex items-center font-nasal justify-center bg-slate-950 text-cyan-400 text-xl">
         Loading your cosmic profile...
       </div>
     );
@@ -114,6 +118,8 @@ export default function CosmicProfile() {
 
   return (
     <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden">
+
+      {/* BACKGROUND GRID + STARS */}
       <div
         className="absolute inset-0"
         style={{
@@ -156,14 +162,13 @@ export default function CosmicProfile() {
           }}
         >
 
-          {/* Header */}
+          {/* PROFILE HEADER */}
           <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
-
             <div className="flex-1 text-center md:text-left">
-              <h1 className="text-4xl md:text-5xl font-bold text-cyan-400 mb-2 tracking-wider">
+              <h1 className="text-4xl md:text-5xl font-orbitron font-bold text-cyan-400 mb-2 tracking-wider">
                 {profile.name}
               </h1>
-              <p className="text-cyan-300/60 text-sm font-mono">{profile.email}</p>
+              <p className="text-cyan-300/60 text-sm font-orbitron">{profile.email}</p>
             </div>
 
             <div className="flex flex-col items-center gap-2">
@@ -174,44 +179,40 @@ export default function CosmicProfile() {
                   animation: "glow-pulse 2s infinite",
                 }}
               />
-              <span className="text-green-400 text-xs font-mono">ACTIVE</span>
+              <span className="text-green-400 text-xs font-nasal">ACTIVE</span>
             </div>
           </div>
 
           <div className="relative h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent mb-8" />
 
-          {/* Info grid */}
+          {/* INFO GRID */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <InfoCard
-              icon={<Building2 className="w-5 h-5 text-cyan-400" />}
-              label="INSTITUTE"
-              value={profile.institute}
-            />
-            <InfoCard
-              icon={<Hash className="w-5 h-5 text-cyan-400" />}
-              label="AVALANCHE ID"
-              value={profile._id}
-            />
-            <InfoCard
-              icon={<GraduationCap className="w-5 h-5 text-cyan-400" />}
-              label="ROLL NUMBER"
-              value={profile.rollNumber}
-            />
-            <InfoCard
-              icon={<Award className={`w-5 h-5 ${profile.hasPaid ? 'text-green-400' : 'text-red-400'}`} />}
-              label="PAYMENT STATUS"
-              value={profile.hasPaid ? 'PAID' : 'UNPAID'}
-            />
+            <InfoCard icon={<Building2 className="w-5 h-5 font-orbitron text-cyan-400" />} label="INSTITUTE" value={profile.institute} />
+            <InfoCard icon={<Hash className="w-5 h-5 font-orbitron text-cyan-400" />} label="AVALANCHE ID" value={profile._id} />
+            <InfoCard icon={<GraduationCap className="w-5 h-5 font-orbitron text-cyan-400" />} label="ROLL NUMBER" value={profile.rollNumber} />
+            <InfoCard icon={<Award className={`w-5 h-5 font-orbitron ${profile.hasPaid ? "text-green-400" : "text-red-400"}`} />} label="PAYMENT STATUS" value={profile.hasPaid ? "PAID" : "UNPAID"} />
           </div>
 
-          {/* Registered events */}
+          {/* ⭐ QR CODE SECTION */}
+          <div className="relative bg-slate-800/40 border border-cyan-500/30 p-6 mb-8 flex flex-col items-center">
+            <h2 className="text-xl font-nasal font-bold text-cyan-400 mb-4 tracking-wider">
+              VERIFICATION QR
+            </h2>
+
+            <div className="bg-white p-3 rounded-md">
+              <QRCode value={encodedEmail || "invalid"} size={160} />
+            </div>
+          </div>
+
+          {/* REGISTERED EVENTS */}
           <div className="relative bg-slate-800/30 border border-cyan-500/40 p-6 mb-6">
             <div className="flex items-center gap-3 mb-6">
               <Calendar className="w-6 h-6 text-cyan-400" />
-              <h2 className="text-2xl font-bold text-cyan-400 tracking-wider">
+              <h2 className="text-2xl font-bold font-nasal text-cyan-400 tracking-wider">
                 REGISTERED EVENTS
               </h2>
             </div>
+
             <div className="space-y-4">
               {profile.registeredEvents.length > 0 ? (
                 profile.registeredEvents.map((event, index) => (
@@ -222,13 +223,13 @@ export default function CosmicProfile() {
                     <div className="flex items-center gap-4">
                       <Award className="w-5 h-5 text-cyan-400 flex-shrink-0" />
                       <div className="flex-1">
-                        <span className="text-white text-lg block">
+                        <span className="text-white font-nasal text-lg block">
                           {event.name || "Event"}
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                        <span className="text-green-400 text-xs font-mono">
+                        <span className="text-green-400 text-xs font-orbitron">
                           CONFIRMED
                         </span>
                       </div>
@@ -236,61 +237,24 @@ export default function CosmicProfile() {
                   </div>
                 ))
               ) : (
-                <p className="text-cyan-300/60 text-sm font-mono">
+                <p className="text-cyan-300/60 text-sm font-orbitron">
                   No events registered yet.
                 </p>
               )}
             </div>
           </div>
 
-          {/* Payment Section */}
-          {profile.hasPaid ? (
-            <div className="relative bg-green-900/30 border border-green-500/40 p-6 mb-6">
-              <div className="flex items-center justify-center gap-3">
-                <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
-                  <Award className="w-6 h-6 text-green-400" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-green-400 tracking-wider">
-                    PAYMENT SUCCESSFUL
-                  </h3>
-                  <p className="text-green-300/80 text-sm font-mono mt-1">
-                    Your registration is complete!
-                  </p>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="relative bg-red-900/30 border border-red-500/40 p-6 mb-6">
-              <div className="flex items-center justify-center gap-3">
-                <div className="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center">
-                  <Award className="w-6 h-6 text-red-400" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-red-400 tracking-wider">
-                    PAYMENT PENDING
-                  </h3>
-                  <p className="text-red-300/80 text-sm font-mono mt-1">
-                    Complete your payment to confirm event registrations.
-                  </p>
-                </div>
-                <div className="justify-items-center">
-                  <PaymentButton />
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Logout Button */}
+          {/* LOGOUT BUTTON */}
           <div className="mt-6 flex justify-center">
             <button
               onClick={handleLogout}
               className="flex items-center gap-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 hover:border-red-400 text-red-400 hover:text-red-300 px-6 py-3 rounded-lg transition-all duration-300"
             >
               <LogOut className="w-4 h-4" />
-              <span className="font-mono text-sm font-bold">LOGOUT</span>
+              <span className="font-orbitron text-sm font-bold">LOGOUT</span>
             </button>
           </div>
+
         </div>
       </div>
     </div>
