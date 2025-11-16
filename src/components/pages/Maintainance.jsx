@@ -34,7 +34,7 @@ const Maintenance = () => {
       {/* Centered Coming Soon text */}
       <div className="relative z-50 flex flex-1 items-center justify-center text-center">
         <h1 className="text-white text-6xl sm:text-7xl md:text-8xl font-bold animate-glow drop-shadow-lg">
-          Website Under Maintenance!!, Shall be restored soon...
+          Registrations Momentarily Closed!!
         </h1>
       </div>
 
