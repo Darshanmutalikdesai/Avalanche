@@ -72,7 +72,8 @@ const eventsData = [{
   "Coord1Pno": "7619189575",
   "Coord2Name": "YASHASWINI SUKHASARE",
   "Coord2Pno": "7899782779",
-  "image": mobile
+  "regfull": true,
+  "image": closed
 },
 
 {
