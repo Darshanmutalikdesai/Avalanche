@@ -35,6 +35,7 @@ const Maintenance = () => {
       <div className="relative z-50 flex flex-1 items-center justify-center text-center">
         <h1 className="text-white text-6xl sm:text-7xl md:text-8xl font-bold animate-glow drop-shadow-lg">
           Registrations Closed!! Please Try again next year!!
+          Thank you for Expressing your interest.
         </h1>
       </div>
 
