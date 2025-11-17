@@ -307,7 +307,6 @@ const RegisterPage = () => {
   // Complete Registration
   const completeRegistration = async () => {
     setLoading(true);
-    try {
       const phoneRegex = /^[0-9]{10}$/;
 
       if (!phoneRegex.test(formData.phone)) {
@@ -328,7 +327,7 @@ const RegisterPage = () => {
         return;
       }
 
-      const response = await fetch(`${API_URL}/api/auth/register/complete`, {
+      {/*const response = await fetch(`${API_URL}/api/auth/register/complete`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -337,31 +336,11 @@ const RegisterPage = () => {
           schlclgName: formData.clgName.trim(),
           rollno: formData.usn.trim().toUpperCase()
         })
-      });
+      });*/}
 
-      const data = await response.json();
-
-      if (response.ok) {
-        // ⭐ TOKEN ALREADY STORED FROM handleGoogleSuccess
         
-        localStorage.setItem('userId', data.userId);
-        localStorage.setItem('avalancheId', data.avalancheId);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        localStorage.setItem('payment', data.user.payment);
+        alert(`Registrations CLosed!!`);
 
-        window.dispatchEvent(new Event('authStateChanged'));
-        
-        alert(`✅ Registration successful! Your Avalanche ID: ${data.avalancheId}`);
-        navigate("/user-portal");
-      } else {
-        alert(`❌ ${data.error || "Registration failed"}`);
-      }
-    } catch (error) {
-      console.error('❌ Registration error:', error);
-      alert("⚠️ Cannot connect to server. Check backend connection.");
-    } finally {
-      setLoading(false);
-    }
   };
 return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
