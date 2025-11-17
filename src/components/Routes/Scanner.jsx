@@ -8,6 +8,14 @@ const ALLOWED_SCANNER_EMAILS = [
   "22u1040@students.git.edu",
   "laxmandesai7932@gmail.com",
   "pratiksadekar2004@gmail.com",
+  "23u0492@students.git.edu",	
+"24u0523@students.git.edu",		
+"23u0298@students.git.edu",		
+"23u0449@students.git.edu",		
+"23u0310@students.git.edu",		
+"25u0107@students.git.edu",		
+"24u0519@students.git.edu",		
+"23ul0995@students.git.edu",
 ];
 
 export default function Scanner() {
