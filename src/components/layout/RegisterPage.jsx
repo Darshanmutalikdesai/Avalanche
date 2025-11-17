@@ -5,6 +5,15 @@ import BackButton from "./Common/BackButton";
 import Footer from "./Common/footer";
 import AuthManager from "../../utils/authManager"; // IMPORT AUTH MANAGER
 
+const ALLOWED_EMAILS = [
+  "amogh.k.2042@gmail.com",
+  "kedari.koushal44@gmail.com",
+  "22u1040@students.git.edu",
+  "laxmandesai7932@gmail.com",
+  "pratiksadekar2004@gmail.com",
+  // Add more emails here
+];
+
 const RegisterPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -15,6 +24,8 @@ const RegisterPage = () => {
   const [fetchingConfig, setFetchingConfig] = useState(true);
   const [displayEventName, setDisplayEventName] = useState(eventNameFromState || "");
   const [whatsappLink, setwhatsappLink] = useState("");
+  const [accessDenied, setAccessDenied] = useState(false);
+
 
   const [teamConfig, setTeamConfig] = useState({
     minTeamMembers: 0,
@@ -34,6 +45,10 @@ const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+    const isEmailAllowed = (email) => {
+    return ALLOWED_EMAILS.includes(email.toLowerCase());
+  };
+
   // ⭐ SESSION CHECK ON MOUNT
   useEffect(() => {
     // Only check authentication if user data exists in localStorage
@@ -42,6 +57,12 @@ const RegisterPage = () => {
     if (!user.avalancheId) {
       alert('⚠ Please log in to register for events.');
       navigate("/register");
+      return;
+    }
+
+        if (!user.email || !isEmailAllowed(user.email)) {
+      setAccessDenied(true);
+      setFetchingConfig(false);
       return;
     }
 
@@ -298,6 +319,33 @@ const RegisterPage = () => {
       setLoading(false);
     }
   };
+
+    if (accessDenied) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-black via-[#00111f] to-black text-white">
+        <NavigationBar />
+        <div className="mt-32 bg-black/60 border-2 border-red-500 rounded-2xl shadow-[0_0_20px_#ff0000] p-8 w-[90%] max-w-lg backdrop-blur-md text-center">
+          <div className="text-6xl mb-4">🚫</div>
+          <h1 className="text-3xl font-bold text-red-400 mb-4">Access Denied</h1>
+          <p className="text-gray-300 mb-6">
+            Your email address ({userEmail || "not provided"}) is not authorized to access event registration at this time.
+          </p>
+          <p className="text-sm text-gray-400 mb-6">
+            Please contact the event organizers if you believe this is an error.
+          </p>
+          <button
+            onClick={() => navigate("/events")}
+            className="px-6 py-3 bg-cyan-400 text-black font-bold rounded-lg hover:bg-cyan-300 transition-all duration-300"
+          >
+            Back to Events
+          </button>
+        </div>
+        <div className="absolute bottom-[0.5rem] right-6 sm:right-10 z-[120]">
+          <BackButton />
+        </div>
+      </div>
+    );
+  }
 
   if (fetchingConfig) {
     return (
