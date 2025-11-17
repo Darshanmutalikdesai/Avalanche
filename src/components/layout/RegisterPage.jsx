@@ -169,7 +169,7 @@ const RegisterPage = () => {
         ...formData,
         userIds: newUserIds,
         teamSize: value,
-        teamId: size === 1 ? user.name : formData.teamId
+        teamId: formData.teamId
       });
 
       const newPaymentStatus = Array(size).fill(null);
