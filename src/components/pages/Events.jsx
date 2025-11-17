@@ -34,7 +34,7 @@ export default function Events() {
 
         {/* Register Event (receives state from CentralEvents/DepartmentEvents) */}
 
-        {/*<Route path="register" element={<RegisterPaperPage />} />*/}
+        <Route path="register" element={<RegisterPaperPage />} />
 
         {/* Catch all → redirect back */}
         <Route path="*" element={<Navigate to="/events" />} />
