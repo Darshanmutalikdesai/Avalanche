@@ -159,9 +159,6 @@ const RegisterPage = () => {
       const size = parseInt(value);
 
       const newUserIds = Array(size).fill("").map((_, idx) => {
-        if (idx === 0 && userAvalancheId) {
-          return userAvalancheId;
-        }
         return formData.userIds[idx] || "";
       });
 
@@ -394,8 +391,7 @@ const RegisterPage = () => {
               </label>
               <input
                 type="text"
-                placeholder={index === 0 ? "Your Avalanche ID (auto-filled)" : "Enter Avalanche ID"}
-                disabled={index === 0}
+                placeholder={"Enter Avalanche ID"}
                 value={member}
                 onChange={(e) => handleTeamMemberChange(index, e.target.value.toUpperCase())}
                 className={`w-full bg-black/40 rounded-md px-4 py-2 text-white focus:outline-none transition-all duration-300 ${paymentStatus[index] === true
