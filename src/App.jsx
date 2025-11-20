@@ -30,11 +30,11 @@ function AppRoutes() {
     <Suspense fallback={<Loading />}>
       <Routes>
         {/* Landing and Home */}
-        <Route path="/" element={<LandingPage />} />
+        {/*<Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<Home />} />
 
         <Route path="/auth" element={<LoginPage />} />
-        {/*<Route path="/otp" element={<OTPPage />} />*/}
+        {/*<Route path="/otp" element={<OTPPage />} />
 
         <Route path="/events/*" element={<Events />} />
         <Route path="/developer" element={<Developer />} />
@@ -43,9 +43,10 @@ function AppRoutes() {
         <Route path="/contact" element={<Contact />} />
         {<Route path="/schedule" element={<Schedule />} />}
         <Route path="/mega-event" element={<MegaEventGuidelines />} />
-        <Route path="/maintenance" element={<Maintenance/>} />
         <Route path="/verify-users" element={<Verification/>}/>
-        <Route path="/user-verification" element={<UserVerification/>}/>
+        <Route path="/user-verification" element={<UserVerification/>}/>*/}
+        <Route path="/" element={<Maintenance/>} />
+
 
 
         {/* Fallback / 404 */}
