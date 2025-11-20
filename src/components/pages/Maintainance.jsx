@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import milestone1600 from "../../assets/1600.png";
 import ava from "../../assets/Avalanche.png";
-import bgAudio from "../../assets/paradise.mp3";
 
 const RegistrationCompletePage = () => {
   // Stars effect
@@ -24,23 +23,38 @@ const RegistrationCompletePage = () => {
     }
   }, []);
 
-  // Audio effect - SEPARATE useEffect
+  // Audio effect - create hidden audio element with autoplay
   useEffect(() => {
-    const audio = new Audio(bgAudio);
-    audio.loop = true;
+    const audio = document.createElement('audio');
+    audio.id = 'bg-audio';
+    audio.loop = false; // Single play to match animation length
     audio.volume = 0.4;
-
-    const playAudio = () => audio.play().catch(() => {});
-    playAudio();
+    audio.autoplay = true;
+    audio.preload = 'auto';
+    
+    // IMPORTANT: Update this path to match your hosting setup
+    // For files in public folder, use: /paradise.mp3
+    audio.src = '/paradise.mp3';
+    
+    // Add to document to enable autoplay
+    document.body.appendChild(audio);
+    
+    // Force play attempt
+    audio.play().catch(err => {
+      console.log("Autoplay blocked, trying alternatives...", err);
+      audio.muted = true;
+      audio.play().then(() => {
+        audio.muted = false;
+      }).catch(e => console.log("Audio failed:", e));
+    });
 
     return () => {
       audio.pause();
-      audio.currentTime = 0;
+      audio.remove();
     };
-    
   }, []);
 
-  // Fireworks effect - SEPARATE useEffect
+  // Fireworks effect
   useEffect(() => {
     const fireworksContainer = document.getElementById("fireworks-container");
     if (!fireworksContainer) return;
